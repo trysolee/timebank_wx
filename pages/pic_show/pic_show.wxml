@@ -1,0 +1,17 @@
+<scroll-view scroll-x="true" scroll-y="true" >
+  <image bindload="imageLoad" src="pic.png" 
+  style="width:{{_width}}px; height:{{_height}}px;"
+  ></image>
+
+<text>img123</text>
+</scroll-view>
+
+
+<view>
+<view  class=''></view>
+<image>
+
+</image>
+
+
+</view>

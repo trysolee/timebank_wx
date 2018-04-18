@@ -1,0 +1,24 @@
+/* pages/list_exp/list_exp.wxss */
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.userinfo-avatar {
+  border-radius: 50%;
+  width: 128rpx;
+  height: 128rpx;
+  background-size: cover;
+  margin: 40rpx;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+button {
+  margin-top: 20rpx;
+  margin: 40rpx;
+}

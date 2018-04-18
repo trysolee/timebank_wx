@@ -1,0 +1,6 @@
+/* pages/pic_show/pic_show.wxss */
+
+img  {
+width: 100%;
+height: 100%;
+}

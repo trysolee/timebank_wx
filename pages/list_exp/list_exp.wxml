@@ -1,0 +1,22 @@
+<!--pages/list_exp/list_exp.wxml-->
+<scroll-view class="container">
+
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+
+  <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="primary"> 巡查拍照 </button>
+
+
+  <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="primary"> 日常拍照 </button>
+
+
+  <block wx:for="{{listDate}}">
+    <button type="default" bindtap="listKey" id="{{index}}" hover-class="other-button-hover">{{item[0]}}月{{item[1]}}日 ( {{item[2]}} )  </button>
+  </block>
+
+</scroll-view>

@@ -1,0 +1,8 @@
+<!--pages/chooseImage/chooseImage.wxml-->
+<text>{{Path}}</text>
+<button type="primary" bindtap="chooseImage">拍照</button>
+<button type="primary" bindtap="filelist">文件列表</button>
+<button type="primary" bindtap="delAll">删除全部</button>
+<button type="primary" bindtap="cameraUP">拍照上传</button>
+<text>{{text}}</text>
+<image mode="widthFix" src="{{src}}"></image>

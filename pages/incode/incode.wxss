@@ -1,0 +1,5 @@
+/* pages/incode/incode.wxss */
+
+view {
+  margin-top: 50px;
+}
