@@ -1,0 +1,23 @@
+<!--pages/work/work.wxml-->
+<!--pages/main/main.wxml-->
+
+<view class="bg">
+
+
+  <view class="input_txt">
+    <input  placeholder="输入项目名称..." />
+  </view>
+  <button class="key" type='warn' bindtap="更多" id="2">新建项目</button>
+
+
+
+  <block wx:for="{{list}}" wx:key='id'>
+
+   <button class="key" type="{{item.type}}" 
+   bindtap="{{item.fun}}" 
+   id="{{index}}">{{item.na}}</button>
+
+  </block>
+
+
+</view>

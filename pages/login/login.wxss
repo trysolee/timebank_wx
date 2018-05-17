@@ -1,26 +1,27 @@
 /* pages/login/login.wxss */
+
 /**index.wxss**/
+
 .userinfo {
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
   align-items: baseline;
-   
 }
 
 .userinfo-avatar {
   border-radius: 50%;
-
   width: 128rpx;
   height: 128rpx;
-background-size: cover;
+  background-size: cover;
   margin: 40rpx;
-
   /*
 
 
 
   */
 }
+
+
 
 .userinfo-nickname {
   color: #aaa;
@@ -29,5 +30,5 @@ background-size: cover;
 .usermotto {
   margin-top: 20px;
   margin: 40rpx;
-  word-wrap:break-word; 
+  word-wrap: break-word;
 }

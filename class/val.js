@@ -1,15 +1,21 @@
 
+// 用 app 里面的 VAL
+// 这里 的 val.js 暂时停用
+//
+
 const ST = require('./showtxt.js');
 // const LOGIN = require('./login.js');
 
 const VAL = {
+
+  测试: true,
 
 
   TEST_: {
     TXT: '通用测试',
 
   },
-  
+
   GO_LOGIN: {
     TXT: '登陆...',
     FUN: function (DAT) {
@@ -106,7 +112,8 @@ const VAL = {
 
 
   loginURL: function () {
-    return 'http://192.168.31.199/login.php';
+    // return 'http://192.168.31.199/a9_login.php';
+    return 'http://localhost/a9_login.php';
   }
 
 };

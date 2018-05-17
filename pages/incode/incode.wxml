@@ -1,15 +1,17 @@
 <!--pages/incode/incode.wxml-->
-<view class="section">
-  <input placeholder="输入邀请码..." auto-focus/>
-</view>
-<view>
-  <button type="primary">注册</button>
-</view>
-<view style="height: 300px;flex-direction:column;">
-  <view>
-    <text>你还可以通过“微信扫一扫”，</text>
+
+<view class="container">
+
+  <view class="section">
+    <input placeholder="输入邀请码..." />
   </view>
   <view>
-    <text>扫描其他用户分享的“邀请码”注册。</text>
+    <button class='OK_key' type="primary">注册</button>
   </view>
+  <view style="height: 300px;flex-direction:column;">
+
+    <textarea>你还可以通过“微信扫一扫”， \n扫描其他用户分享的“邀请码”注册。
+    </textarea>
+  </view>
+
 </view>

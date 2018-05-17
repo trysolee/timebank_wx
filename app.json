@@ -1,16 +1,22 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/main/main",
+    "pages/admin1/admin1",
+    "pages/admin3/admin3",
+    "pages/admin2/admin2",
+    "pages/work/work",
+    "pages/wSelType/wSelType",
     "pages/incode/incode",
     "pages/index/index",
     "pages/map/map",
     "pages/wBrowse/wBrowse",
-    "pages/wSelType/wSelType",
     "pages/chooseImage/chooseImage",
     "pages/bu/bu",
     "pages/list_exp/list_exp",
     "pages/logs/logs",
-    "pages/pic_show/pic_show"
+    "pages/pic_show/pic_show",
+    "pages/fix_xm_name/fix_xm_name"
   ],
   "window": {
     "backgroundTextStyle": "light",

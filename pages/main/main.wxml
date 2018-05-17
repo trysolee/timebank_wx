@@ -1,0 +1,21 @@
+<!--pages/main/main.wxml-->
+
+<view class="bg">
+
+
+
+    <button class="key" bindtap="更多" >更多...</button>
+
+
+  <block wx:for="{{list}}" wx:key='id'>
+    <view class='list_M{{item.bg}}' id="{{index}}" bindtap="tapName">
+      <view class='list1'>
+        <image class='img1' src='{{item.pic}}'></image>
+      </view>
+      <view class='list2'>{{item.na}}</view>
+    </view>
+  </block>
+
+
+
+</view>

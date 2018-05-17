@@ -1,167 +1,173 @@
-
-var USER = require('class/user');
-
-var sys = require('class/sys');
-
-
-
+const SYS = require('class/sys');
+const USER = require('class/user');
+const BUF = require('class/buf');
+const PAGE = require('class/page');
+// 
 const VAL = {
-
-  TEST_: {
-    TXT: '通用测试',
-
-  },
-
-  GO_LOGIN: {
-    TXT: '登陆...',
-    FUN: function (DAT) {
-
-
-      LOGIN.GO();
-      //
-
+    // 
+    TEST_: {
+        TXT: '通用测试',
     },
-  },
-
-  OK_WX_LOGIN: {
-
-    TXT: '微信登陆成功',
- 
-  },
-
-  OK_WX_GET_USER_INFO: {
-
-    TXT: '获取微信用户信息成功',
-    FUN: function (DAT) {
-
-      ST.showJson(DAT); // 测试用
-
-      getApp().globalData.userInfo = DAT;
-      //
-
+    还没注册: {
+        TXT: '还没注册',
+        PageJump: '邀请码',
     },
-  },
-
-  OK_SERVER_LOGIN: {
-
-    TXT: '服务器登录成功',
-    FUN: function (DAT) {
-
-      ST.showJson(DAT); // 测试用
-      //
-
+    参数不全: {
+        TXT: '参数不全',
+        // TODO
+        // 跳转到相应页面
+        // 
     },
-  },
-
-  OK_SERVER_RET: {
-
-    TXT: '服务器返回数据',
-    FUN: function (DAT) {
-
-      //
-
+    权限错误: {
+        TXT: '权限错误',
+        // TODO
+        // 跳转到相应页面
+        // 
     },
-  },
-
-  ERR_NOT_Invitation: {
-
-    TXT: '还没被邀请',
-    FUN: function (DAT) {
-
-      //
-
+    微信登录失败: {
+        TXT: '微信登录失败',
+        // TODO
+        // 跳转到相应页面
+        // 
     },
-  },
-
-  ERR_WX_LOGIN_FAILED: {
-
-    TXT: '微信登录失败',
-    FUN: function (DAT) {
-
-      //
-
+    返回邀请码: {
+        // 发出邀请后 , 
+        // 服务器 产生并返回一个邀请码
+        // TODO
+        // 跳转到相应页面
+        // 
     },
-  },
-
-  ERR_WX_GET_USER_INFO: {
-
-    TXT: '获取微信用户信息失败',
-    FUN: function (DAT) {
-
-      //
-
+    GO_LOGIN: {
+        TXT: '登陆...',
+        FUN: function(DAT) {
+            if (SYS.测试) {
+                // LOGIN.serverGO('user');
+                PAGE.set('code', SYS.测试用户);
+                LOG({
+                    _URL: '登录', //
+                });
+            } else {
+                LOGIN.GO();
+            }
+        },
     },
-  },
-
-  ERR_SERVER_LOGIN: {
-
-    TXT: '服务器登陆失败',
-    FUN: function (DAT) {
-
-      //
-
+    获取微信用户信息成功: {
+        TXT: '获取微信用户信息成功',
+        FUN: function(DAT) {
+            ST.showJson(DAT); // 测试用
+            getApp().globalData.userInfo = DAT;
+            //
+        },
     },
-  },
-
-
-
-
-  loginURL: function () {
-    return 'http://192.168.31.199/login.php';
-    // return 'http://192.168.31.199/test.php';
-  }
-
+    系统管理员: {
+        PageJump: '项目列表',
+    },
+    // 
+    转到其他项目: {
+        PageJump: '项目列表',
+    },
+    // 
+    发出邀请: {
+        // TODO
+    },
+    // 
+    地图: {
+        // TODO
+    },
+    // 
+    新帖子: {
+        // TODO
+    },
+    修改项目名称: {
+        PageJump: '修改项目名称',
+    },
+    修改分组名称: {
+        // TODO
+    },
+    //
+    // 显示出 <项目.分组>
+    // 和 全部成员名称
+    修改分组权限: {
+        // TODO
+    },
+    //
+    // 显示 成员 及 全部权限( 包括 未授权的 )
+    显示成员权限: {
+        // TODO
+    },
+    进入分组: {
+        // 变更当前<项目.分组>
+        // 
+        url: '变更项目_分组',
+    },
+    // 判断 是否登录成功
+    登录OK: {
+        TXT: '服务器登录成功',
+        FUN: function(DAT) {
+            // ST.showJson(DAT); // 测试用
+            //
+        },
+        PageJump: '首页',
+    },
+    返回OK: {
+        TXT: '服务器返回数据',
+        FUN: function(DAT) {
+            RET(DAT);
+        },
+    },
+    后续call: {
+        FUN: function(DAT) {
+            for (var i in DAT) {
+                LOG({
+                    VAL: VAL[DAT[i]], //
+                })
+            }
+        },
+    },
+    清空指定BUF: {
+        FUN: function(DAT) {
+            for (var i in DAT) {
+                BUF.freeBUF(DAT[i]);
+            }
+        },
+    },
+    // 处理接收到的数据
+    BUF: {
+        TXT: '缓存数据',
+        FUN: function(DAT) {
+            //
+            BUF.jsonIN(DAT);
+        },
+    },
+    ERR_NOT_Invitation: {
+        TXT: '还没被邀请',
+        FUN: function(DAT) {
+            //
+        },
+    },
+    ERR_WX_GET_USER_INFO: {
+        TXT: '获取微信用户信息失败',
+        FUN: function(DAT) {
+            //
+        },
+    },
+    服务器连接失败: {
+        TXT: '服务器进水了',
+    },
 };
-
 //app.js
 App({
-  onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    // wx.login({//   success: res => {
-    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //   }
-    // })
-
-    // 获取用户信息
-    // wx.getSetting({
-    //   success: res => {
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-    //       wx.getUserInfo({
-    //         success: res => {
-    //           // 可以将 res 发送给后台解码出 unionId
-    //           this.globalData.userInfo = res.userInfo
-
-    //           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //           // 所以此处加入 callback 以防止这种情况
-    //           if (this.userInfoReadyCallback) {
-    //             this.userInfoReadyCallback(res)
-    //           }
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
-  },
-
-  VAL: VAL,
-
-  globalData: {
-    userInfo: null,
-
-    user: new USER(),
-
-  }
-})
-
-
-
+    onLaunch: function() {},
+    VAL: VAL,
+    Url: Url,
+    globalData: {
+        userInfo: null,
+        // user: new USER(),
+    },
+});
 // const ST = require('class/showtxt.js');
 const LOGIN = require('class/login.js');
 const RET = require('class/ret.js');
 const ST = require('class/showtxt.js');
+const LOG = require('class/log');
+const Url = require('class/url');

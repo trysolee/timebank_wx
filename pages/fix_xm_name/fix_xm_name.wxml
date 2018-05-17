@@ -1,0 +1,11 @@
+<!--pages/fix_zm_name/fix_xm_name.wxml-->
+<view class="container">
+
+  <view class="section">
+    <input bindblur="input_name" placeholder="{{name}}" />
+  </view>
+  <view>
+    <button bindtap='OK_key' type="primary">修改项目名</button>
+  </view>
+
+</view>
