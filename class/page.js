@@ -1,4 +1,14 @@
 const ST = require('./showtxt.js');
+var Url;
+// 
+var atFirst = true;
+const init = function() {
+    if (atFirst) {
+        Url = require('./url');
+        // 
+        atFirst = false;
+    }
+}
 // 
 const Page = {
     // 接受邀请 , 输入二维码
@@ -23,7 +33,8 @@ const Page = {
     项目人员: {
         url: '../admin2/admin2',
         返回: '上一页',
-        返回连接: null,
+        载入数据url: '获取项目的全部人员',
+        载入数据callBack: 'callBack',
     },
     人员权限: {
         url: '../admin3/admin3',
@@ -33,10 +44,16 @@ const Page = {
         url: '../fix_xm_name/fix_xm_name',
         返回: '上一页',
     },
+    修改分组名称: {
+        url: '../fix_xm_name/fix_xm_name',
+        返回: '上一页',
+    },
 };
 var BOX = [{
     dat: {}
 }];
+// 
+var callBack = null;
 // 
 const obj = {
     open: function(p) {
@@ -65,9 +82,27 @@ const obj = {
             page: o,
             dat: {},
         });
+        // 
+        if (p.载入数据url) {
+            Url.post(p.载入数据url)
+        }
+        if (p.载入数据callBack) {
+            callBack = p.载入数据callBack;
+        }
     },
+    // 
+    callBack: function() {
+        if (callBack) {
+            var p = getCurrentPages();
+            var l = i.length;
+            // 
+            var f = p[l - 1];
+            f[callBack]();
+            // 
+            callBack = null;
+        }
+    }
     //   
-   
     // 设置 数值
     set: function(n, v) {
         if (BOX.length > 0) {

@@ -121,6 +121,7 @@ const OBJ = {
                 type: 'primary',
                 fun: '分组',
                 na: s2 + j.分组名(o.分组()),
+                分组名: j.分组名(o.分组()),
                 项目名: j.项目名(),
                 JID: o.JID(),
                 分组: o.分组(),

@@ -53,17 +53,26 @@ const JSON串toJSON = function(D) {
 const inBUF = {
     // 返回 true , 保存
     // 返回 false , 不保存
-    pic: function(dat) {
+    pic: function(dat, box) {
         时间串toDate(dat);
     },
-    work: function(dat) {
+    work: function(dat, box) {
         时间串toDate(dat);
         JSON串toJSON(dat);
     },
-    pro_user: function(dat) {
+    pro_user: function(dat, box) {
         时间串toDate(dat);
         JSON串toJSON(dat);
-        return true; // 缓存
+        // 
+        for (var x in box) {
+            var y = box[x];
+            if (y.JID == dat.JID && y.GRO == dat.GRO) {
+                box[x] = dat;
+                return false;
+            }
+        }
+        box.push(dat);
+        return false; // 缓存
     },
     // 
     // user_my 是最后一个解析 , 
@@ -178,7 +187,7 @@ function _SDB_(tList) {
                     //
                     if (f) {
                         // 有导入函数
-                        if (f(v)) {
+                        if (f(v, o)) {
                             //  导入 返回true 就缓存他
                             o[B[x][I]] = B[x];
                         }
@@ -217,7 +226,7 @@ function _SDB_(tList) {
                     //
                     if (f) {
                         // 有导入函数
-                        if (f(v)) {
+                        if (f(v, o)) {
                             //  导入 返回true 就缓存他
                             o.push(v);
                         }

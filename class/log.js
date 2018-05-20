@@ -29,6 +29,9 @@ const LOG = function(a) {
     var d;
     while (ARR.length > 0) {
         d = ARR.pop();
+        if (d._VAL) {
+            d.VAL = VAL[d._VAL];
+        }
         if (d.VAL) {
             if (d.VAL.TXT) ST.show(d.VAL.TXT);
             if (d.VAL.FUN) {
@@ -42,30 +45,6 @@ const LOG = function(a) {
             }
             if (d.VAL.url) {
                 Url.post(d.VAL.url);
-                // if (!d.DAT) d.DAT = [];
-                // // 
-                // if (APP.globalData.sessionid) {
-                //     d.DAT._SID = APP.globalData.sessionid;
-                // }
-                // wx.request({
-                //     url: d.VAL.url,
-                //     data: d.DAT,
-                //     success: function(res) {
-                //         LOG({
-                //             VAL: VAL.返回OK, // 服务器返回成功
-                //             DAT: res.data,
-                //         });
-                //     },
-                //     fail: function(ret) {
-                //         LOG({
-                //             VAL: VAL.服务器连接失败
-                //         }) // 服务器登录失败
-                //     },
-                //     method: 'POST',
-                //     header: {
-                //         'content-type': 'application/x-www-form-urlencoded' // 默认值
-                //     },
-                // })
             }
             if (d.VAL.PageJump) {
                 PAGE.open(d.VAL.PageJump);

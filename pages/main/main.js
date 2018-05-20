@@ -12,6 +12,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        BKey_S: true,
         // 
         list: [{
             bg: 1,
@@ -29,6 +30,14 @@ Page({
             pic: '黄小鸟.jpg',
             na: '飞上天,整理'
         }]
+    },
+    BKey: function() {
+        var i = getCurrentPages();
+        var l = i.length;
+        // 
+        i[l - 1].setData({
+            BKey_S: false
+        })
     },
     更多: function(a) {
         wx.showActionSheet({

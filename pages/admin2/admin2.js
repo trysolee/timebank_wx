@@ -12,8 +12,12 @@ Page({
      * 页面的初始数据
      */
     data: {
+        BKeyTxt: '载入人员数据...',
+        ready: false,
+        Loading: true,
         list: theList
     },
+    // 
     成员: function(r) {
         var i = r.target.id;
         if (i > 0) {
@@ -22,7 +26,7 @@ Page({
             PAGE.set('userName', o.name);
             PAGE.set('JSON', o.JSON);
             LOG({
-                VAL: VAL.显示成员权限,
+                _VAL: '显示成员权限',
             })
         }
     },
@@ -69,7 +73,11 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function() {},
+    onReady: function() {
+        LOG({
+            _URL: '获取项目的全部人员',
+        })
+    },
     /**
      * 生命周期函数--监听页面显示
      */
@@ -77,21 +85,4 @@ Page({
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function() {},
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {},
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function() {},
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function() {},
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function() {}
 })

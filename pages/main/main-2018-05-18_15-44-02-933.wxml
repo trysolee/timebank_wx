@@ -1,9 +1,9 @@
 <!--pages/main/main.wxml-->
 
 
-<view class="bg" wx:if="{{BKey_S}}" >
+<view class="bg"  >
 
-  <button  class="key" bindtap="BKey" id="1">返回</button>
+  <button class="key" bindtap="BKey" id="1">返回</button>
 
 
 

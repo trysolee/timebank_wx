@@ -11,9 +11,7 @@ Page({
     /**
      * 页面的初始数据
      */
-    data: {
-      
-    },
+    data: {},
     // 
     项目: function(r) {
         var index = r.target.id;
@@ -31,7 +29,7 @@ Page({
                 success: function(res) {
                     var i = res.tapIndex;
                     LOG({
-                        VAL: VAL[theList2[i]],
+                        _VAL: theList2[i],
                     })
                 },
             })
@@ -65,7 +63,7 @@ Page({
             success: function(res) {
                 var i = res.tapIndex;
                 LOG({
-                    VAL: VAL[theList2[i]],
+                    _VAL: theList2[i],
                 })
             },
         })

@@ -79,17 +79,28 @@ const VAL = {
         // TODO
     },
     修改项目名称: {
+        FUN: function(DAT) {
+            PAGE.set('_URL', '修改项目名称');
+            PAGE.set('OKkey_name', '修改项目名');
+            var n = PAGE.get('项目名');
+            PAGE.set('name', n);
+        },
         PageJump: '修改项目名称',
     },
     修改分组名称: {
-        // TODO
+        FUN: function(DAT) {
+            PAGE.set('_URL', '修改分组名称');
+            PAGE.set('OKkey_name', '修改分组名');
+            var n = PAGE.get('分组名');
+            PAGE.set('name', n);
+        },
+        // Jump 到 同一页  , 但有不同的 _URL
+        PageJump: '修改项目名称',
     },
     //
     // 显示出 <项目.分组>
     // 和 全部成员名称
-    修改分组权限: {
-        // TODO
-    },
+    修改分组权限: {},
     //
     // 显示 成员 及 全部权限( 包括 未授权的 )
     显示成员权限: {
@@ -153,6 +164,11 @@ const VAL = {
     },
     服务器连接失败: {
         TXT: '服务器进水了',
+    },
+    pageBack: {
+        FUN: function(DAT) {
+            PAGE.callBack();
+        },
     },
 };
 //app.js

@@ -79,9 +79,19 @@ const arr = {
             name: ['input_name', null, false],
         }
     },
+    // 
+    获取项目的全部人员: {
+        url: path() + 版本 + '5_get_pro_all_user.php',
+        dat: {}
+    },
 };
 // 
+var pageBack = false;
+// 
 const OBJ = {
+    setPageBack: function() {
+        pageBack = true;
+    },
     post: function(n) {
         init();
         // 
@@ -121,9 +131,15 @@ const OBJ = {
             data: d,
             success: function(res) {
                 LOG({
-                    VAL: VAL.返回OK, // 服务器返回成功
+                    _VAL: '返回OK', // 服务器返回成功
                     DAT: res.data,
                 });
+                if (pageBack) {
+                    pageBack = false;
+                    LOG({
+                        _VAL: 'pageBack',
+                    })
+                }
             },
             fail: function(ret) {
                 LOG({

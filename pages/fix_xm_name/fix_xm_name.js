@@ -1,3 +1,5 @@
+// 修改 <项目名> 或者 <分组名>
+// 
 // pages/fix_zm_name/fix_xm_name.js
 const PAGE = require('../../class/page');
 const LOG = require('../../class/log.js');
@@ -14,7 +16,8 @@ Page({
      */
     onLoad: function(options) {
         this.setData({
-            name: PAGE.get('项目名'),
+            name: PAGE.get('name'),
+            keyName: PAGE.get('OKkey_name'),
         })
     },
     /**
@@ -28,7 +31,7 @@ Page({
     OK_key: function(e) {
         // 
         LOG({
-            _URL: '修改项目名称',
+            _URL: PAGE.get('_URL'),
         })
     },
 })

@@ -1,16 +1,19 @@
 <!--pages/work/work.wxml-->
 <!--pages/main/main.wxml-->
 
-<view class="bg">
+<view class="bg" wx:if="{{!ready}}" >
 
-  <button class="key" bindtap="listKey" id="1">返回</button>
+  <button class="key" loading="{{Loading}}"
+   bindtap="BKey" id="1">{{BKeyTxt}}</button>
 
+</view>
+
+
+<view class="bg" wx:if="{{ready}}">
 
   <block wx:for="{{list}}" wx:key='id'>
 
-   <button class="key" type="{{item.type}}" 
-   bindtap="{{item.fun}}" 
-   id="{{index}}">{{item.na}}</button>
+    <button class="key" type="{{item.type}}" bindtap="{{item.fun}}" id="{{index}}">{{item.na}}</button>
 
   </block>
 
