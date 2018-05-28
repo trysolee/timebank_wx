@@ -7,13 +7,13 @@ var VAL;
 var atFirst = true;
 const init = function() {
     if (atFirst) {
+        atFirst = false;
+        // 
         ST = require('./showtxt.js');
         PAGE = require('./page');
         Url = require('./url');
-        APP = getApp();
-        VAL = APP.VAL;
-        // 
-        atFirst = false;
+        VAL = require('./val');
+        VAL.init();
     }
 }
 // 

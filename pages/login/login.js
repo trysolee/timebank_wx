@@ -1,8 +1,8 @@
 // pages/login/login.js
-// var VAL = require('../../class/val.js');
+
 var LOG = require('../../class/log.js');
 // var ShowTxt = require('../../class/showtxt.js');
-const VAL = getApp().VAL;
+
 var TXT = '';
 //
 Page({
@@ -36,7 +36,7 @@ Page({
      */
     onReady: function() {
         LOG({
-            VAL: VAL.GO_LOGIN
+            _VAL: 'GO_LOGIN'
         })
     },
     /**

@@ -2,20 +2,18 @@ var SYS;
 var ST;
 var PAGE;
 var APP;
-var VAL;
 var LOG;
 // 
 var atFirst = true;
 const init = function() {
     if (atFirst) {
+        atFirst = false;
+        // 
         SYS = require('./sys');
         ST = require('./showtxt.js');
         PAGE = require('./page');
-        APP = getApp();
-        VAL = APP.VAL;
         LOG = require('./log');
-        // 
-        atFirst = false;
+        APP = getApp();
     }
 }
 // 
@@ -36,61 +34,67 @@ const arr = {
         url: path() + 版本 + '9_login.php',
         dat: {
             code: ['code', null, false],
-        }
+        },
     },
     变更项目_分组: {
         url: path() + 版本 + '9_chg_group.php',
         dat: {
             JID: ['JID', null, false],
             group: ['分组', null, false],
-        }
+        },
     },
-    // 
-    设置管理员: {
-        url: path() + 版本 + '1_set_sys_admin.php',
-        dat: {
-            UID: ['UID', null, false],
-        }
-    },
-    免除管理员: {
-        url: path() + 版本 + '1_remove_sys_admin.php',
-        dat: {
-            UID: ['UID', null, false],
-        }
-    },
-    // 
     // 
     修改项目名称: {
         url: path() + 版本 + '1_fix_project_name.php',
         dat: {
             name: ['input_name', null, false],
-        }
+        },
     },
     新建项目: {
         url: path() + 版本 + '1_new_project.php',
         dat: {
             pro_name: ['input_name', null, false],
-        }
+        },
     },
     // 
     修改分组名称: {
         url: path() + 版本 + '5_fix_group_name.php',
         dat: {
             name: ['input_name', null, false],
-        }
+        },
     },
     // 
     获取项目的全部人员: {
         url: path() + 版本 + '5_get_pro_all_user.php',
-        dat: {}
+        dat: {},
+    },
+    // 
+    修改分组人员权限: {
+        url: path() + 版本 + '5_fix_group.php',
+        dat: {
+            ARR: ['ARR', null, false],
+        },
+    },
+    // 
+    系统管理员列表: {
+        url: path() + 版本 + '1_get_sys_admin.php',
+        dat: {},
+    },
+    // 
+    系统管理员设置: {
+        url: path() + 版本 + '1_set_sys_admin.php',
+        dat: {
+            ARR: ['ARR', null, false],
+        },
     },
 };
+const toObj = ['ARR', 'ARR1'];
 // 
-var pageBack = false;
+var pageBack = null;
 // 
 const OBJ = {
-    setPageBack: function() {
-        pageBack = true;
+    setPageBack: function(fun) {
+        pageBack = fun;
     },
     post: function(n) {
         init();
@@ -113,6 +117,10 @@ const OBJ = {
                 if (v) {
                     if (fun)
                         if (!fun(v)) return;
+                    // 需要转换成JSON
+                    if (toObj.indexOf(i) > -1) {
+                        v = JSON.stringify(v);
+                    }
                     d[i] = v;
                 } else {
                     if (!nullOK) {
@@ -135,20 +143,37 @@ const OBJ = {
                     DAT: res.data,
                 });
                 if (pageBack) {
-                    pageBack = false;
+                    var pb = pageBack;
+                    pageBack = null;
                     LOG({
                         _VAL: 'pageBack',
+                        DAT: {
+                            pageBack: pb,
+                            OK: true,
+                        }
                     })
                 }
             },
             fail: function(ret) {
                 LOG({
-                    VAL: VAL.服务器连接失败
+                    _VAL: '服务器连接失败',
                 }) // 服务器登录失败
+                if (pageBack) {
+                    var pb = pageBack;
+                    pageBack = null;
+                    LOG({
+                        _VAL: 'pageBack',
+                        DAT: {
+                            pageBack: pb,
+                            OK: false,
+                        }
+                    })
+                }
             },
             method: 'POST',
             header: {
                 'content-type': 'application/x-www-form-urlencoded' // 默认值
+                // 'content-type': 'application/json;charset=utf8'
             },
         })
     }

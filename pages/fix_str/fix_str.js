@@ -1,26 +1,17 @@
-// 修改 <项目名> 或者 <分组名>
-// 
-// pages/fix_zm_name/fix_xm_name.js
+// pages/fix_str/fix_str.js
 const PAGE = require('../../class/page');
-const LOG = require('../../class/log.js');
+const Url = require('../../class/url.js');
 // 
 Page({
     /**
      * 页面的初始数据
      */
-    data: {},
-    /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad: function(options) {
-        this.setData({
-            name: PAGE.get('name'),
-            keyName: PAGE.get('OKkey_name'),
-        })
+    data: {
+        BKeyTxt: '载入...',
+        ready: false,
+        Loading: true, // 按键设置
+        hasOK: false,
     },
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
     onReady: function() {
         PAGE.ready();
         // 
@@ -37,6 +28,7 @@ Page({
         }
         // 
         this.setData({
+            ready: true,
             name: name,
             keyName: ok_name,
         })
@@ -45,15 +37,25 @@ Page({
     input_name: function(e) {
         PAGE.set(PAGE.当前page().pageVN, e.detail.value);
     },
+    // 
     OK_key: function(e) {
         var p = PAGE.当前page();
         if (p.OK_fun) {
             var s = PAGE.get(p.pageVN);
             p.OK_fun(s);
         }
-        // 
-        LOG({
-            _URL: p.OK_URL,
-        })
+        if (p.OK_URL) {
+            Url.setPageBack('OK_end');
+            Url.post(p.OK_URL);
+            this.setData({
+                ready: false,
+                BKeyTxt: '请稍后...',
+            })
+        } else {
+            this.OK_end(true);
+        }
+    },
+    OK_end: function(OK) {
+        if (OK) PAGE.pageBack()
     },
 })

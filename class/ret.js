@@ -1,19 +1,17 @@
 var LOG;
 var APP;
-var VAL;
 var ST;
 var My;
 // 
 var atFirst = true;
 const init = function() {
     if (atFirst) {
+        atFirst = false;
+        // 
         LOG = require('./log');
-        APP = getApp();
-        VAL = APP.VAL;
         ST = require('./showtxt.js');
         My = require('./user_my.js');
-        // 
-        atFirst = false;
+        APP = getApp();
     }
 }
 // 
@@ -32,7 +30,7 @@ const RET = function(d) {
     //
     if (!OPT) {
         LOG({
-            VAL: VAL.服务器连接失败, //
+            _VAL: '服务器连接失败', //
         });
     } else if (OPT.ERR) {
         ST.show(OPT.MSG);
@@ -40,7 +38,7 @@ const RET = function(d) {
         if (err == '90') {
             // 
             LOG({
-                VAL: VAL[OPT.MSG], //
+                _VAL: OPT.MSG, //
             });
         }
     } else {
@@ -55,24 +53,24 @@ const RET = function(d) {
         }
         if (OPT.freeBUF) {
             LOG({
-                VAL: VAL.清空指定BUF, //
+                _VAL: '清空指定BUF', //
                 DAT: OPT.freeBUF,
             })
         }
         if (OPT.INID) {
             LOG({
-                VAL: VAL.返回邀请码, //
+                _VAL: '返回邀请码', //
                 DAT: OPT.INID,
             })
         }
         // 
         LOG({
-            VAL: VAL.BUF, // 缓存数据
+            _VAL: 'BUF', // 缓存数据
             DAT: d.DAT,
         })
         if (OPT.call) {
             LOG({
-                VAL: VAL.后续call, //
+                _VAL: '后续call', //
                 DAT: OPT.call,
             })
         }

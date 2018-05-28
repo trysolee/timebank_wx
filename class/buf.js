@@ -5,11 +5,11 @@ var PRO_USER;
 var atFirst = true;
 const init = function() {
     if (atFirst) {
+        atFirst = false;
+        // 
         DAT = require('./dat');
         MY = require('./user_my');
         PRO_USER = require('./pro_user');
-        // 
-        atFirst = false;
     }
 }
 // 
@@ -28,6 +28,7 @@ const tableList = { //
     // 用于 <user>权限调整
     pro_all_user: 'UID',
     user_my: null,
+    sys_admin: 'UID', // 系统管理员清单
 };
 /*
 数据导入时 , 进行处理

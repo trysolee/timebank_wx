@@ -16,7 +16,10 @@
     "pages/list_exp/list_exp",
     "pages/logs/logs",
     "pages/pic_show/pic_show",
-    "pages/fix_xm_name/fix_xm_name"
+    "pages/fix_xm_name/fix_xm_name",
+    "pages/list_chk/list_chk",
+    "pages/list_sel/list_sel",
+    "pages/fix_str/fix_str"
   ],
   "window": {
     "backgroundTextStyle": "light",

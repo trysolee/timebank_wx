@@ -2,7 +2,7 @@ const PRO_USER = require('../../class/pro_user');
 const PAGE = require('../../class/page');
 const MY = require('../../class/user_my');
 const LOG = require('../../class/log.js');
-const VAL = getApp().VAL;
+
 // 
 var theList = [];
 var theList2 = [];

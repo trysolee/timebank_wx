@@ -1,0 +1,12 @@
+/* pages/fix_str/fix_str.wxss */
+
+
+view {
+  margin-top: 50px;
+}
+
+input {
+  text-align: center;
+  height: 4em;
+  background-color: #eee;
+}

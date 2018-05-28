@@ -1,0 +1,27 @@
+<view class="bg" wx:if="{{!ready}}">
+
+  <button class="key" loading="{{Loading}}" bindtap="BKey" >{{BKeyTxt}}</button>
+
+</view>
+
+<view class="bg" wx:if="{{ready}}">
+
+
+  <block wx:for="{{list}}" wx:key='id'>
+
+    <button class="key" type="{{item.type}}" bindtap="chk" id="{{index}}">{{item.na}}</button>
+
+  </block>
+
+
+</view>
+
+<view class="bg" wx:if="{{ready}}">
+
+
+
+  <button class="OK_key" type="primary" bindtap="OK_key">{{OK_name}}</button>
+
+
+
+</view>

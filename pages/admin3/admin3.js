@@ -1,8 +1,6 @@
 const PAGE = require('../../class/page');
 const BUF = require('../../class/buf');
 const PRO = require('../../class/project');
-const APP = getApp();
-const VAL = APP.VAL;
 // 
 var theList = [];
 // 
@@ -30,12 +28,14 @@ function setList() {
             type: t,
             na: n,
             role: x,
+            fun: '点击',
         });
     }
+    return l;
 }
 
 function setBUF() {
-    var o = PAGE.get('JSON').role;
+    var o = PAGE.get('JSON');
     var a = theList;
     var l = [];
     // 
@@ -67,40 +67,14 @@ Page({
             })
         }
     },
-    /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad: function(options) {
-        var li = [{
-            // primary
-            // default
-            // warn
-            type: 'default',
-            na: PAGE.get('userName'),
-        }];
-        // 分组权限
-        var f = APP.项目权限[PAGE.get('分组')];
-        // 用户权限
-        var r = PAGE.get('JSON').role;
-        for (var i in f) {
-            var t = 'default';
-            if (r.indexOf(f[i]) != -1) {
-                t = 'primary';
-            }
-            li.push({
-                type: t,
-                na: f[i],
-            })
-        }
-        theList = li;
+    onReady: function() {
         this.setData({
-            list: theList
+            list: setList()
         })
     },
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
+
+    // 
+    onUnload: function() {
         setBUF();
     },
 })

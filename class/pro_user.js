@@ -7,12 +7,13 @@ var MY;
 var atFirst = true;
 const init = function() {
     if (atFirst) {
+        atFirst = false;
+        // 
         SYS = require('./sys');
         BUF = require('./buf');
         PRO = require('./project');
         USER = require('./user');
         MY = require('./user_my');
-        atFirst = false;
     }
 }
 // 

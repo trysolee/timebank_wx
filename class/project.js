@@ -4,10 +4,10 @@ var BUF;
 var atFirst = true;
 const init = function() {
     if (atFirst) {
+        atFirst = false;
+        // 
         SYS = require('./sys');
         BUF = require('./buf');
-        //
-        atFirst = false;
     }
 }
 // 

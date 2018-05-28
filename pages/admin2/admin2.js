@@ -2,7 +2,6 @@ const PAGE = require('../../class/page');
 const MY = require('../../class/user_my');
 const LOG = require('../../class/log.js');
 const BUF = require('../../class/buf');
-const VAL = getApp().VAL;
 // 
 // 
 var theList = [];
@@ -26,14 +25,11 @@ Page({
             PAGE.set('userName', o.name);
             PAGE.set('JSON', o.JSON);
             LOG({
-                _VAL: '显示成员权限',
+                _VAL: '人员权限',
             })
         }
     },
-    /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad: function(options) {
+    callBack: function() {
         var li = [{
             // primary
             // default
@@ -42,7 +38,7 @@ Page({
             na: PAGE.get('项目名') + ' . ' + PAGE.get('分组名'),
         }];
         // 
-        var a = BUF.get('pro_all_user');
+        var a = BUF.getBUF('pro_all_user');
         for (var i in a) {
             var x = a[i];
             var n = x.JSON.name;
@@ -62,22 +58,24 @@ Page({
                 na: n,
                 name: x.JSON.name,
                 UID: x.UID,
-                JSON: x
+                JSON: x.JSON,
+                fun: '成员',
             })
         }
         theList = li;
         this.setData({
-            list: theList
+            list: theList,
+            ready: true
         })
     },
     /**
+     * 生命周期函数--监听页面加载
+     */
+    onLoad: function(options) {},
+    /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function() {
-        LOG({
-            _URL: '获取项目的全部人员',
-        })
-    },
+    onReady: function() {},
     /**
      * 生命周期函数--监听页面显示
      */

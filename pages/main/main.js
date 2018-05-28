@@ -1,6 +1,6 @@
 const LOG = require('../../class/log');
 const BUF = require('../../class/buf');
-const VAL = getApp().VAL;
+// 
 var keyList = ['系统管理员', '转到其他项目' // 
     , '发出邀请', '新帖子', '地图'
 ];
@@ -31,13 +31,18 @@ Page({
             na: '飞上天,整理'
         }]
     },
+    test: function(o) {
+        return o;
+    },
     BKey: function() {
-        var i = getCurrentPages();
-        var l = i.length;
-        // 
-        i[l - 1].setData({
-            BKey_S: false
-        })
+        var a = [];
+        for (var i = 0; i < 2; i++) {
+            a[i] = this.test({
+                a: 123,
+            })
+        }
+        a[0].a = 234;
+
     },
     更多: function(a) {
         wx.showActionSheet({
@@ -45,7 +50,7 @@ Page({
             success: function(res) {
                 var i = res.tapIndex;
                 LOG({
-                    VAL: VAL[keyList[i]], // 获取用户数据成功
+                    _VAL: keyList[i], // 获取用户数据成功
                 })
             },
         })

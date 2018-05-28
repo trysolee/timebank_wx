@@ -5,11 +5,14 @@ var PAGE;
 var LOG;
 var LOGIN;
 var ST;
+var RET;
 // 
 var atFirst = true;
 const VAL = {
     init: function() {
         if (atFirst) {
+            atFirst = false;
+            // 
             SYS = require('./sys');
             USER = require('./user');
             BUF = require('./buf');
@@ -17,8 +20,7 @@ const VAL = {
             LOG = require('./log');
             LOGIN = require('./login.js');
             ST = require('./showtxt.js');
-            // 
-            atFirst = false;
+            RET = require('./ret.js');
         }
     },
     // 
@@ -76,13 +78,7 @@ const VAL = {
             //
         },
     },
-    系统管理员: {
-        PageJump: '项目列表',
-    },
-    // 
-    转到其他项目: {
-        PageJump: '项目列表',
-    },
+ 
     // 
     发出邀请: {
         // TODO
@@ -95,39 +91,7 @@ const VAL = {
     新帖子: {
         // TODO
     },
-    修改项目名称: {
-        FUN: function(DAT) {
-            PAGE.set('_URL', '修改项目名称');
-            PAGE.set('OKkey_name', '修改项目名');
-            var n = PAGE.get('项目名');
-            PAGE.set('name', n);
-        },
-        PageJump: '修改项目名称',
-    },
-    修改分组名称: {
-        FUN: function(DAT) {
-            PAGE.set('_URL', '修改分组名称');
-            PAGE.set('OKkey_name', '修改分组名');
-            var n = PAGE.get('分组名');
-            PAGE.set('name', n);
-        },
-        // Jump 到 同一页  , 但有不同的 _URL
-        PageJump: '修改项目名称',
-    },
-    //
-    // 显示出 <项目.分组>
-    // 和 全部成员名称
-    修改分组权限: {},
-    //
-    // 显示 成员 及 全部权限( 包括 未授权的 )
-    显示成员权限: {
-        // TODO
-    },
-    进入分组: {
-        // 变更当前<项目.分组>
-        // 
-        url: '变更项目_分组',
-    },
+
     // 判断 是否登录成功
     登录OK: {
         TXT: '服务器登录成功',
@@ -184,7 +148,7 @@ const VAL = {
     },
     pageBack: {
         FUN: function(DAT) {
-            PAGE.callBack();
+            PAGE.pageObj()[DAT.pageBack](DAT.OK);
         },
     },
 };
