@@ -5,6 +5,8 @@ var Url;
 var PRO;
 var PRO_USER;
 var MY;
+var REC;
+var PLAY;
 // 
 var atFirst = true;
 const init = function() {
@@ -17,6 +19,8 @@ const init = function() {
         PRO = require('./project');
         PRO_USER = require('./pro_user');
         MY = require('./user_my');
+        REC = require('./recorder');
+        PLAY = require('./play_audio');
     }
 }
 // 
@@ -26,6 +30,72 @@ const Page = {
     邀请码: {
         url: '../incode/incode',
         返回: null, // 没有返回键
+    },
+    声音测试: {
+        url: '../list_chk/list_chk',
+        返回: null, // 没有返回键
+        datList: function() {
+            var li = [{
+                // primary
+                // default
+                // warn
+                type: 'primary',
+                na: '录音...',
+                fun: '录音',
+            }, {
+                // primary
+                // default
+                // warn
+                type: 'warn',
+                na: '结束',
+                fun: '结束',
+            }, {
+                // primary
+                // default
+                // warn
+                type: 'primary',
+                na: '回播',
+                fun: '回播',
+            }, {
+                // primary
+                // default
+                // warn
+                type: 'default',
+                na: '播放web',
+                fun: '播放',
+            }, {
+                // primary
+                // default
+                // warn
+                type: 'default',
+                na: '播放1',
+                fun: '播放1',
+            }];
+            // TODO 
+            // 只设置了<更多>键 , 
+            // 帖子的列表还没有考虑
+            return li;
+        },
+        // dList : 全部列表Arr
+        // o : 被点击的obj
+        录音: function(dList, o) {
+            REC.开始();
+        },
+        结束: function(dList, o) {
+            REC.结束((res) => {
+                console.log('recorder stop', res)
+                PAGE.set('tempFilePath', res.tempFilePath)
+            });
+        },
+        回播: function(dList, o) {
+            PLAY.开始(PAGE.get('tempFilePath'));
+        },
+        播放: function(dList, o) {
+            PLAY.开始('https://kfqlh.com/a3.mp3');
+        },
+        播放1: function(dList, o) {
+            PLAY.开始('https://kfqlh.com/a1.m4a');
+        },
     },
     首页: {
         url: '../list_chk/list_chk',

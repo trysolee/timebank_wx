@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/admin1/admin1",
     "pages/login/login",
     "pages/main/main",
-    "pages/admin1/admin1",
     "pages/admin3/admin3",
     "pages/admin2/admin2",
     "pages/work/work",
