@@ -1,13 +1,13 @@
 // 我的数据
 const DAT = {
-    当前JID: -1,
-    当前分组: '',
+    家庭id: -1,
+    角色: '',
     UID: '',
     用户名: '',
+    家庭名称: '',
     // 
-    is超级管理员: false,
     is系统管理员: false,
-    is分组管理员: false,
+    is管理员: false,
     // 
     分组权限: function(JID, 分组) {
         if (this.系统权限()) return true;

@@ -36,31 +36,34 @@ const arr = {
             code: ['code', null, false],
         },
     },
-    变更项目_分组: {
+    执行任务: {
         url: path() + 版本 + '9_chg_group.php',
         dat: {
-            JID: ['JID', null, false],
-            group: ['分组', null, false],
+            UID: ['UID', null, false],
+            WID: ['WID', null, false], // 任务id
         },
     },
     // 
-    修改项目名称: {
+    更新孩子数据: {
         url: path() + 版本 + '1_fix_project_name.php',
         dat: {
-            name: ['input_name', null, false],
+            UID: ['UID', null, false],
         },
     },
-    新建项目: {
+    添加孩子: {
         url: path() + 版本 + '1_new_project.php',
         dat: {
-            pro_name: ['input_name', null, false],
+            userName: ['input_name', null, false],
         },
     },
     // 
-    修改分组名称: {
+    创建家庭: {
         url: path() + 版本 + '5_fix_group_name.php',
         dat: {
-            name: ['input_name', null, false],
+            // 孩子名称
+            h_name: ['h_name', null, false],
+            // 家长名称
+            j_name: ['j_name', null, false],
         },
     },
     // 
@@ -89,6 +92,35 @@ const arr = {
     },
 };
 const toObj = ['ARR', 'ARR1'];
+// 
+// primary
+// default
+// warn
+const page返回后台 = function() {
+    var po = PAGE.pageObj();
+    po.setData({
+        ready: false,
+        Loading: true, // 按键设置
+        keyType: 'default',
+        BKeyTxt: '发送...',
+    });
+      ST.show('发送请求...');
+}
+const page返回前台 = function() {
+    var po = PAGE.pageObj();
+    po.setData({
+        ready: true,
+    });
+}
+const page设置错误键 = function() {
+    var po = PAGE.pageObj();
+    po.setData({
+        ready: true,
+        Loading: false, // 按键设置
+        keyType: 'warn',
+        BKeyTxt: '返回',
+    });
+}
 // 
 var pageBack = null;
 // 
@@ -134,6 +166,7 @@ const OBJ = {
             d._SID = APP.globalData.sessionid;
         }
         // 
+        page返回后台();
         wx.request({
             url: o.url,
             data: d,
@@ -153,6 +186,7 @@ const OBJ = {
                         }
                     })
                 }
+                page返回前台();
             },
             fail: function(ret) {
                 LOG({
@@ -169,6 +203,7 @@ const OBJ = {
                         }
                     })
                 }
+                page设置错误键();
             },
             method: 'POST',
             header: {

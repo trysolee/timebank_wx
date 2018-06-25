@@ -11,6 +11,7 @@ Page({
         ready: false,
         Loading: true, // 按键设置
         hasOK: false,
+        keyType: 'default',
     },
     // 
     theList: null,
@@ -43,6 +44,7 @@ Page({
         };
         var cp = PAGE.当前page();
         var li = dat.list = cp.datList();
+        // 
         if (cp.OK_URL || cp.OK_fun) {
             dat.hasOK = true;
             dat.OK_name = '确定';
@@ -83,6 +85,12 @@ Page({
         var cp = PAGE.当前page();
         var p = PAGE.get('theList');
         var o = p[index];
+        // 
+        //  点击后 , 把指定的'数值' set到 PAGE里面
+        if (o._page_set_)
+            for (var x in o) //
+                PAGE.set(x, o[x]);
+        // 
         if (o.pageJump) {
             PAGE.open(o.pageJump);
             return;

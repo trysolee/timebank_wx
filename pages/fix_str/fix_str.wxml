@@ -1,18 +1,16 @@
-
-
 <view class="bg" wx:if="{{!ready}}">
+  <button class="key" loading="{{Loading}}"  type="{{keyType}}" bindtap="BKey">{{BKeyTxt}}</button>
 
-  <button class="key" loading="{{Loading}}" bindtap="BKey">{{BKeyTxt}}</button>
-
+  <view class="bg_back_text" >
+    <text class="back_text">{{BTxt}}</text>
+  </view>
 </view>
 
-<view class="container" wx:if="{{ready}}">
-
-  <view class="section">
+<view class="bg" wx:if="{{ready}}">
+  <view class="input_txt">
     <input bindblur="input_name" placeholder="{{name}}" />
   </view>
   <view>
-    <button bindtap='OK_key' type="primary">{{keyName}}</button>
+    <button  class="OK_key" bindtap='OK_key' type="primary">{{keyName}}</button>
   </view>
-
 </view>

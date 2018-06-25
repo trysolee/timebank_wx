@@ -2,11 +2,10 @@ const ST = require('./showtxt.js');
 var LOG;
 var BUF;
 var Url;
-var PRO;
-var PRO_USER;
+var USER;
 var MY;
-var REC;
-var PLAY;
+var MISSION;
+var FIRST;
 // 
 var atFirst = true;
 const init = function() {
@@ -16,11 +15,10 @@ const init = function() {
         Url = require('./url');
         LOG = require('./log');
         BUF = require('./buf');
-        PRO = require('./project');
-        PRO_USER = require('./pro_user');
+        USER = require('./user');
         MY = require('./user_my');
-        REC = require('./recorder');
-        PLAY = require('./play_audio');
+        MISSION = require('./mission');
+        FIRST = require('../class_tb/s_first');
     }
 }
 // 
@@ -101,17 +99,26 @@ const Page = {
         url: '../list_chk/list_chk',
         返回: null, // 没有返回键
         datList: function() {
-            var li = [{
+            var li = [];
+            var arr = USER.孩子列表();
+            for (var i = 0; i < arr.length; i++) {
+                var x = arr[i];
+                li.push({
+                    type: 'primary',
+                    na: x.列表名称(),
+                    pageJump: '任务列表',
+                    UID: x.UID(),
+                    _page_set_: ['UID'],
+                })
+            }
+            li.push({
                 // primary
                 // default
                 // warn
                 type: 'default',
                 na: '更多...',
                 fun: '更多',
-            }];
-            // TODO 
-            // 只设置了<更多>键 , 
-            // 帖子的列表还没有考虑
+            })
             return li;
         },
         // dList : 全部列表Arr
@@ -121,66 +128,231 @@ const Page = {
             var li = [];
             // 
             li.push({
-                na: '系统管理员',
-                pageJump: '系统管理员',
+                na: '排行榜',
+                pageJump: '排行榜',
                 // fun: '点击',
             });
             li.push({
-                na: '转到其他项目',
-                pageJump: '项目列表',
+                na: '家人列表',
+                pageJump: '家人清单',
                 // fun: '点击',
             });
             li.push({
-                na: '发出邀请',
+                na: '添加好友',
                 fun: '点击',
             });
             li.push({
-                na: '新帖子',
+                na: '添加家长',
                 fun: '点击',
             });
             li.push({
-                na: '地图',
+                na: '添加孩子',
                 fun: '点击',
             });
             return li;
         },
+        // 
         // dList : 全部列表Arr
         // o : 被点击的obj
         // m : 被点击的 <下拉菜单>的obj
         点击: function(dList, o, m) {
+            PAGE.pageObj().setData({
+                ready: false,
+                BKeyTxt: '请稍后...',
+            });
             LOG({
-                _VAL: m.na,
-            })
+                _URL: '变更项目_分组',
+            });
         },
     },
-    系统管理员: {
+    // 
+    // 点击 '孩子' 后 
+    // 更新数据
+    // 再决定跳转到那一页
+    任务列表: {
         url: '../list_chk/list_chk',
         返回: '上一页',
+        载入数据url: '更新孩子数据',
         datList: function() {
-            var li = [];
+            // 用于 列表的list
             // 
-            li.push({
-                type: 'default',
-                na: '新建项目',
-                pageJump: '新建项目',
-            });
+            var user = USER.getByID(PAGE.get('UID'));
+            if (user.is任务中()) {
+                PAGE.open('任务执行');
+                return [];
+            }
             // 
-            li.push({
-                type: 'default',
-                na: '设置系统管理员',
-                pageJump: '设置系统管理员',
-            });
+            var li = [
+                // primary
+                // default
+                // warn
+            ];
+            // 
+            var arr = MISSION.任务列表();
+            for (var i in arr) {
+                var x = arr[i];
+                li.push({
+                    type: 'primary',
+                    na: x.名称(),
+                    _URL: '执行任务',
+                    WID: x.WID(),
+                    _page_set_: ['WID'],
+                })
+            }
             return li;
         },
     },
-    新建项目: {
+    排行榜: {
+        url: '../list_chk/list_chk',
+        返回: '上一页',
+        datList: function() {
+            var arr = USER.孩子_好友列表();
+            var li = [];
+            // 
+            for (var i = 0; i < arr.length; i++) {
+                var x = arr[i];
+                var t = 'primary';
+                if (x.is好友()) t = 'default';
+                li.push({
+                    type: t,
+                    na: x.名称_存款(),
+                })
+            }
+            return li;
+        },
+    },
+    人员列表: {
+        url: '../list_chk/list_chk',
+        返回: '上一页',
+        datList: function() {
+            var arr = USER.家长_孩子_好友列表();
+            var li = [];
+            // 
+            for (var i = 0; i < arr.length; i++) {
+                var x = arr[i];
+                var t = 'default';
+                if (x.is孩子()) {
+                    t = 'primary';
+                    fun = '_孩子';
+                }
+                if (x.is好友()) {
+                    t = 'primary';
+                    fun = '_好友';
+                }
+                if (x.is家长()) {
+                    t = 'primary';
+                    fun = '_家长';
+                }
+                li.push({
+                    type: t,
+                    na: x.名称_存款(),
+                    user: x,
+                    _page_set_: ['UID'],
+                })
+            }
+            return li;
+        },
+        // 
+        _家长: function(dList, o) {
+            // 
+            var an = '设为管理员';
+            var x = o.user;
+            if (x.is管理员()) {
+                an = '撤销管理员';
+            }
+            // 
+            var li = [{
+                na: '改称为',
+                pageJump: '家长_改名',
+            }, {
+                na: '改密码',
+                pageJump: '家长_改密码',
+            }, {
+                na: an,
+                UID: x.UID(),
+                _URL: '管理员_转换',
+                _page_set_: ['UID'],
+            }, {
+                na: '删除',
+                _URL: '删除家长',
+                UID: x.UID(),
+                _page_set_: ['UID'],
+            }];
+            // 
+            return li;
+        },
+        // 
+        _孩子: function(dList, o) {
+            // 
+            var li = [{
+                na: '改昵称',
+                pageJump: '孩子_改名',
+            }, {
+                na: '终止任务',
+                pageJump: '终止任务',
+            }, {
+                na: '删除',
+                _URL: '删除孩子',
+                UID: x.UID(),
+                _page_set_: ['UID'],
+            }];
+            // 
+            return li;
+        },
+        // 
+        _好友: function(dList, o) {
+            // 
+            var li = [{
+                na: '删除',
+                _URL: '删除好友',
+                UID: x.UID(),
+                _page_set_: ['UID'],
+            }];
+            // 
+            return li;
+        },
+    },
+    注册_孩子昵称: {
         url: '../fix_str/fix_str',
         返回: '首页',
-        OK_URL: '新建项目',
-        OK_name: '新建项目',
+        OK_page: '注册_家长称为',
+        OK_name: '下一步',
+        // 
+        // 输入后 , 用'input_name'保存在page
+        pageVN: 'h_name',
+        getStr: function() {
+            return '孩子昵称';
+        },
+        OK_fun: function(str) {},
+    },
+    注册_家长称为: {
+        url: '../fix_str/fix_str',
+        返回: '上一页',
+        OK_URL: '创建家庭',
+        OK_name: '注册',
+        // 
+        // 输入后 , 用'input_name'保存在page
+        pageVN: 'j_name',
+        getStr: function() {
+            return '称为(爸爸,妈妈...)';
+        },
+        OK_fun: function(str) {},
+    },
+    // 
+    // TODO
+    // 注册 孩子几年级
+    // 
+    // 
+    添加孩子: {
+        url: '../fix_str/fix_str',
+        返回: '上一页',
+        OK_URL: '添加孩子',
+        OK_name: '添加孩子',
+        // 
+        // 输入后 , 用'input_name'保存在page
         pageVN: 'input_name',
         getStr: function() {
-            return '项目名称';
+            return '孩子昵称';
         },
         OK_fun: function(str) {},
     },
@@ -227,10 +399,6 @@ const Page = {
         OK_fun: function(arr, list) {
             PAGE.set('ARR', arr);
         },
-    },
-    帖子: {
-        url: '../work/work',
-        返回: '首页',
     },
     // 
     // 用于 转到其他项目
@@ -449,9 +617,9 @@ const Page = {
         },
     },
 };
-var BOX = [{
-    dat: {}
-}];
+// var BOX = [{
+//     dat: {}
+// }];
 // 
 // 由于 <打开页面> 需要等待 <onReady>异步处理
 // 所以需要把 <当前page> 临时记录在<backup>里面
@@ -503,16 +671,10 @@ const PAGE = {
         }
     },
     // 
-    // getPageCla: function(name) {
-    //     return CLA[name];
-    // },
-    // // 
-    // 当前cla: function() {
-    //     return this.pageObj()._BOX_.cla;
-    // },
-    // 
     当前page: function() {
-        return this.pageObj()._BOX_.page;
+        var box = this.pageObj()._BOX_;
+        if (!box) box = this.pageObj()._BOX_ = {};
+        return box;
     },
     // 
     pageObj: function() {
@@ -528,7 +690,7 @@ const PAGE = {
         // var o = backup;
         var op = this.pageObj();
         var box = op._BOX_ = {
-            page: backup,
+            // page: backup,
             dat: {},
         };
         // 

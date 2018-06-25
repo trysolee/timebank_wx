@@ -1,6 +1,5 @@
 var DAT;
 var MY;
-var PRO_USER;
 // 
 var atFirst = true;
 const init = function() {
@@ -9,7 +8,6 @@ const init = function() {
         // 
         DAT = require('./dat');
         MY = require('./user_my');
-        PRO_USER = require('./pro_user');
     }
 }
 // 
@@ -18,17 +16,11 @@ const init = function() {
 const tableList = { //
     // pic : table名
     // PID : 主键名
-    pic: 'PID',
-    projoct: 'JID',
-    work: 'WID',
     user: 'UID',
-    pro_user: null,
     // 
-    // 记录 <项目.分组>的全部user
-    // 用于 <user>权限调整
-    pro_all_user: 'UID',
     user_my: null,
-    sys_admin: 'UID', // 系统管理员清单
+    // 
+    jt: null, // 家庭
 };
 /*
 数据导入时 , 进行处理
@@ -42,85 +34,37 @@ const 时间串toDate = function(D) {
             D[x] = new Date(Date.parse(D[x]));
     }
 };
-const JSON串toJSON = function(D) {
-    //
-    // 调试时,发现系统已经自动转好了
-    //
-    // if (D.JSON) {
-    //     D.JSON = JSON.parse(D.JSON);
-    // }
-}
 // 
 const inBUF = {
     // 返回 true , 保存
     // 返回 false , 不保存
-    pic: function(dat, box) {
-        时间串toDate(dat);
-    },
-    work: function(dat, box) {
-        时间串toDate(dat);
-        JSON串toJSON(dat);
-    },
-    pro_user: function(dat, box) {
-        时间串toDate(dat);
-        JSON串toJSON(dat);
-        // 
-        for (var x in box) {
-            var y = box[x];
-            if (y.JID == dat.JID && y.GRO == dat.GRO) {
-                box[x] = dat;
-                return false;
-            }
-        }
-        box.push(dat);
-        return false; // 缓存
-    },
     // 
     // user_my 是最后一个解析 , 
     // 可以用前面的数据
     user_my: function(dat) {
         时间串toDate(dat);
-        JSON串toJSON(dat);
         //
-        MY.当前JID = dat.JSON.JID;
-        MY.当前分组 = dat.JSON.分组;
+        MY.家庭id = dat.JID;
         MY.UID = dat.UID;
-        MY.用户名 = dat.name;
+        var 角色 = MY.角色 = dat.JSON.角色;
+        MY.用户名 = dat.JSON.name;
         // 
-        var o = PRO_USER.findByID(MY.当前JID, MY.当前分组);
-        if (!o) {
-            // 管理员不一定 有对应的 PRO_USER
-            MY.is分组管理员 = false;
-        } else {
-            MY.is分组管理员 = o.is管理员();
+        if (角色 == '管理员') {
+            MY.is管理员 = true;
+        } else if (角色 == '系统管') {
+            MY.is管理员 = true;
+            MY.is系统管理员 = true;
         }
+        return false; // 不缓存
+    },
+    jt: function(dat) {
+        //
+        MY.家庭名称 = dat.NA;
         return false; // 不缓存
     },
 }
 // 发生变化 , 重新归纳统计
-const changeBUF = {
-    // 按每一天 , 归纳到 DAT.dateList 里面
-    pro_work: function(box, arr) {
-        // 归纳统计 
-        var a = {};
-        for (var x in arr) {
-            var d = arr[x].FT.dayFormat();
-            if (a[d]) a[d] = [arr[x]];
-            else a[d].push(arr[x]);
-        }
-        var b = [];
-        for (var x in a) b.push({
-            date: x,
-            list: a[x],
-        });
-        // 排序
-        b.sort(function(a, b) {
-            if (a.date < b.date) return -1;
-            else return 1;
-        });
-        DAT.dateList = b;
-    },
-}
+const changeBUF = {}
 // =====================================
 function _SDB_(tList) {
     this.MYDAT = {};

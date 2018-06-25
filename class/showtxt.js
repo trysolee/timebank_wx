@@ -1,19 +1,43 @@
 // 
-const SYS = require('./sys.js');
+var SYS;
+var PAGE;
+// 
+var atFirst = true;
+const init = function() {
+    if (atFirst) {
+        atFirst = false;
+        // 
+        SYS = require('./sys');
+        PAGE = require('./page');
+    }
+}
 // 
 // 
 var MW = '';
 
 function st(txt) {
+    init();
     if (SYS.测试) {
-        MW += txt;
+        MW += txt + '\n';
     } else {
         MW = txt;
     }
-    wx.showToast({
-        title: MW,
-        duration: 2000
-    })
+    // var cp = PAGE.当前page();
+    var po = PAGE.pageObj();
+    var dat = po.data;
+    if (dat.ready) {
+        po.setData({
+            ready: false,
+            BTxt: MW,
+            Loading: false, // 按键设置
+            keyType: 'primary',
+            BKeyTxt: '确认',
+        });
+    }else{
+        po.setData({
+            BTxt: MW,
+        });
+    }
 }
 const Show = {
     fun: st,

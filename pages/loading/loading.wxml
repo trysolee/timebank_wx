@@ -1,0 +1,5 @@
+<!--pages/loading/loading.wxml-->
+<view class="bg" >
+  <button class="key" loading="{{Loading}}" bindtap="BKey">{{BKeyTxt}}</button>
+    <text class="back_text">{{BTxt}}</text>
+</view>

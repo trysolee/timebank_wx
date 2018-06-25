@@ -9,6 +9,8 @@ Page({
         BKeyTxt: '载入...',
         ready: false,
         Loading: true, // 按键设置
+        keyType: 'default',
+        hasOK: false,
     },
     onReady: function() {
         PAGE.ready();

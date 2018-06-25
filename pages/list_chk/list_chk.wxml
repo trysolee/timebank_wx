@@ -1,9 +1,10 @@
 <view class="bg" wx:if="{{!ready}}">
+  <button class="key" loading="{{Loading}}"  type="{{keyType}}" bindtap="BKey">{{BKeyTxt}}</button>
 
-  <button class="key" loading="{{Loading}}" bindtap="BKey">{{BKeyTxt}}</button>
-
+  <view class="bg_back_text" >
+    <text class="back_text">{{BTxt}}</text>
+  </view>
 </view>
-
 
 <view class="bg" wx:if="{{ready}}">
 
