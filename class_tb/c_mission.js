@@ -5,8 +5,9 @@ const ELEMENT = require('./c_element');
 // 任务
 const FUN = function(B) {
     this.BUF = B;
-    this.名称 = function() { // 任务名称
-        // return this.BUF.JID;
+    // 
+    this.名称 = function() { // 名称
+        return this.BUF.Na;
     };
     this.第一个元素Na = function() { //
         // return this.BUF.JID;
@@ -35,13 +36,24 @@ const FUN = function(B) {
 }
 // 
 const MISSION = {
+    // 
+    getByNa: function(Na) {
+        return new FUN( //
+            DAT.get_任务(Na) //
+        );
+    },
+    //
+    getBy执行包: function(dat) {
+        var o = MISSION.getByNa(dat.任务);
+        return o;
+    },
     //
     // na : 声音名称
     // o : DAT ( JSON )
     初始化: function(na, o) {
         //
         // 
-        var d = DAT.get_声音(na);
+        var d = DAT.get_任务(na);
         if (d) {
             // 
             if (d.版本 == o.版本) {
@@ -58,6 +70,7 @@ const MISSION = {
             }
             o.DAT.时长 = i;
         }
+        o.Na = na; // 记录 名称
         // 
         DAT.set_任务(na, o);
     },
@@ -67,6 +80,5 @@ const MISSION = {
     任务列表: function() {
         //
     },
-    getByNa: function(Na) {},
 };
 module.exports = MISSION;

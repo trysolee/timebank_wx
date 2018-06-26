@@ -51,8 +51,9 @@ const KEY = {
 // 元素
 const FUN = function(B) {
     this.BUF = B;
-    this.名称 = function() { // 元素名称
-        // return this.BUF.JID;
+    // 
+    this.名称 = function() { // 名称
+        return this.BUF.Na;
     };
     this.时长 = function() { //
         // return this.BUF.JID;
@@ -66,6 +67,7 @@ const FUN = function(B) {
             this.创建_时刻轴1(执行包_dat //
                 , i, arr[i].key, arr[i].arr);
         }
+        执行包_dat.时间轴 = this.时间轴;
     };
     this.创建_时刻轴1 = function(执行包_dat //
         , T, keyNa, arr) { // 
@@ -90,35 +92,45 @@ const FUN = function(B) {
             }
         }
     };
+    // 
+    // 
+    this.时刻 = 0;
+    this.时间轴 = [];
+    // 
+    this.时间轴_当前时刻 = function() {
+        return this.时刻;
+    };
     this.时间轴_设置_时刻 = function(s) {
-        // 
+        this.时刻 = s;
         //   
-        // 时间轴_例子
-        var arr = [{
-            时差: 10, // 单位 : 秒 
-            声音URL: 'xxx',
-            已播放: false,
-        }, {
-            时差: 15, // 单位 : 秒 
-            声音URL: 'xxx',
-            已播放: false,
-        }, ];
-        return arr;
     };
     this.时间轴_倒设_时刻 = function(s) {
-        // 
+        this.时刻 = this.时长() - s;
     };
     this.时间轴_设置_播放 = function(url) {
         // 
-    };
-    this.时间轴_当前时刻 = function() {
-        // 
+        this.时间轴.push({
+            时差: this.时刻, // 单位 : 秒 
+            声音URL: url,
+            已播放: false,
+        });
     };
 }
 // 
 // 
 const ELEMENT = {
-    getByNa: function(Na) {},
+    //
+    getByNa: function(Na) {
+        return new FUN( //
+            DAT.get_元素(Na) //
+        );
+    },
+    //
+    getBy执行包: function(dat) {
+        var o = ELEMENT.getByNa(dat.元素);
+        o.时间轴 = dat.时间轴;
+        return o;
+    },
     //
     // na : 元素名称
     // o : DAT ( JSON )
@@ -138,42 +150,9 @@ const ELEMENT = {
                 最近5次完成时间: [],
             }
         }
+        o.Na = na; // 记录 名称
         // 
         DAT.set_元素(na, o);
-    },
-    //
-    getBy执行包: function(dat) {},
-    //
-    倒设_时刻: function(fly, //
-        声音, dat) {
-        if (元素.时长 <= dat.时长) {
-            fly.声音_条件不符合();
-        }
-    },
-    元素时长大于: function(任务, 元素, fly, //
-        声音, dat) {
-        if (元素.时长 <= dat.时长) {
-            fly.声音_条件不符合();
-        }
-    },
-    元素时长大于: function(任务, 元素, fly, //
-        声音, dat) {
-        if (元素.时长 <= dat.时长) {
-            fly.声音_条件不符合();
-        }
-    },
-    //
-    // 载入一个元素 , 首先判断剩下的时间够不够
-    // 如果不够 , 调整元素开始的时间
-    // 
-    倒设_时刻: function(任务, 元素, fly, //
-        声音, dat) {
-        元素.倒设_时刻(dat.时刻);
-    },
-    // 
-    几率_一定播放: function(任务, 元素, fly, //
-        声音, dat) {
-        元素.倒设_时刻(dat.时刻);
     },
 };
 module.exports = ELEMENT;
