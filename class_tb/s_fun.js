@@ -1,5 +1,6 @@
 // 
-var _SYS = require('../class/sys');
+const _SYS = require('../class/sys');
+var SOUND = require('./c_sound');
 // 
 const S_FUN = {
     //
@@ -7,6 +8,7 @@ const S_FUN = {
         声音, dat) {
         if (元素.时长() <= dat.时长) {
             声音.不播放();
+            声音.停止exec();
         }
     },
     //
@@ -15,12 +17,49 @@ const S_FUN = {
     // 
     倒设_时刻: function(执行包_dat, 元素, //
         声音, dat) {
-        元素.时间轴_倒设_时刻(dat.时刻);
+        声音.set时刻(元素.时间轴_倒设_时刻(dat.时刻));
+        声音.设置播放();
+    },
+    // 
+    设置_时刻_一半: function(执行包_dat, 元素, //
+        声音, dat) {
+        var l = 元素.时长();
+        元素.时间轴_倒设_时刻(l / 2);
+        声音.设置播放();
+    },
+    // 
+    时刻循环: function(执行包_dat, 元素, //
+        声音, dat) {
+        // 
+        var s = dat.间距;
+        var e = dat.结尾留空;
+        var l = 元素.时长();
+        // 
+        for (var i = 执行包_dat.元素_开始偏移 + s; //
+            i < l - e; i += s) {
+            元素.时间轴_设置_播放(声音.getUrl(), i);
+        }
+        // 
+    },
+    // 
+    后续声音: function(执行包_dat, 元素, //
+        声音, dat) {
+        var t = 声音.get时刻();
+        var y = dat.间隔;
+        // 
+        var a = [];
+        a.push(dat.声音);
+        // 
+        元素.创建_时刻轴1(执行包_dat //
+            , Number(t) + Number(y) //
+            , a);
+        // 
     },
     // 
     几率_一定播放: function(执行包_dat, 元素, //
         声音, dat) {
-        元素.设置播放();
+        声音.设置播放();
+        // 元素.时间轴_设置_播放();
     },
     // 
     几率_播放次数控制: function(执行包_dat, 元素, //

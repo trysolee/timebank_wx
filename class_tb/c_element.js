@@ -1,7 +1,19 @@
 // 
 // 
-const MISSION = require('./c_mission');
-const SOUND = require('./c_sound');
+var SOUND;
+var _SYS;
+var DAT;
+// 
+var atFirst = true;
+const init = function() {
+    if (atFirst) {
+        atFirst = false;
+        // 
+        SOUND = require('./c_sound');
+        _SYS = require('../class/sys');
+        DAT = require('./s_dat');
+    }
+}
 // 
 const KEY = {
     不限句数: function() {
@@ -12,37 +24,48 @@ const KEY = {
             // 
         };
         this.继续判断 = function() {
-            // 
+            return true;
         };
-        this.end = function() {
+        this.end = function(elem) {
             // 
         };
     },
     最少一句: function() {
+        this.播放了 = false;
+        this.arr = [];
+        // 
         this.判断记录 = function(声音Na) {
+            this.arr.push(声音Na);
             // 
         };
         this.播放记录 = function(声音Na, Url) {
-            // 
+            this.播放了 = true;
         };
         this.继续判断 = function() {
-            // 
+            return true;
         };
-        this.end = function() {
-            // 
+        this.end = function(elem) {
+            if (!this.播放了) {
+                var l = this.arr.length;
+                var i = _SYS.随机数(0, l - 1);
+                // 
+                var s = SOUND.getByNa(this.arr[i]);
+                elem.时间轴_设置_播放(s.getUrl());
+            }
         };
     },
     最多一句: function() {
+        this.播放了 = false;
         this.判断记录 = function(声音Na) {
             // 
         };
         this.播放记录 = function(声音Na, Url) {
-            // 
+            this.播放了 = true;
         };
         this.继续判断 = function() {
-            // 
+            return !this.播放了;
         };
-        this.end = function() {
+        this.end = function(elem) {
             // 
         };
     },
@@ -50,42 +73,54 @@ const KEY = {
 // 
 // 元素
 const FUN = function(B) {
+    // 
+    init();
+    // 
     this.BUF = B;
     // 
     this.名称 = function() { // 名称
         return this.BUF.Na;
     };
+    // 
+    // 注意 : 不一定在 0 开始
+    this.开始时刻 = function() {
+        //   TODO
+    };
     this.时长 = function() { //
-        // return this.BUF.JID;
+        return this.BUF.时长;
     };
     this.声音s = function() { //
-        // 返回 声音剧本
+        return this.BUF.声音;
     };
     this.创建_时刻轴 = function(执行包_dat) { // 元素名称
         var arr = this.声音s();
         for (var i in arr) {
+            // 
+            this.KEY = new KEY[arr[i].key]();
+            // 
             this.创建_时刻轴1(执行包_dat //
-                , i, arr[i].key, arr[i].arr);
+                , i, arr[i].arr);
         }
         执行包_dat.时间轴 = this.时间轴;
     };
+    this.KEY = null;
     this.创建_时刻轴1 = function(执行包_dat //
-        , T, keyNa, arr) { // 
+        , T, arr) { // 
         // 
-        this.时间轴_设置_时刻(T);
-        // 
-        var key = new KEY[keyNa]();
+        var key = this.KEY;
         // 
         for (var i in arr) {
             // 
             var n = arr[i]; // n : 声音Na
             var s = SOUND.getByNa(n);
+            s.set时刻(T);
             // 
             key.判断记录(n);
             if (s.exec(执行包_dat, this)) {
                 var u = s.getUrl();
                 key.播放记录(n, u);
-                this.时间轴_设置_播放(u);
+                // 
+                this.时间轴_设置_播放(u, s.get时刻());
             }
             if (!key.继续判断()) {
                 return;
@@ -94,23 +129,16 @@ const FUN = function(B) {
     };
     // 
     // 
-    this.时刻 = 0;
     this.时间轴 = [];
     // 
-    this.时间轴_当前时刻 = function() {
-        return this.时刻;
-    };
-    this.时间轴_设置_时刻 = function(s) {
-        this.时刻 = s;
-        //   
-    };
+    //   
     this.时间轴_倒设_时刻 = function(s) {
-        this.时刻 = this.时长() - s;
+        return this.时长() - s;
     };
-    this.时间轴_设置_播放 = function(url) {
+    this.时间轴_设置_播放 = function(url, T) {
         // 
         this.时间轴.push({
-            时差: this.时刻, // 单位 : 秒 
+            时差: T, // 单位 : 秒 
             声音URL: url,
             已播放: false,
         });
@@ -135,7 +163,8 @@ const ELEMENT = {
     // na : 元素名称
     // o : DAT ( JSON )
     初始化: function(na, o) {
-        //
+        // 
+        init();
         // 
         var d = DAT.get_元素(na);
         if (d) {

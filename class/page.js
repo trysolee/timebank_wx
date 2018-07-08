@@ -17,7 +17,7 @@ const init = function() {
         BUF = require('./buf');
         USER = require('./user');
         MY = require('./user_my');
-        MISSION = require('./mission');
+        MISSION = require('../class_tb/c_mission');
         FIRST = require('../class_tb/s_first');
     }
 }

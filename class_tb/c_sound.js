@@ -1,10 +1,27 @@
 // 
 // 
-const MISSION = require('./c_mission');
-const FUN = require('./s_fun');
+var MISSION;
+var FUN;
+var DAT;
+var _SYS;
+// 
+var atFirst = true;
+const init = function() {
+    if (atFirst) {
+        atFirst = false;
+        // 
+        MISSION = require('./c_mission');
+        FUN = require('./s_fun');
+        DAT = require('./s_dat');
+        _SYS = require('../class/sys');
+    }
+}
 // 
 // 元素
-const FUN = function(B) {
+const CLA = function(B) {
+    // 
+    init();
+    // 
     this.BUF = B;
     this.播放OK = false;
     this.继续exec = true;
@@ -12,6 +29,17 @@ const FUN = function(B) {
     this.getBUF = function() { // 
         return this.BUF.DAT;
     };
+    // 
+    // 
+    this.时刻 = 0;
+    this.set时刻 = function(s) { // 
+        this.时刻 = s;
+    };
+    this.get时刻 = function() { // 
+        return this.时刻;
+    };
+    //
+    //  
     this.名称 = function() { // 声音名称
         return this.BUF.Na;
     };
@@ -44,8 +72,17 @@ const FUN = function(B) {
     };
     this.getUrl = function() { //
         var dat = this.getBUF();
-        var url = this.BUF.URLs[dat.上次index++];
+        var i = dat.上次index++;
+        var arr = this.BUF.URLs;
+        if (i >= arr.length) {
+            i = 0;
+            dat.上次index = 0;
+        }
+        var url = arr[i];
         this.save();
+        if (_SYS.测试) {
+            return this.名称() + '_' + url;
+        }
         return url;
     };
     this.停止exec = function() { //
@@ -58,12 +95,17 @@ const FUN = function(B) {
 // 
 // 
 const SOUND = {
-    getByNa: function(Na) {},
+    getByNa: function(Na) {
+        return new CLA( //
+            DAT.get_声音(Na) //
+        );
+    },
     //
     // na : 声音名称
     // o : DAT ( JSON )
     初始化: function(na, o) {
-        //
+        // 
+        init();
         // 
         var d = DAT.get_声音(na);
         if (d) {

@@ -4,7 +4,7 @@ const SYS = {
     //   
     // ===== 常量 =====
     // 
-    非正式测试: true,
+    非正式测试: true, // 正式调试之前
     // 
     测试: true,
     测试用户: 'admin',
@@ -16,7 +16,9 @@ const SYS = {
     // 
     // 包括 m1 和 m2
     随机数: function(m1, m2) {
-        // body...
+        var j = m2 - m1 + 1;
+        var i = Math.floor(Math.random() * j)
+        return m1 + i;
     },
     //
     //

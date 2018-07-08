@@ -21,46 +21,40 @@ function get1(na) {
 // 
 const DAT = {
     get_提款: function(na) {
-        return get1('提款_'.na);
+        return get1('TK_' + na);
     },
     set_提款: function(na, obj) {
-        set1('提款_'.na, obj);
+        set1('TK_' + na, obj);
     },
     get_元素插入: function(na) {
-        return get1('元素插入_'.na);
+        return get1('EI_' + na);
     },
     set_元素插入: function(na, obj) {
-        set1('元素插入_'.na, obj);
-    },
-    get_声音组: function(na) {
-        return get1('声音组_'.na);
-    },
-    set_声音组: function(na, obj) {
-        set1('声音组_'.na, obj);
+        set1('EI_' + na, obj);
     },
     get_声音: function(na) {
-        return get1('声音_'.na);
+        return get1('S_' + na);
     },
     set_声音: function(na, obj) {
-        set1('声音_'.na, obj);
+        set1('S_' + na, obj);
     },
     get_任务: function(na) {
-        return get1('任务_'.na);
+        return get1('MS_' + na);
     },
     set_任务: function(na, obj) {
-        set1('任务_'.na, obj);
+        set1('MS_' + na, obj);
     },
     get_元素: function(na) {
-        return get1('元素_'.na);
+        return get1('E_' + na);
     },
     set_元素: function(na, obj) {
-        set1('元素_'.na, obj);
+        set1('E_' + na, obj);
     },
     get_SYS: function(na) {
-        return get1('SYS_'.na);
+        return get1('SYS_' + na);
     },
     set_SYS: function(na, obj) {
-        set1('SYS_'.na, obj);
+        set1('SYS_' + na, obj);
     },
 };
 module.exports = DAT;

@@ -7,8 +7,48 @@ const SYS = require('../../class/sys.js');
 const FIRST = require('../../class_tb/s_first');
 // 
 var input_str = '';
+var 测试_执行包 = null;
 // 
 Page({
+    //
+    // 测试入口
+    OK_key: function(e) {
+        if (SYS.非正式测试) {
+            if (input_str == '') {
+                测试_执行包 = FIRST.测试1();
+                // 
+            } else if (input_str == 'p') {
+                FIRST.测试2(测试_执行包);
+                // 
+            } else if (input_str == 's') {
+                FIRST.测试3();
+                // 
+            }
+            return;
+        }
+        // 
+        // 
+        // 
+        // 
+        var p = PAGE.当前page();
+        if (p.OK_fun) {
+            var s = PAGE.get(p.pageVN);
+            p.OK_fun(s);
+        }
+        if (p.OK_page) {
+            PAGE.open(p.OK_page);
+            // 
+        } else if (p.OK_URL) {
+            Url.setPageBack('OK_end');
+            Url.post(p.OK_URL);
+            this.setData({
+                ready: false,
+                BKeyTxt: '请稍后...',
+            })
+        } else {
+            this.OK_end(true);
+        }
+    },
     /**
      * 页面的初始数据
      */
@@ -51,38 +91,14 @@ Page({
     },
     // 
     BKey: function(e) {
+        if (SYS.非正式测试) {
+            ST.show('----');
+        }
         this.setData({
             ready: true,
-        })
+        });
     },
-    OK_key: function(e) {
-        if (SYS.非正式测试) {
-            FIRST.校验_byCS();
-            return;
-        }
-        // 
-        // 
-        // 
-        // 
-        var p = PAGE.当前page();
-        if (p.OK_fun) {
-            var s = PAGE.get(p.pageVN);
-            p.OK_fun(s);
-        }
-        if (p.OK_page) {
-            PAGE.open(p.OK_page);
-            // 
-        } else if (p.OK_URL) {
-            Url.setPageBack('OK_end');
-            Url.post(p.OK_URL);
-            this.setData({
-                ready: false,
-                BKeyTxt: '请稍后...',
-            })
-        } else {
-            this.OK_end(true);
-        }
-    },
+    //
     OK_end: function(OK) {
         if (OK) {
             PAGE.pageBack()

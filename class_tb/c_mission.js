@@ -1,19 +1,63 @@
 // 
 // 
-const ELEMENT = require('./c_element');
+var ELEMENT;
+var DAT;
+var PLAY;
+// 
+var atFirst = true;
+const init = function() {
+    if (atFirst) {
+        atFirst = false;
+        // 
+        ELEMENT = require('./c_element');
+        PLAY = require('./c_play');
+        DAT = require('./s_dat');
+    }
+}
 // 
 // 任务
 const FUN = function(B) {
+    // 
+    init();
+    // 
     this.BUF = B;
     // 
     this.名称 = function() { // 名称
         return this.BUF.Na;
     };
+    this.时长 = function() { //
+        return this.BUF.DAT.时长;
+    };
+    this.剩下时间 = function(执行包_dat) { //
+        var d = new Date();
+        var s = Math.round((d - 执行包_dat.任务_开始时刻) / 1000);
+        return this.时长() - s;
+    };
     this.第一个元素Na = function() { //
-        // return this.BUF.JID;
+        return this.BUF.元素[0];
     };
     this.下一个元素 = function(执行包_dat) { //
-        // return this.BUF.JID;
+        var i = ++执行包_dat.当前元素下标;
+        var m = this.BUF.元素.length;
+        if (i >= m) {
+            return null;
+        }
+        var na = this.BUF.元素[i];
+        var e = ELEMENT.getByNa(na);
+        // 
+        执行包_dat.元素 = na;
+        执行包_dat.元素_开始时刻 = new Date();
+        // 
+        // 计算 剩下的秒数
+        var s1 = this.剩下时间(执行包_dat);
+        var s2 = e.时长();
+        if (s2 > s1) {
+            执行包_dat.元素_开始偏移 = s2 - s1;
+        } else {
+            执行包_dat.元素_开始偏移 = 0;
+        }
+        // 
+        e.创建_时刻轴(执行包_dat);
     };
     this.创建_执行包 = function() { // 任务id
         var 元素na = this.第一个元素Na();
@@ -22,16 +66,37 @@ const FUN = function(B) {
         var dat = {
             任务: this.名称(),
             元素: 元素na,
+            // 
+            // 如果<任务>剩下时间不够执行<元素>
+            // <元素> 就不是从0 开始播放
+            元素_开始偏移: 0,
+            // 
             当前元素下标: 0, // 
             任务_开始时刻: new Date(),
             元素_开始时刻: new Date(),
-            时刻轴: 元素obj.创建_时刻轴();
+            时间轴: null,
         };
+        元素obj.创建_时刻轴(dat);
         // 
         return dat;
     };
-    this.循环执行 = function() {
-        //
+    this.循环执行 = function(执行包_dat) {
+        var d = new Date();
+        // 
+        var a = 执行包_dat.元素_开始偏移;
+        var b = a + //
+            Math.round((d - 执行包_dat.元素_开始时刻) / 1000);
+        // 
+        var arr = 执行包_dat.时间轴;
+        for (var i in arr) {
+            var o = arr[i];
+            if (o.已播放) continue;
+            // 
+            if (a <= o.时差 && o.时差 <= b) {
+                PLAY.play(o.声音URL);
+                o.已播放 = true;
+            }
+        }
     };
 }
 // 
@@ -51,7 +116,8 @@ const MISSION = {
     // na : 声音名称
     // o : DAT ( JSON )
     初始化: function(na, o) {
-        //
+        // 
+        init();
         // 
         var d = DAT.get_任务(na);
         if (d) {
@@ -62,6 +128,7 @@ const MISSION = {
             // 
             o.DAT = d.DAT
         } else {
+            o.DAT = {};
             var y = o.元素;
             var i = 0;
             for (var x in y) {
