@@ -25,6 +25,9 @@ const FUN = function(B) {
     this.名称 = function() { // 名称
         return this.BUF.Na;
     };
+    this.时间段 = function() { //
+        return this.BUF.启动时间段;
+    };
     this.时长 = function() { //
         return this.BUF.DAT.时长;
     };
@@ -35,6 +38,14 @@ const FUN = function(B) {
     };
     this.第一个元素Na = function() { //
         return this.BUF.元素[0];
+    };
+    this.下一个元素Na = function(执行包_dat) { //
+        var i = 执行包_dat.当前元素下标;
+        var m = this.BUF.元素.length;
+        if (i >= m) {
+            return null;
+        }
+        return this.BUF.元素[i];
     };
     this.下一个元素 = function(执行包_dat) { //
         var i = ++执行包_dat.当前元素下标;
@@ -113,6 +124,10 @@ const MISSION = {
         return o;
     },
     //
+    剩下的时间: function(执行包) {
+        // TODO
+    },
+    //
     // na : 声音名称
     // o : DAT ( JSON )
     初始化: function(na, o) {
@@ -123,6 +138,7 @@ const MISSION = {
         if (d) {
             // 
             if (d.版本 == o.版本) {
+                MISSION.保存列表1(na, o);
                 return;
             }
             // 
@@ -140,12 +156,35 @@ const MISSION = {
         o.Na = na; // 记录 名称
         // 
         DAT.set_任务(na, o);
+        MISSION.保存列表1(na, o);
+        // 
+    },
+    // 
+    // 记录<任务>列表数据 , 
+    初始化记录: {},
+    //
+    // 保存<任务>列表数据
+    保存列表: function() {
+        DAT.set_SYS('任务列表', MISSION.初始化记录);
+    },
+    保存列表1: function(na, o) {
+        // 为 <保存列表>做准备... 
+        var m = new FUN(o);
+        MISSION.初始化记录[na] = true;
     },
     // 
     // 根据当前时间
     // 列出最可能执行的任务
     任务列表: function() {
-        //
+        // 
+        init();
+        // 
+        var arr = DAT.get_SYS('任务列表');
+        var ar = [];
+        for (var i in arr) {
+            ar.push(MISSION.getByNa(i));
+        }
+        return ar;
     },
 };
 module.exports = MISSION;

@@ -64,7 +64,9 @@ const inBUF = {
     },
 }
 // 发生变化 , 重新归纳统计
-const changeBUF = {}
+const changeBUF = {
+    // TODO
+}
 // =====================================
 function _SDB_(tList) {
     this.MYDAT = {};

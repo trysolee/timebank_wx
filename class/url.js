@@ -27,7 +27,8 @@ const path = function() {
         return 'http://localhost/';
     }
 }
-const 版本 = 'a';
+// const 版本 = 'a';
+const 版本 = 'tb';
 // 
 const arr = {
     登录: {
@@ -36,19 +37,17 @@ const arr = {
             code: ['code', null, false],
         },
     },
-    执行任务: {
-        url: path() + 版本 + '9_chg_group.php',
+    更新执行包: {
+        url: path() + 版本 + '9_up_exec.php',
         dat: {
             UID: ['UID', null, false],
-            WID: ['WID', null, false], // 任务id
+            JSON: ['m_box', null, false], // 执行包
         },
     },
     // 
     更新孩子数据: {
-        url: path() + 版本 + '1_fix_project_name.php',
-        dat: {
-            UID: ['UID', null, false],
-        },
+        url: path() + 版本 + '9_update.php',
+        dat: {},
     },
     添加孩子: {
         url: path() + 版本 + '1_new_project.php',
@@ -91,7 +90,7 @@ const arr = {
         },
     },
 };
-const toObj = ['ARR', 'ARR1'];
+const toObj = ['ARR', 'ARR1', 'JSON'];
 // 
 // primary
 // default
@@ -104,7 +103,7 @@ const page返回后台 = function() {
         keyType: 'default',
         BKeyTxt: '发送...',
     });
-      ST.show('发送请求...');
+    ST.show('发送请求...');
 }
 const page返回前台 = function() {
     var po = PAGE.pageObj();

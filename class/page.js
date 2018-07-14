@@ -194,13 +194,31 @@ const Page = {
                 li.push({
                     type: 'primary',
                     na: x.名称(),
-                    _URL: '执行任务',
-                    WID: x.WID(),
-                    _page_set_: ['WID'],
+                    // _URL: '执行任务', // TODO 
+                    fun: '执行任务',
+                    任务Na: x.名称(),
+                    _page_set_: ['任务Na'],
                 })
             }
             return li;
         },
+        执行任务: function() {
+            // 
+            var m = MISSION.getByNa(PAGE.get('任务Na'));
+            var b = m.创建_执行包();
+            var user = USER.getByID(PAGE.get('UID'));
+            user.set执行包(b);
+            // 
+            PAGE.set('m_box', b);
+            PAGE.go('执行任务');
+            Url.post('执行任务');
+            // 
+            return null;
+        },
+    },
+    执行任务: {
+        url: '../run_time/run_time',
+        返回: '首页',
     },
     排行榜: {
         url: '../list_chk/list_chk',
@@ -338,6 +356,21 @@ const Page = {
         },
         OK_fun: function(str) {},
     },
+
+
+    测试1: {
+        url: '../fix_str/fix_str',
+        返回: '首页',
+        OK_name: '输入测试码',
+        // 
+        // 输入后 , 用'input_name'保存在page
+        pageVN: 'input_name',
+        getStr: function() {
+            return '测试码';
+        },
+        OK_fun: function(str) {},
+    },
+
     // 
     // TODO
     // 注册 孩子几年级
@@ -623,7 +656,7 @@ const Page = {
 // 
 // 由于 <打开页面> 需要等待 <onReady>异步处理
 // 所以需要把 <当前page> 临时记录在<backup>里面
-var backup = null;
+var backup = Page['测试1'];
 // 
 const PAGE = {
     open: function(p) {
@@ -643,7 +676,6 @@ const PAGE = {
                 url: u,
             })
         } else if (!o.返回) {
-            BOX = [];
             wx.reLaunch({
                 url: u,
             })
@@ -673,8 +705,8 @@ const PAGE = {
     // 
     当前page: function() {
         var box = this.pageObj()._BOX_;
-        if (!box) box = this.pageObj()._BOX_ = {};
-        return box;
+        // if (!box) box = this.pageObj()._BOX_ = {};
+        return box.page;
     },
     // 
     pageObj: function() {
@@ -690,7 +722,7 @@ const PAGE = {
         // var o = backup;
         var op = this.pageObj();
         var box = op._BOX_ = {
-            // page: backup,
+            page: backup,
             dat: {},
         };
         // 

@@ -20,6 +20,21 @@ const SYS = {
         var i = Math.floor(Math.random() * j)
         return m1 + i;
     },
+    // 
+    秒ToStr: function(s) {
+        var f = '';
+        if (Number(s) < 0) {
+            s = s * -1;
+            f = '-';
+        }
+        var i = s % 60;
+        var m = Math.floor(s / 60);
+        // 
+        if (i < 10) i = '0' + i;
+        return f + m + ':' + i;
+    },
+    //
+    //
     //
     //
     //

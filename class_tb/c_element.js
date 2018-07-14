@@ -160,6 +160,10 @@ const ELEMENT = {
         return o;
     },
     //
+    剩下的时间: function(执行包) {
+      // TODO
+    },
+    //
     // na : 元素名称
     // o : DAT ( JSON )
     初始化: function(na, o) {

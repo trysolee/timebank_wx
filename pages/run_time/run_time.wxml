@@ -1,0 +1,19 @@
+<view class="bg" wx:if="{{!ready}}">
+  <button class="key" loading="{{Loading}}" type="{{keyType}}" bindtap="BKey">{{BKeyTxt}}</button>
+
+  <view class="bg_back_text">
+    <text class="back_text">{{BTxt}}</text>
+  </view>
+</view>
+
+<view class="bg" wx:if="{{ready}}">
+  <view>
+    <button class="OK_key" bindtap='取消' >起床___X</button>
+  </view>
+  <view class="input_txt">
+    <text class="back_text">{{timeStr}}</text>
+  </view>
+  <view>
+    <button class="OK_key" bindtap='OK_key' type="primary">{{keyName}}</button>
+  </view>
+</view>

@@ -67,9 +67,9 @@ Page({
         // 
         var p = PAGE.当前page();
         var ok_name = '确定';
+        var name; // 输入提示
         if (p.OK_name) ok_name = p.OK_name;
         // 
-        var name;
         if (p.getStr) {
             name = p.getStr();
             PAGE.set(p.pageVN, name);

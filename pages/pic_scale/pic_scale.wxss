@@ -1,6 +1,0 @@
-/* pages/pic_scale/pic_scale.wxss */
-
-.s-item {
-  width: 100%;
-  display: inline-block;
-}

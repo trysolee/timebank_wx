@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/loading/loading",
     "pages/fix_str/fix_str",
+    "pages/run_time/run_time",
     "pages/login/login",
     "pages/main/main",
     "pages/incode/incode",
@@ -11,8 +13,7 @@
     "pages/list_exp/list_exp",
     "pages/logs/logs",
     "pages/list_chk/list_chk",
-    "pages/list_sel/list_sel",
-    "pages/loading/loading"
+    "pages/list_sel/list_sel"
   ],
   "window": {
     "backgroundTextStyle": "light",

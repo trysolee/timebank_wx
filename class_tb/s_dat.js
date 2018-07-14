@@ -1,5 +1,6 @@
 // 
 var ST = require('../class/showtxt.js');
+var BUF = require('../class/buf.js');
 // 
 function set1(na, obj) {
     wx.setStorage({
@@ -20,6 +21,12 @@ function get1(na) {
 }
 // 
 const DAT = {
+    get_user: function(uid) {
+        return BUF.getOne('user', uid);
+    },
+    // set_user: function(uid, obj) {
+    //     // set1('U_' + uid, obj);
+    // },
     get_提款: function(na) {
         return get1('TK_' + na);
     },

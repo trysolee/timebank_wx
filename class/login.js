@@ -18,12 +18,12 @@ const LOGIN = {
         wx.login({
             success: function(loginResult) {
                 LOG({
-                    _VAL: 'OK_WX_LOGIN'
+                    _VAL: '微信登录_成功'
                 }) // 微信登陆成功
                 wx.getUserInfo({
                     success: function(userResult) {
                         LOG({
-                            _VAL: 'OK_WX_GET_USER_INFO', // 获取用户数据成功
+                            _VAL: '获取微信用户信息成功', // 获取用户数据成功
                             DAT: userResult.userInfo,
                         });
                         // LOGIN.serverGO('user');
@@ -35,14 +35,14 @@ const LOGIN = {
                     },
                     fail: function(userError) {
                         LOG({
-                            _VAL: 'ERR_WX_GET_USER_INFO'
+                            _VAL: '获取微信用户信息失败'
                         }) // 获取微信用户信息失败
                     },
                 });
             },
             fail: function(loginError) {
                 LOG({
-                    _VAL:'ERR_WX_LOGIN_FAILED'
+                    _VAL:'微信登录_失败'
                 }) // 微信登录失败
             },
         });

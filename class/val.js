@@ -43,12 +43,6 @@ const VAL = {
         // 跳转到相应页面
         // 
     },
-    微信登录失败: {
-        TXT: '微信登录失败',
-        // TODO
-        // 跳转到相应页面
-        // 
-    },
     返回邀请码: {
         // 发出邀请后 , 
         // 服务器 产生并返回一个邀请码
@@ -70,15 +64,24 @@ const VAL = {
             }
         },
     },
+    微信登录_成功: {
+        // TXT: '微信登录失败',
+    },
+    微信登录_失败: {
+        TXT: '微信登录失败',
+    },
     获取微信用户信息成功: {
         TXT: '获取微信用户信息成功',
         FUN: function(DAT) {
-            ST.showJson(DAT); // 测试用
+            if (SYS.测试) {
+                ST.showJson(DAT); // 测试用
+            }
             getApp().globalData.userInfo = DAT;
-            //
         },
     },
- 
+    获取微信用户信息失败: {
+        TXT: '获取微信用户信息失败',
+    },
     // 
     发出邀请: {
         // TODO
@@ -91,12 +94,11 @@ const VAL = {
     新帖子: {
         // TODO
     },
-
     // 判断 是否登录成功
     登录OK: {
         TXT: '服务器登录成功',
         FUN: function(DAT) {
-            // ST.showJson(DAT); // 测试用
+            ST.showJson(DAT); // 测试用
             //
         },
         PageJump: '首页',
@@ -133,12 +135,6 @@ const VAL = {
     },
     ERR_NOT_Invitation: {
         TXT: '还没被邀请',
-        FUN: function(DAT) {
-            //
-        },
-    },
-    ERR_WX_GET_USER_INFO: {
-        TXT: '获取微信用户信息失败',
         FUN: function(DAT) {
             //
         },
