@@ -9,7 +9,7 @@ input {
   background-color: #eee;
 }
 
-text {
+.time_txt {
   padding-left: 2em;
   padding-right: 2em;
   padding-bottom: 1em;

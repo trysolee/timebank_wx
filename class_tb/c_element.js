@@ -16,6 +16,20 @@ const init = function() {
 }
 // 
 const KEY = {
+    禁止提前: function() {
+        this.判断记录 = function(声音Na) {
+            // 
+        };
+        this.播放记录 = function(声音Na, Url) {
+            // 
+        };
+        this.继续判断 = function() {
+            return true;
+        };
+        this.end = function(elem) {
+            // 
+        };
+    },
     不限句数: function() {
         this.判断记录 = function(声音Na) {
             // 
@@ -74,17 +88,29 @@ const KEY = {
 // 元素
 const FUN = function(B) {
     // 
-    init();
-    // 
     this.BUF = B;
     // 
     this.名称 = function() { // 名称
         return this.BUF.Na;
     };
     // 
-    // 注意 : 不一定在 0 开始
-    this.开始时刻 = function() {
-        //   TODO
+    // 注意 : 不一定在 0 开始 // 单位 : 秒
+    this.开始时刻 = function(执行包_dat) {
+        return 执行包_dat.元素_开始偏移;
+    };
+    // 
+    this.当前时刻 = function(执行包_dat) {
+        var d = new Date();
+        // 
+        var a = this.开始时刻(执行包_dat); // 
+        var b = a + //
+            Math.round((d - 执行包_dat.元素_开始时刻) / 1000);
+        // 
+        return b;
+    };
+    // 
+    this.剩下时间 = function(执行包_dat) {
+        return this.时长() - this.当前时刻(执行包_dat);
     };
     this.时长 = function() { //
         return this.BUF.时长;
@@ -149,21 +175,22 @@ const FUN = function(B) {
 const ELEMENT = {
     //
     getByNa: function(Na) {
+        // 
+        init();
+        // 
         return new FUN( //
             DAT.get_元素(Na) //
         );
     },
     //
     getBy执行包: function(dat) {
+        // 
+        init();
+        // 
         var o = ELEMENT.getByNa(dat.元素);
         o.时间轴 = dat.时间轴;
         return o;
     },
-    //
-    剩下的时间: function(执行包) {
-      // TODO
-    },
-    //
     // na : 元素名称
     // o : DAT ( JSON )
     初始化: function(na, o) {

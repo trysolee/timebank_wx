@@ -129,6 +129,7 @@ const FIRST = {
         FIRST.Each(CS.提款, TAKEBACK.初始化);
         // 
         MISSION.保存列表();
+        TAKEBACK.保存列表();
         // 
         var w = MISSION.getByNa('起床');
         var dat = w.创建_执行包();

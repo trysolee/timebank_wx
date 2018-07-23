@@ -1,4 +1,4 @@
-var BUF, MY;
+var BUF, MY, PAGE , Url;
 // 
 var atFirst = true;
 const init = function() {
@@ -7,6 +7,8 @@ const init = function() {
         // 
         BUF = require('./buf');
         MY = require('./user_my');
+        PAGE = require('./page');
+        Url = require('./url');
     }
 }
 // 
@@ -26,8 +28,7 @@ const FUN = function(B) {
     };
     // 
     this.存款 = function() {
-        // TODO 
-        // 返回 存款数
+        return this.BUF.JSON.存款;
     };
     // 
     // 如果是孩子 , 返回 true
@@ -59,52 +60,21 @@ const FUN = function(B) {
     // 
     // 正在执行任务
     this.is任务中 = function() {
-        return false; // TODO
+        return this.BUF.JSON.任务中;
+    };
+    // 
+    this.set执行包 = function(b) {
+        this.BUF.JSON.执行包 = b;
+        this.BUF.JSON.任务中 = true;
+      
     };
     // 
     this.get执行包 = function() {
-        // 
+        return this.BUF.JSON.执行包;
     };
     // 
-    this.set执行包 = function(执行包) {
-        // 
-        this.save();
-    };
-    // 
-    this.执行_任务 = function(任务名) {
-        // 设置当前任务
-        // 设置当前元素
-        // 设置元素时间轴
-        // 设置任务开始时间
-        // 设置元素开始时间
-        // 
-    };
-    this.执行_下一元素 = function() {
-        // return this.BUF.UID;
-    };
-    this.执行_周期 = function(时间) {
-        // 播放 声音
-        // 结束 元素 ( 运行 下一个 )
-    };
-    this.当前_任务 = function() {
-        // return this.BUF.UID;
-    };
-    this.任务_开始时间 = function() {
-        // return this.BUF.UID;
-    };
-    // 
-    this.元素_开始时间 = function() {
-        // return this.BUF.UID;
-    };
-    // 由于 任务剩下时间不足
-    // 元素开始时刻不一定是从'0' 开始
-    this.元素_起始时刻 = function() {
-        // return this.BUF.UID;
-    };
-    // 
-    // 
-    this.当前_时间轴 = function() {
-        // return this.BUF.UID;
+    this.end执行 = function() {
+        this.BUF.JSON.任务中 = false;
     };
     // 
     // 用于列表

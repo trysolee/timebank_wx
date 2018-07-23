@@ -11,7 +11,7 @@
     <button class="OK_key" bindtap='取消' >起床___X</button>
   </view>
   <view class="input_txt">
-    <text class="back_text">{{timeStr}}</text>
+    <text class="time_txt">{{timeStr}}</text>
   </view>
   <view>
     <button class="OK_key" bindtap='OK_key' type="primary">{{keyName}}</button>

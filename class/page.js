@@ -97,6 +97,7 @@ const Page = {
     },
     首页: {
         url: '../list_chk/list_chk',
+        标志: '首页',
         返回: null, // 没有返回键
         datList: function() {
             var li = [];
@@ -178,7 +179,8 @@ const Page = {
             // 
             var user = USER.getByID(PAGE.get('UID'));
             if (user.is任务中()) {
-                PAGE.open('任务执行');
+                PAGE.set('m_box', user.get执行包());
+                PAGE.open('执行任务');
                 return [];
             }
             // 
@@ -188,11 +190,79 @@ const Page = {
                 // warn
             ];
             // 
+            var da = new Date();
+            var 最近期的任务 = -1;
             var arr = MISSION.任务列表();
             for (var i in arr) {
                 var x = arr[i];
+                if (最近期的任务 < 0) {
+                    if (x.未到时间段()) 最近期的任务 = i;
+                }
                 li.push({
-                    type: 'primary',
+                    type: 'default',
+                    na: x.名称(),
+                    // _URL: '执行任务', // TODO 
+                    fun: '执行任务',
+                    任务Na: x.名称(),
+                    _page_set_: ['任务Na'],
+                })
+            }
+            if (最近期的任务 < 0) 最近期的任务 = 0;
+            li[最近期的任务].type = 'primary';
+            if (最近期的任务 > 0) {
+                li[最近期的任务 - 1].type = 'primary';
+            }
+            // 
+            li.push({
+                type: 'warn',
+                na: '提款',
+                // _URL: '执行任务', // TODO 
+                // fun: '执行任务',
+                pageJump: '测试1',
+                // pageJump: '提款',
+            })
+            return li;
+        },
+        执行任务: function() {
+            // 
+            var m = MISSION.getByNa(PAGE.get('任务Na'));
+            var b = m.创建_执行包();
+            var user = USER.getByID(PAGE.get('UID'));
+            user.set执行包(b);
+            // 
+            PAGE.set('m_box', b);
+            PAGE.open('执行任务');
+            Url.post('更新执行包');
+            // 
+            return null;
+        },
+    },
+    // 
+    提款列表: {
+        url: '../list_chk/list_chk',
+        返回: '上一页',
+        // 载入数据url: '更新孩子数据',
+        datList: function() {
+            // 用于 列表的list
+            // 
+            var user = USER.getByID(PAGE.get('UID'));
+            var 存款 = user.存款();
+            // 
+            var li = [
+                // primary
+                // default
+                // warn
+            ];
+            //           
+            var arr = TAKEBACK.任务列表();
+            for (var i in arr) {
+                var x = arr[i];
+                var t = 'default';
+                if (x.预留存款() < 存款) {
+                    t = 'primary';
+                }
+                li.push({
+                    type: t,
                     na: x.名称(),
                     // _URL: '执行任务', // TODO 
                     fun: '执行任务',
@@ -204,14 +274,19 @@ const Page = {
         },
         执行任务: function() {
             // 
-            var m = MISSION.getByNa(PAGE.get('任务Na'));
-            var b = m.创建_执行包();
+            var m = TAKEBACK.getByNa(PAGE.get('任务Na'));
             var user = USER.getByID(PAGE.get('UID'));
+            if (user.存款() < m.预留存款()) {
+                ST.showtxt('存款不足' + m.预留存款());
+                return null;
+            }
+            var b = m.创建_执行包();
             user.set执行包(b);
             // 
             PAGE.set('m_box', b);
-            PAGE.go('执行任务');
-            Url.post('执行任务');
+            // PAGE.open('执行任务');
+            Url.setPageBack('执行任务');
+            Url.post('更新执行包');
             // 
             return null;
         },
@@ -356,11 +431,9 @@ const Page = {
         },
         OK_fun: function(str) {},
     },
-
-
     测试1: {
         url: '../fix_str/fix_str',
-        返回: '首页',
+        返回: '上一页',
         OK_name: '输入测试码',
         // 
         // 输入后 , 用'input_name'保存在page
@@ -370,7 +443,6 @@ const Page = {
         },
         OK_fun: function(str) {},
     },
-
     // 
     // TODO
     // 注册 孩子几年级
@@ -657,6 +729,7 @@ const Page = {
 // 由于 <打开页面> 需要等待 <onReady>异步处理
 // 所以需要把 <当前page> 临时记录在<backup>里面
 var backup = Page['测试1'];
+var backBOX = null;
 // 
 const PAGE = {
     open: function(p) {
@@ -665,6 +738,7 @@ const PAGE = {
         ST.reSet();
         // 
         var o = backup = Page[p];
+        backBOX = {};
         //
         var u = o.url;
         // 
@@ -680,14 +754,26 @@ const PAGE = {
                 url: u,
             })
         } else {
-            wx.navigateTo({
-                url: u,
-            })
-            // wx.redirectTo({
-            //     url: u,
-            // })
+            var p = getCurrentPages();
+            var l = p.length;
+            var j = 0;
+            for (var i = p.length - 1; i >= 0; i--) {
+                var arr = p[i]._BOX_.dat;
+                for (var x in arr) {
+                    if (typeof(backBOX[x]) == 'undefined') {
+                        backBOX[x] = arr[x];
+                    }
+                }
+                if (p[i]._BOX_.page.标志 == o.返回) {
+                    if (j > 0) wx.navigateBack(j);
+                    wx.navigateTo({
+                        url: u,
+                    })
+                    return;
+                }
+                j++;
+            }
         }
-        // 
     },
     // 
     pageBack: function() {
@@ -724,6 +810,7 @@ const PAGE = {
         var box = op._BOX_ = {
             page: backup,
             dat: {},
+            dat1: backBOX,
         };
         // 
         // var cla = CLA[o.cla];
@@ -754,7 +841,12 @@ const PAGE = {
         for (var i = l; i >= 0; i--) {
             if (!p[i]._BOX_) continue;
             var v = p[i]._BOX_.dat[n];
-            if (v) return v;
+            if (typeof(v) != 'undefined') //
+                return v;
+            // 
+            v = p[i]._BOX_.dat1[n];
+            if (typeof(v) != 'undefined') //
+                return v;
         }
         return null;
     },

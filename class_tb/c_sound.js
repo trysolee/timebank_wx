@@ -19,9 +19,6 @@ const init = function() {
 // 
 // 元素
 const CLA = function(B) {
-    // 
-    init();
-    // 
     this.BUF = B;
     this.播放OK = false;
     this.继续exec = true;
@@ -96,6 +93,9 @@ const CLA = function(B) {
 // 
 const SOUND = {
     getByNa: function(Na) {
+        // 
+        init();
+        // 
         return new CLA( //
             DAT.get_声音(Na) //
         );
@@ -135,7 +135,5 @@ const SOUND = {
         o.Na = na; // 记录 声音的名称
         DAT.set_声音(na, o);
     },
-
-    
 };
 module.exports = SOUND;

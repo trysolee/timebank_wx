@@ -37,11 +37,28 @@ const arr = {
             code: ['code', null, false],
         },
     },
+    // 
+    修改存款: {
+        url: path() + 版本 + '9_fix_money.php',
+        dat: {
+            UID: ['UID', null, false],
+            m: ['money', null, false], //
+        },
+    },
+    // 
     更新执行包: {
         url: path() + 版本 + '9_up_exec.php',
         dat: {
             UID: ['UID', null, false],
             JSON: ['m_box', null, false], // 执行包
+        },
+    },
+    // 
+    任务结束: {
+        url: path() + 版本 + '9_mission_end.php',
+        dat: {
+            UID: ['UID', null, false],
+            T: ['剩下时间', null, false], //
         },
     },
     // 
