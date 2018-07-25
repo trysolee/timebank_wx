@@ -17,7 +17,7 @@ Page({
         // 
         var o = PAGE.当前page();
         if (o.LOAD_URL) {
-            Url.setPageBack('callBack');
+            Url.setBackCall('callBack');
             Url.post(o.LOAD_URL);
         } else {
             this.callBack();
@@ -81,5 +81,11 @@ Page({
                 list: li
             })
         }
+    },
+    /**
+     * 生命周期函数--监听页面卸载
+     */
+    onUnload: function() {
+        PAGE.pageBack();
     },
 })

@@ -32,11 +32,16 @@ const FUN = function(B) {
     this.时长 = function() { // 
         return this.BUF.时长;
     };
+    // 
+    this.用掉的时间 = function() { // 
+        return new Date() - 执行包_dat.提款_开始时刻;
+    };
     this.创建_执行包 = function() { // 
         // 
         var dat = {
             类型: '提款',
             提款: this.名称(),
+            元素: this.BUF.元素[0],
             提款_开始时刻: new Date().getTime(),
         };
         // 

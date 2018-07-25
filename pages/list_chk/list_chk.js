@@ -23,7 +23,7 @@ Page({
         // 
         var o = PAGE.当前page();
         if (o.载入数据url) {
-            Url.setPageBack('callBack');
+            Url.setBackCall('callBack');
             Url.post(o.载入数据url);
         } else {
             this.callBack();
@@ -74,6 +74,12 @@ Page({
     },
     OK_end: function(OK) {
         if (OK) PAGE.pageBack()
+    },
+    /**
+     * 生命周期函数--监听页面卸载
+     */
+    onUnload: function() {
+        PAGE.pageBack();
     },
     //
     // 主要判断执行 <pageJump> 和 <fun>

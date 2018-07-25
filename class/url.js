@@ -58,6 +58,14 @@ const arr = {
         url: path() + 版本 + '9_mission_end.php',
         dat: {
             UID: ['UID', null, false],
+            T: ['用掉的时间', null, false], //
+        },
+    },
+    // 
+    提款结束: {
+        url: path() + 版本 + '9_takeback_end.php',
+        dat: {
+            UID: ['UID', null, false],
             T: ['剩下时间', null, false], //
         },
     },
@@ -109,40 +117,40 @@ const arr = {
 };
 const toObj = ['ARR', 'ARR1', 'JSON'];
 // 
-// primary
-// default
-// warn
-const page返回后台 = function() {
-    var po = PAGE.pageObj();
-    po.setData({
-        ready: false,
-        Loading: true, // 按键设置
-        keyType: 'default',
-        BKeyTxt: '发送...',
-    });
-    ST.show('发送请求...');
-}
-const page返回前台 = function() {
-    var po = PAGE.pageObj();
-    po.setData({
-        ready: true,
-    });
-}
-const page设置错误键 = function() {
-    var po = PAGE.pageObj();
-    po.setData({
-        ready: true,
-        Loading: false, // 按键设置
-        keyType: 'warn',
-        BKeyTxt: '返回',
-    });
-}
 // 
+var backCall = null;
 var pageBack = null;
 // 
 const OBJ = {
-    setPageBack: function(fun) {
-        pageBack = fun;
+    setBackCall: function(fun) {
+        backCall = fun;
+    },
+    setPageBack: function(page) {
+        pageBack = page;
+    },
+    execBackCall: function(ok) {
+        if (backCall) {
+            var bc = backCall;
+            backCall = null;
+            LOG({
+                _VAL: 'pageBackCall',
+                DAT: {
+                    backCall: bc,
+                    OK: ok,
+                }
+            })
+        }
+    },
+    goPageBack: function() {
+        if (pageBack) {
+            var pb = pageBack;
+            pageBack = null;
+            LOG({
+                VAL: {
+                    PageJump: pb,
+                }
+            })
+        }
     },
     post: function(n) {
         init();
@@ -182,44 +190,23 @@ const OBJ = {
             d._SID = APP.globalData.sessionid;
         }
         // 
-        page返回后台();
+        LOG({
+            _VAL: '连接_发送'
+        });
         wx.request({
             url: o.url,
             data: d,
             success: function(res) {
                 LOG({
+                    // 触发 <连接_成功> 或 <连接_成功_但有ERR>
                     _VAL: '返回OK', // 服务器返回成功
                     DAT: res.data,
                 });
-                if (pageBack) {
-                    var pb = pageBack;
-                    pageBack = null;
-                    LOG({
-                        _VAL: 'pageBack',
-                        DAT: {
-                            pageBack: pb,
-                            OK: true,
-                        }
-                    })
-                }
-                page返回前台();
             },
             fail: function(ret) {
                 LOG({
-                    _VAL: '服务器连接失败',
-                }) // 服务器登录失败
-                if (pageBack) {
-                    var pb = pageBack;
-                    pageBack = null;
-                    LOG({
-                        _VAL: 'pageBack',
-                        DAT: {
-                            pageBack: pb,
-                            OK: false,
-                        }
-                    })
-                }
-                page设置错误键();
+                    _VAL: '连接_失败',
+                })
             },
             method: 'POST',
             header: {

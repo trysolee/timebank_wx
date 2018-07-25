@@ -6,6 +6,7 @@ var LOG;
 var LOGIN;
 var ST;
 var RET;
+var URL;
 // 
 var atFirst = true;
 const VAL = {
@@ -14,6 +15,7 @@ const VAL = {
             atFirst = false;
             // 
             SYS = require('./sys');
+            URL = require('./url');
             USER = require('./user');
             BUF = require('./buf');
             PAGE = require('./page');
@@ -27,6 +29,71 @@ const VAL = {
     TEST_: {
         TXT: '通用测试',
     },
+    // ----------------------
+    // ----------------------
+    // -------- 不同的<连接>状态触发
+    // 
+    连接_发送: {
+        FUN: function(DAT) {
+            // 
+            // ------- 页面设为<等待> ---
+            var po = PAGE.pageObj();
+            po.setData({
+                ready: false,
+                Loading: true, // 按键设置
+                keyType: 'default',
+                BKeyTxt: '发送...',
+            });
+            ST.show('发送请求...');
+            // 
+            // 
+        },
+    },
+    返回OK: {
+        TXT: '服务器返回数据',
+        FUN: function(DAT) {
+            RET(DAT);
+        },
+    },
+    连接_成功: {
+        FUN: function(DAT) {
+            // 
+            // ------- 页面设为<连接结束.恢复> ---
+            var po = PAGE.pageObj();
+            po.setData({
+                ready: true,
+            });
+            //
+            URL.execBackCall(true);
+            // 
+            URL.goPageBack();
+        },
+    },
+    连接_成功_但有ERR: {
+        FUN: function(DAT) {
+            // 
+            // ------- 页面设为<连接结束.有异常> ---
+            // 暂停在 提示页面
+            var po = PAGE.pageObj();
+            po.setData({
+                ready: true,
+                Loading: false, // 按键设置
+                keyType: 'warn',
+                BKeyTxt: '返回',
+            });
+            //
+            URL.execBackCall(false);
+            // 
+        },
+    },
+    连接_失败: {
+        TXT: '服务器进水了',
+        // 
+        FUN: function(DAT) {
+            VAL.连接_成功_但有ERR.FUN(DAT);
+        },
+    },
+    // ----------------------
     还没注册: {
         TXT: '还没注册',
         PageJump: '邀请码',
@@ -103,12 +170,6 @@ const VAL = {
         },
         PageJump: '首页',
     },
-    返回OK: {
-        TXT: '服务器返回数据',
-        FUN: function(DAT) {
-            RET(DAT);
-        },
-    },
     后续call: {
         FUN: function(DAT) {
             for (var i in DAT) {
@@ -142,9 +203,10 @@ const VAL = {
     服务器连接失败: {
         TXT: '服务器进水了',
     },
-    pageBack: {
+    // 
+    pageBackCall: {
         FUN: function(DAT) {
-            PAGE.pageObj()[DAT.pageBack](DAT.OK);
+            PAGE.pageObj()[DAT.backCall](DAT.OK);
         },
     },
     // 

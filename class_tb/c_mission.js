@@ -99,7 +99,7 @@ const FUN = function(B) {
         var 元素obj = ELEMENT.getByNa(元素na);
         // 
         var 最后一个 = false;
-        if (this.元素个数() <= 1) 最后一个元素 = true;
+        if (this.元素个数() <= 1) 最后一个 = true;
         // 
         var dat = {
             类型: '任务',

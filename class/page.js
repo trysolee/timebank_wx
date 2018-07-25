@@ -218,8 +218,8 @@ const Page = {
                 na: '提款',
                 // _URL: '执行任务', // TODO 
                 // fun: '执行任务',
-                pageJump: '测试1',
-                // pageJump: '提款',
+                // pageJump: '测试1',
+                pageJump: '提款',
             })
             return li;
         },
@@ -293,6 +293,10 @@ const Page = {
     },
     执行任务: {
         url: '../run_time/run_time',
+        返回: '首页',
+    },
+    提款: {
+        url: '../get_time/get_time',
         返回: '首页',
     },
     排行榜: {
@@ -729,63 +733,41 @@ const Page = {
 // 由于 <打开页面> 需要等待 <onReady>异步处理
 // 所以需要把 <当前page> 临时记录在<backup>里面
 var backup = Page['测试1'];
-var backBOX = null;
 // 
 const PAGE = {
     open: function(p) {
+        
+        // 
         init();
         // 
         ST.reSet();
         // 
         var o = backup = Page[p];
-        backBOX = {};
         //
-        var u = o.url;
-        // 
-        // 只有<返回> : null 
-        // 用 重新开始
-        // 其他 都用 <navigateTo>
-        if (o.返回 == '上一页') {
-            wx.navigateTo({
-                url: u,
-            })
-        } else if (!o.返回) {
+        if (o.标志 == '首页') {
             wx.reLaunch({
-                url: u,
+                url: o.url,
             })
         } else {
-            var p = getCurrentPages();
-            var l = p.length;
-            var j = 0;
-            for (var i = p.length - 1; i >= 0; i--) {
-                var arr = p[i]._BOX_.dat;
-                for (var x in arr) {
-                    if (typeof(backBOX[x]) == 'undefined') {
-                        backBOX[x] = arr[x];
-                    }
-                }
-                if (p[i]._BOX_.page.标志 == o.返回) {
-                    if (j > 0) wx.navigateBack(j);
-                    wx.navigateTo({
-                        url: u,
-                    })
-                    return;
-                }
-                j++;
-            }
+            wx.navigateTo({
+                url: o.url,
+            })
         }
     },
     // 
     pageBack: function() {
-        var p = this.当前page();
-        if (p.返回 == '上一页') {
+        var o = this.当前page();
+        if (o.返回 == '上一页') {
             wx.navigateBack();
-        } else if (p.返回 == '首页') {
-            this.open('首页');
-        } else if (p.返回 == '后退') {
-            wx.navigateBack({
-                delta: p.后退页数
-            })
+            // } else if (p.返回 == '首页') {
+            //     this.open('首页');
+        } else {
+            var p = getCurrentPages();
+            // i 从倒数第二page 开始 , 到 顺数第二page结束
+            for (var i = p.length - 2; i >= 1; i--) {
+                if (p[i]._BOX_.page.标志 == o.返回) return;
+                wx.navigateBack();
+            }
         }
     },
     // 
@@ -810,14 +792,7 @@ const PAGE = {
         var box = op._BOX_ = {
             page: backup,
             dat: {},
-            dat1: backBOX,
         };
-        // 
-        // var cla = CLA[o.cla];
-        // if (cla) {
-        //     box.cla = cla;
-        //     cla.fun();
-        // }
     },
     //   
     // 设置 数值
@@ -841,10 +816,6 @@ const PAGE = {
         for (var i = l; i >= 0; i--) {
             if (!p[i]._BOX_) continue;
             var v = p[i]._BOX_.dat[n];
-            if (typeof(v) != 'undefined') //
-                return v;
-            // 
-            v = p[i]._BOX_.dat1[n];
             if (typeof(v) != 'undefined') //
                 return v;
         }

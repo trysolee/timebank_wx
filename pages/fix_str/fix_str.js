@@ -113,9 +113,6 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
-
-        var p = PAGE.当前page();
-         wx.navigateBack();
-
+        PAGE.pageBack();
     },
 })

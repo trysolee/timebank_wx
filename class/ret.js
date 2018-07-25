@@ -33,6 +33,11 @@ const RET = function(d) {
             _VAL: '服务器连接失败', //
         });
     } else if (OPT.ERR) {
+        // 
+        LOG({
+            _VAL: '连接_成功_但有ERR', //
+        });
+        // 
         ST.show(OPT.MSG);
         var err = OPT.ERR;
         if (err == '90') {
@@ -85,6 +90,10 @@ const RET = function(d) {
                 }
             })
         }
+        // 
+        LOG({
+            _VAL: '连接_成功', //
+        });
     }
 };
 module.exports = RET;
