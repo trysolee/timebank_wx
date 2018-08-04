@@ -1,18 +1,12 @@
-// pages/run_time/run_time.js
-const PAGE = require('../../class/page');
-const SOUND = require('../../class_tb/c_sound');
-const TAKEBACK = require('../../class_tb/c_takeback');
-const ELEMENT = require('../../class_tb/c_element');
-const SYS = require('../../class/sys.js');
-const Url = require('../../class/url.js');
-const ST = require('../../class/showtxt.js');
-
+// 
+const A = getApp();
+// 
 function TO() {
-    var p = PAGE.pageObj();
-    var m = TAKEBACK.getBy执行包(执行包);
-    var e = ELEMENT.getBy执行包(执行包);
+    var p = A.PAGE.pageObj();
+    var m = A.TAKEBACK.getBy执行包(执行包);
+    var e = A.ELEMENT.getBy执行包(执行包);
     p.setData({
-        timeStr: SYS.秒ToStr(e.剩下时间(执行包)),
+        timeStr: A.SYS.秒ToStr(e.剩下时间(执行包)),
     });
     m.循环执行(执行包);
     time1000 = setTimeout(TO, 1000);
@@ -28,15 +22,22 @@ Page({
             BKeyTxt: '结束...',
         })
         // 
-        var m = TAKEBACK.getBy执行包(执行包);
+        var m = A.TAKEBACK.getBy执行包(执行包);
         PAGE.set('用掉的时间', m.用掉的时间(执行包));
-        Url.setPageBack('OK_end');
-        Url.post('提款结束');
+        A.Url.setBackCall('OK_end');
+        A.Url.post('提款结束');
         // 
     },
-    // OK_end: function(OK) {
-    //     if (OK) PAGE.pageBack()
-    // },
+    取消: function(e) {
+        this.setData({
+            ready: false,
+            BKeyTxt: '结束...',
+        })
+        // 
+        A.Url.setBackCall('OK_end');
+        A.Url.post('提款取消');
+        // 
+    },
     /**
      * 页面的初始数据
      */
@@ -52,10 +53,10 @@ Page({
     // default
     // warn
     onReady: function() {
-        PAGE.ready();
+        A.PAGE.ready();
         // 
-        执行包 = PAGE.get('m_box');
-        var m = TAKEBACK.getBy执行包(执行包);
+        执行包 = A.PAGE.get('m_box');
+        var m = A.TAKEBACK.getBy执行包(执行包);
         this.setData({
             ready: true,
         })
@@ -65,12 +66,12 @@ Page({
     // 
     input_name: function(e) {
         input_str = e.detail.value;
-        PAGE.set(PAGE.当前page().pageVN, input_str);
+        A.PAGE.set(A.PAGE.当前page().pageVN, input_str);
     },
     // 
     BKey: function(e) {
-        if (SYS.非正式测试) {
-            ST.show('----');
+        if (A.SYS.非正式测试) {
+            A.ST.show('----');
         }
         this.setData({
             ready: true,
@@ -79,7 +80,7 @@ Page({
     //
     OK_end: function(OK) {
         if (OK) {
-            PAGE.pageBack()
+            A.PAGE.pageBack()
         } else {
             this.setData({
                 ready: false,
@@ -92,6 +93,6 @@ Page({
      */
     onUnload: function() {
         clearTimeout(time1000);
-        PAGE.pageBack();
+        A.PAGE.pageBack_标志(this);
     },
 })

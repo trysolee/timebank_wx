@@ -1,5 +1,5 @@
-const PAGE = require('../../class/page');
-const Url = require('../../class/url.js');
+// 
+const A = getApp();
 // 
 Page({
     /**
@@ -13,21 +13,21 @@ Page({
         hasOK: false,
     },
     onReady: function() {
-        PAGE.ready();
+        A.PAGE.ready();
         // 
-        var o = PAGE.当前page();
+        var o = A.PAGE.当前page();
         if (o.LOAD_URL) {
-            Url.setBackCall('callBack');
-            Url.post(o.LOAD_URL);
+            A.Url.setBackCall('callBack');
+            A.Url.post(o.LOAD_URL);
         } else {
             this.callBack();
         }
         // 
     },
     callBack: function() {
-        var cp = PAGE.当前page();
+        var cp = A.PAGE.当前page();
         var li = cp.datList();
-        PAGE.set('theList', li);
+        A.PAGE.set('theList', li);
         // 
         var key_na = '确定';
         if (cp.OK_name) key_na = cp.OK_name;
@@ -38,8 +38,8 @@ Page({
         })
     },
     OK_key: function() {
-        var p = PAGE.当前page();
-        var a = PAGE.get('theList');
+        var p = A.PAGE.当前page();
+        var a = A.PAGE.get('theList');
         var l = [];
         // 
         for (var i = 0; i < a.length; i++) {
@@ -54,8 +54,8 @@ Page({
         }
         // 
         if (p.OK_URL) {
-            Url.setPageBack('OK_end');
-            Url.post(p.OK_URL);
+            A.Url.setPageBack('OK_end');
+            A.Url.post(p.OK_URL);
             this.setData({
                 ready: false,
                 BKeyTxt: '请稍后...',
@@ -65,11 +65,11 @@ Page({
         }
     },
     OK_end: function(OK) {
-        if (OK) PAGE.pageBack()
+        if (OK) A.PAGE.pageBack()
     },
     chk: function(r) {
         var index = r.target.id;
-        var li = PAGE.get('theList');
+        var li = A.PAGE.get('theList');
         var o = li[index];
         if (o.chk) {
             if (o.type == 'primary') {
@@ -86,6 +86,6 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
-        PAGE.pageBack();
+        A.PAGE.pageBack_标志(this);
     },
 })

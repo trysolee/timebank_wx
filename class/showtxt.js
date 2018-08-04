@@ -1,29 +1,17 @@
 // 
-var SYS;
-var PAGE;
-// 
-var atFirst = true;
-const init = function() {
-    if (atFirst) {
-        atFirst = false;
-        // 
-        SYS = require('./sys');
-        PAGE = require('./page');
-    }
-}
+const A = getApp();
 // 
 // 
 var MW = '';
 
 function st(txt) {
-    init();
-    if (SYS.测试) {
+    if (A.SYS.测试) {
         MW += txt + '\n';
     } else {
         MW = txt;
     }
     // var cp = PAGE.当前page();
-    var po = PAGE.pageObj();
+    var po = A.PAGE.pageObj();
     var dat = po.data;
     if (dat.ready) {
         po.setData({
@@ -33,7 +21,7 @@ function st(txt) {
             keyType: 'primary',
             BKeyTxt: '确认',
         });
-    }else{
+    } else {
         po.setData({
             BTxt: MW,
         });

@@ -1,7 +1,9 @@
 // 
-var ST = require('../class/showtxt.js');
-var BUF = require('../class/buf.js');
 // 
+//  
+const A = getApp();
+// 
+
 function set1(na, obj) {
     wx.setStorage({
         key: na,
@@ -22,7 +24,7 @@ function get1(na) {
 // 
 const DAT = {
     get_user: function(uid) {
-        return BUF.getOne('user', uid);
+        return A.BUF.getOne('user', uid);
     },
     // set_user: function(uid, obj) {
     //     // set1('U_' + uid, obj);

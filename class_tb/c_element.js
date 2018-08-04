@@ -1,19 +1,5 @@
 // 
-// 
-var SOUND;
-var _SYS;
-var DAT;
-// 
-var atFirst = true;
-const init = function() {
-    if (atFirst) {
-        atFirst = false;
-        // 
-        SOUND = require('./c_sound');
-        _SYS = require('../class/sys');
-        DAT = require('./s_dat');
-    }
-}
+const A = getApp();
 // 
 const KEY = {
     禁止提前: function() {
@@ -61,9 +47,9 @@ const KEY = {
         this.end = function(elem) {
             if (!this.播放了) {
                 var l = this.arr.length;
-                var i = _SYS.随机数(0, l - 1);
+                var i = A.SYS.随机数(0, l - 1);
                 // 
-                var s = SOUND.getByNa(this.arr[i]);
+                var s = A.SOUND.getByNa(this.arr[i]);
                 elem.时间轴_设置_播放(s.getUrl());
             }
         };
@@ -138,7 +124,7 @@ const FUN = function(B) {
         for (var i in arr) {
             // 
             var n = arr[i]; // n : 声音Na
-            var s = SOUND.getByNa(n);
+            var s = A.SOUND.getByNa(n);
             s.set时刻(T);
             // 
             key.判断记录(n);
@@ -175,17 +161,14 @@ const FUN = function(B) {
 const ELEMENT = {
     //
     getByNa: function(Na) {
-        // 
-        init();
+        //
         // 
         return new FUN( //
-            DAT.get_元素(Na) //
+            A.DAT.get_元素(Na) //
         );
     },
     //
     getBy执行包: function(dat) {
-        // 
-        init();
         // 
         var o = ELEMENT.getByNa(dat.元素);
         o.时间轴 = dat.时间轴;
@@ -195,9 +178,7 @@ const ELEMENT = {
     // o : DAT ( JSON )
     初始化: function(na, o) {
         // 
-        init();
-        // 
-        var d = DAT.get_元素(na);
+        var d = A.DAT.get_元素(na);
         if (d) {
             // 
             if (d.版本 == o.版本) {
@@ -212,7 +193,7 @@ const ELEMENT = {
         }
         o.Na = na; // 记录 名称
         // 
-        DAT.set_元素(na, o);
+        A.DAT.set_元素(na, o);
     },
 };
 module.exports = ELEMENT;

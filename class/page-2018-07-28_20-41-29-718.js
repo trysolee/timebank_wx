@@ -85,7 +85,7 @@ const Page = {
                 var x = arr[i];
                 li.push({
                     type: 'primary',
-                    na: x.名称_存款(),
+                    na: x.列表名称(),
                     pageJump: '任务列表',
                     UID: x.UID(),
                     _page_set_: ['UID'],
@@ -114,7 +114,7 @@ const Page = {
             });
             li.push({
                 na: '家人列表',
-                pageJump: '人员列表',
+                pageJump: '家人清单',
                 // fun: '点击',
             });
             li.push({
@@ -127,17 +127,16 @@ const Page = {
             });
             li.push({
                 na: '添加孩子',
-                pageJump: '添加孩子',
+                fun: '点击',
             });
-            // 
-            if (A.SYS.非正式测试) {
-                li.push({
-                    na: '-测试-',
-                    pageJump: '测试1',
-                });
-            }
-            // 
+            li.push({
+                na: '重载CS',
+                fun: '测试',
+            });
             return li;
+        },
+        测试: function(dList, o, m) {
+            测试_执行包 = A.FIRST.测试1();
         },
         // 
         // dList : 全部列表Arr
@@ -165,15 +164,10 @@ const Page = {
             // 用于 列表的list
             // 
             var user = A.USER.getByID(PAGE.get('UID'));
-            if (!user.is空闲中()) {
+            if (user.is任务中()) {
                 PAGE.set('m_box', user.get执行包());
-                if (user.is任务中()) {
-                    PAGE.open('执行任务');
-                }
-                if (user.is提款中()) {
-                    PAGE.open('提款');
-                }
-                return '无用页';
+                PAGE.open('执行任务');
+                return [];
             }
             // 
             var li = [
@@ -270,7 +264,7 @@ const Page = {
             var m = A.TAKEBACK.getByNa(PAGE.get('任务Na'));
             var user = A.USER.getByID(PAGE.get('UID'));
             if (user.存款() < m.预留存款()) {
-                A.ST.show('存款不足' + m.预留存款());
+                A.ST.showtxt('存款不足' + m.预留存款());
                 return null;
             }
             var b = m.创建_执行包();
@@ -321,27 +315,23 @@ const Page = {
             for (var i = 0; i < arr.length; i++) {
                 var x = arr[i];
                 var t = 'default';
-                var f = null;
-                // 
                 if (x.is孩子()) {
                     t = 'primary';
-                    f = '_孩子';
+                    fun = '_孩子';
                 }
                 if (x.is好友()) {
                     t = 'primary';
-                    f = '_好友';
+                    fun = '_好友';
                 }
                 if (x.is家长()) {
                     t = 'primary';
-                    f = '_家长';
+                    fun = '_家长';
                 }
                 li.push({
                     type: t,
                     na: x.名称_存款(),
                     user: x,
-                    UID: x.UID(),
                     _page_set_: ['UID'],
-                    fun: f,
                 })
             }
             return li;
@@ -363,36 +353,33 @@ const Page = {
                 pageJump: '家长_改密码',
             }, {
                 na: an,
+                UID: x.UID(),
                 _URL: '管理员_转换',
+                _page_set_: ['UID'],
             }, {
                 na: '删除',
                 _URL: '删除家长',
+                UID: x.UID(),
+                _page_set_: ['UID'],
             }];
             // 
             return li;
         },
         // 
         _孩子: function(dList, o) {
-            var x = o.user;
             // 
             var li = [{
                 na: '改昵称',
                 pageJump: '孩子_改名',
             }, {
+                na: '终止任务',
+                pageJump: '终止任务',
+            }, {
                 na: '删除',
                 _URL: '删除孩子',
+                UID: x.UID(),
+                _page_set_: ['UID'],
             }];
-            if (x.is提款中()) {
-                li.unshift({
-                    na: '取消提款',
-                    _URL: '提款取消',
-                })
-            } else if (x.is任务中()) {
-                li.unshift({
-                    na: '取消任务',
-                    _URL: '任务取消',
-                })
-            }
             // 
             return li;
         },
@@ -402,58 +389,20 @@ const Page = {
             var li = [{
                 na: '删除',
                 _URL: '删除好友',
+                UID: x.UID(),
+                _page_set_: ['UID'],
             }];
             // 
             return li;
         },
     },
-    家长_改密码: {
-        url: '../fix_str/fix_str',
-        OK_URL: '家长_改密码',
-        OK_name: '修改',
-        // msg: '提示：\n还可以通过 [ 扫一扫 ] 分享码，\n加入已有家庭。',
-        // 
-        // 输入后 , 用'h_name'保存在page
-        pageVN: '短密',
-        getStr: function() {
-            return '输入新密码...(4位数字)';
-        },
-        OK_fun: function(str) {},
-    },
-    家长_改名: {
-        url: '../fix_str/fix_str',
-        OK_URL: '家长_改名',
-        OK_name: '修改',
-        // msg: '提示：\n还可以通过 [ 扫一扫 ] 分享码，\n加入已有家庭。',
-        // 
-        // 输入后 , 用'h_name'保存在page
-        pageVN: '家长称为',
-        getStr: function() {
-            return '输入家长称为...';
-        },
-        OK_fun: function(str) {},
-    },
-    孩子_改名: {
-        url: '../fix_str/fix_str',
-        OK_URL: '孩子_改名',
-        OK_name: '修改',
-        // msg: '提示：\n还可以通过 [ 扫一扫 ] 分享码，\n加入已有家庭。',
-        // 
-        // 输入后 , 用'h_name'保存在page
-        pageVN: '孩子昵称',
-        getStr: function() {
-            return '输入孩子昵称...';
-        },
-        OK_fun: function(str) {},
-    },
     注册_孩子昵称: {
         url: '../fix_str/fix_str',
-        标志: '首页',
+        返回: '首页',
         OK_page: '注册_家长称为',
         OK_name: '下一步',
-        msg: '提示：\n还可以通过 [ 扫一扫 ] 分享码，\n加入已有家庭。',
         // 
-        // 输入后 , 用'h_name'保存在page
+        // 输入后 , 用'input_name'保存在page
         pageVN: 'h_name',
         getStr: function() {
             return '孩子昵称';
@@ -462,24 +411,20 @@ const Page = {
     },
     注册_家长称为: {
         url: '../fix_str/fix_str',
-        // 返回: '上一页',
+        返回: '上一页',
         OK_URL: '创建家庭',
         OK_name: '注册',
         // 
-        END_page: '首页',
-        // 
-        // 输入后 , 用'j_name'保存在page
+        // 输入后 , 用'input_name'保存在page
         pageVN: 'j_name',
         getStr: function() {
             return '称为(爸爸,妈妈...)';
         },
-        OK_fun: function(str) {
-            A.PAGE.set('LJ', '4');
-        },
+        OK_fun: function(str) {},
     },
     测试1: {
         url: '../fix_str/fix_str',
-        // 返回: '上一页',
+        返回: '上一页',
         OK_name: '输入测试码',
         // 
         // 输入后 , 用'input_name'保存在page
@@ -487,18 +432,7 @@ const Page = {
         getStr: function() {
             return '测试码';
         },
-        OK_fun: function(str) {
-            if (str == '') {
-                测试_执行包 = A.FIRST.测试1();
-                // 
-            } else if (str == 'p') {
-                A.FIRST.测试2(测试_执行包);
-                // 
-            } else if (str == 's') {
-                A.FIRST.测试3();
-                // 
-            }
-        },
+        OK_fun: function(str) {},
     },
     // 
     // TODO
@@ -507,7 +441,7 @@ const Page = {
     // 
     添加孩子: {
         url: '../fix_str/fix_str',
-        返回: '首页',
+        返回: '上一页',
         OK_URL: '添加孩子',
         OK_name: '添加孩子',
         // 
@@ -517,21 +451,6 @@ const Page = {
             return '孩子昵称';
         },
         OK_fun: function(str) {},
-    },
-    添加家长: {
-        url: '../fix_str/fix_str',
-        返回: '首页',
-        OK_URL: '添加家长',
-        OK_name: '添加家长',
-        // 
-        // 输入后 , 用'input_name'保存在page
-        pageVN: 'input_name',
-        getStr: function() {
-            return '称为(爷爷,奶奶...)';
-        },
-        OK_fun: function(str) {
-            A.PAGE.set('JID', A.MY.家庭id);
-        },
     },
     // 
     设置系统管理员: {
@@ -794,10 +713,13 @@ const Page = {
         },
     },
 };
+// var BOX = [{
+//     dat: {}
+// }];
 // 
 // 由于 <打开页面> 需要等待 <onReady>异步处理
 // 所以需要把 <当前page> 临时记录在<backup>里面
-var backup = Page['首页'];
+var backup = Page['测试1'];
 // 
 const PAGE = {
     open: function(p) {
@@ -818,41 +740,16 @@ const PAGE = {
     },
     // 
     pageBack: function() {
-        wx.navigateBack();
-    },
-    // 
-    // 
-    // 有可能一次返回多个page ,
-    // 导致每个页面都触发<onunload>
-    // 为了避免这种情况,
-    // 每返回一个page , 就把他的<data.ready>设为false
-    // 
-    pageBack_标志: function(page_obj) {
-        // 
-        if (!page_obj.data.ready) {
-            return;
-        }
-        // 
         var o = this.当前page();
         if (o.返回 == '上一页') {
-            return;
-        } else if (!o.返回) {
-            return;
+            wx.navigateBack();
+            // } else if (p.返回 == '首页') {
+            //     this.open('首页');
         } else {
             var p = getCurrentPages();
             // i 从倒数第二page 开始 , 到 顺数第二page结束
             for (var i = p.length - 2; i >= 1; i--) {
-                var cp = p[i];
-                //
-                // 如果遇到<ready : false > (没有准备好)
-                // 的page
-                // 也不要他
-                if (!page_obj.data.ready) {
-                    wx.navigateBack();
-                }
-                if (cp._BOX_.page.标志 == o.返回) return;
-                // 
-                page_obj.data.ready = false;
+                if (p[i]._BOX_.page.标志 == o.返回) return;
                 wx.navigateBack();
             }
         }

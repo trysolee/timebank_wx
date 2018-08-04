@@ -1,4 +1,6 @@
-const LOG = require('../../class/log');
+// 
+const A = getApp();
+// 
 Page({
     /**
      * 页面的初始数据
@@ -12,8 +14,10 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-        LOG({
-            _VAL: 'GO_LOGIN',
+        A.LOG({
+            // _VAL: 'GO_LOGIN',
+            // 
+            _URL: '登录',
         });
     },
     /**

@@ -1,30 +1,7 @@
-var SYS;
-var USER;
-var BUF;
-var PAGE;
-var LOG;
-var LOGIN;
-var ST;
-var RET;
-var URL;
 // 
-var atFirst = true;
+const A = getApp();
+// 
 const VAL = {
-    init: function() {
-        if (atFirst) {
-            atFirst = false;
-            // 
-            SYS = require('./sys');
-            URL = require('./url');
-            USER = require('./user');
-            BUF = require('./buf');
-            PAGE = require('./page');
-            LOG = require('./log');
-            LOGIN = require('./login.js');
-            ST = require('./showtxt.js');
-            RET = require('./ret.js');
-        }
-    },
     // 
     TEST_: {
         TXT: '通用测试',
@@ -37,14 +14,14 @@ const VAL = {
         FUN: function(DAT) {
             // 
             // ------- 页面设为<等待> ---
-            var po = PAGE.pageObj();
+            var po = A.PAGE.pageObj();
             po.setData({
                 ready: false,
                 Loading: true, // 按键设置
                 keyType: 'default',
                 BKeyTxt: '发送...',
             });
-            ST.show('发送请求...');
+            A.ST.show('发送请求...');
             // 
             // 
         },
@@ -52,21 +29,21 @@ const VAL = {
     返回OK: {
         TXT: '服务器返回数据',
         FUN: function(DAT) {
-            RET(DAT);
+            A.RET(DAT);
         },
     },
     连接_成功: {
         FUN: function(DAT) {
             // 
             // ------- 页面设为<连接结束.恢复> ---
-            var po = PAGE.pageObj();
+            var po = A.PAGE.pageObj();
             po.setData({
                 ready: true,
             });
             //
-            URL.execBackCall(true);
+            A.Url.execBackCall(true);
             // 
-            URL.goPageBack();
+            A.Url.goPageBack();
         },
     },
     连接_成功_但有ERR: {
@@ -74,7 +51,7 @@ const VAL = {
             // 
             // ------- 页面设为<连接结束.有异常> ---
             // 暂停在 提示页面
-            var po = PAGE.pageObj();
+            var po = A.PAGE.pageObj();
             po.setData({
                 ready: true,
                 Loading: false, // 按键设置
@@ -82,7 +59,7 @@ const VAL = {
                 BKeyTxt: '返回',
             });
             //
-            URL.execBackCall(false);
+            A.Url.execBackCall(false);
             // 
         },
     },
@@ -96,7 +73,8 @@ const VAL = {
     // ----------------------
     还没注册: {
         TXT: '还没注册',
-        PageJump: '邀请码',
+        // PageJump: '邀请码',
+        PageJump: '注册_孩子昵称',
     },
     参数不全: {
         TXT: '参数不全',
@@ -117,22 +95,18 @@ const VAL = {
         // 跳转到相应页面
         // 
     },
-    GO_LOGIN: {
-        TXT: '登陆...',
-        FUN: function(DAT) {
-            if (SYS.测试) {
-                // LOGIN.serverGO('user');
-                PAGE.set('code', SYS.测试用户);
-                LOG({
-                    _URL: '登录', //
-                });
-            } else {
-                LOGIN.GO();
-            }
-        },
-    },
     微信登录_成功: {
-        // TXT: '微信登录失败',
+        TXT: '微信登录成功',
+        FUN: function(DAT) {
+            // 
+            // 微信登录 , 都是为了获取<code>用于<登录>
+            // 所以<微信登录>后 , 需要继续<服务连接>
+            A.PAGE.set('_CODE_', DAT.code);
+            var o = A.PAGE.get('url_obj');
+            A.Url.post_(o);
+            // 
+            // 
+        },
     },
     微信登录_失败: {
         TXT: '微信登录失败',
@@ -140,8 +114,8 @@ const VAL = {
     获取微信用户信息成功: {
         TXT: '获取微信用户信息成功',
         FUN: function(DAT) {
-            if (SYS.测试) {
-                ST.showJson(DAT); // 测试用
+            if (A.SYS.测试) {
+                A.ST.showJson(DAT); // 测试用
             }
             getApp().globalData.userInfo = DAT;
         },
@@ -165,7 +139,7 @@ const VAL = {
     登录OK: {
         TXT: '服务器登录成功',
         FUN: function(DAT) {
-            ST.showJson(DAT); // 测试用
+            A.ST.showJson(DAT); // 测试用
             //
         },
         PageJump: '首页',
@@ -173,7 +147,7 @@ const VAL = {
     后续call: {
         FUN: function(DAT) {
             for (var i in DAT) {
-                LOG({
+                A.LOG({
                     _VAL: DAT[i], //
                 })
             }
@@ -182,7 +156,7 @@ const VAL = {
     清空指定BUF: {
         FUN: function(DAT) {
             for (var i in DAT) {
-                BUF.freeBUF(DAT[i]);
+                A.BUF.freeBUF(DAT[i]);
             }
         },
     },
@@ -191,7 +165,7 @@ const VAL = {
         TXT: '缓存数据',
         FUN: function(DAT) {
             //
-            BUF.jsonIN(DAT);
+            A.BUF.jsonIN(DAT);
         },
     },
     ERR_NOT_Invitation: {
@@ -206,7 +180,7 @@ const VAL = {
     // 
     pageBackCall: {
         FUN: function(DAT) {
-            PAGE.pageObj()[DAT.backCall](DAT.OK);
+            A.PAGE.pageObj()[DAT.backCall](DAT.OK);
         },
     },
     // 

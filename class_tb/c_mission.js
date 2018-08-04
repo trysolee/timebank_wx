@@ -1,3 +1,5 @@
+// // 
+const A = getApp();
 // 
 // 
 const ST = require('../class/showtxt.js');
@@ -18,8 +20,6 @@ const init = function() {
 // 
 // 任务
 const FUN = function(B) {
-    // 
-    init();
     // 
     this.BUF = B;
     // 
@@ -77,7 +77,7 @@ const FUN = function(B) {
             return false;
         }
         var na = this.BUF.元素[i];
-        var e = ELEMENT.getByNa(na);
+        var e = A.ELEMENT.getByNa(na);
         // 
         执行包_dat.元素 = na;
         执行包_dat.元素_开始时刻 = new Date().getTime();
@@ -96,7 +96,7 @@ const FUN = function(B) {
     };
     this.创建_执行包 = function() { // 任务id
         var 元素na = this.第一个元素Na();
-        var 元素obj = ELEMENT.getByNa(元素na);
+        var 元素obj = A.ELEMENT.getByNa(元素na);
         // 
         var 最后一个 = false;
         if (this.元素个数() <= 1) 最后一个 = true;
@@ -123,7 +123,7 @@ const FUN = function(B) {
     this.循环执行 = function(执行包_dat) {
         // 
         var e, a, b;
-        e = ELEMENT.getBy执行包(执行包_dat);
+        e = A.ELEMENT.getBy执行包(执行包_dat);
         a = e.开始时刻(执行包_dat);
         b = e.当前时刻(执行包_dat);
         // 
@@ -133,7 +133,7 @@ const FUN = function(B) {
             if (o.已播放) continue;
             // 
             if (a <= o.时差 && o.时差 <= b) {
-                PLAY.play(o.声音URL);
+                A.PLAY.play(o.声音URL);
                 o.已播放 = true;
             }
         }
@@ -144,16 +144,12 @@ const MISSION = {
     // 
     getByNa: function(Na) {
         // 
-        init();
-        // 
         return new FUN( //
-            DAT.get_任务(Na) //
+            A.DAT.get_任务(Na) //
         );
     },
     //
     getBy执行包: function(dat) {
-        // 
-        init();
         // 
         var o = MISSION.getByNa(dat.任务);
         return o;
@@ -169,9 +165,7 @@ const MISSION = {
     // o : DAT ( JSON )
     初始化: function(na, o) {
         // 
-        init();
-        // 
-        var d = DAT.get_任务(na);
+        var d = A.DAT.get_任务(na);
         if (d) {
             // 
             if (d.版本 == o.版本) {
@@ -185,14 +179,14 @@ const MISSION = {
             var y = o.元素;
             var i = 0;
             for (var x in y) {
-                var o1 = ELEMENT.getByNa(y[x]);
+                var o1 = A.ELEMENT.getByNa(y[x]);
                 i += Number(o1.时长());
             }
             o.DAT.时长 = i;
         }
         o.Na = na; // 记录 名称
         // 
-        DAT.set_任务(na, o);
+        A.DAT.set_任务(na, o);
         MISSION.保存列表1(na, o);
         // 
     },
@@ -203,7 +197,7 @@ const MISSION = {
     //
     // 保存<任务>列表数据
     保存列表: function() {
-        DAT.set_SYS('任务列表', MISSION.初始化记录);
+        A.DAT.set_SYS('任务列表', MISSION.初始化记录);
     },
     保存列表1: function(na, o) {
         // 为 <保存列表>做准备... 
@@ -215,9 +209,7 @@ const MISSION = {
     // 列出最可能执行的任务
     任务列表: function() {
         // 
-        init();
-        // 
-        var arr = DAT.get_SYS('任务列表');
+        var arr = A.DAT.get_SYS('任务列表');
         var ar = [];
         for (var i in arr) {
             ar.push(MISSION.getByNa(i));

@@ -8,7 +8,7 @@
 
 <view class="bg" wx:if="{{ready}}">
   <view>
-    <button class="OK_key" bindtap='取消' >起床___X</button>
+    <button class="OK_key" bindtap='取消' >取消任务_X</button>
   </view>
   <view class="input_txt">
     <text class="time_txt">{{timeStr}}</text>

@@ -1,6 +1,5 @@
 // 
-const _SYS = require('../class/sys');
-var SOUND = require('./c_sound');
+const A = getApp();
 // 
 const S_FUN = {
     //
@@ -23,8 +22,9 @@ const S_FUN = {
     // 
     设置_时刻_一半: function(执行包_dat, 元素, //
         声音, dat) {
-        var l = 元素.时长();
-        元素.时间轴_倒设_时刻(l / 2);
+        var l = 元素.剩下时间(执行包_dat);
+        var s = 元素.时间轴_倒设_时刻(l / 2);
+        声音.set时刻(s);
         声音.设置播放();
     },
     // 
@@ -93,7 +93,7 @@ const S_FUN = {
                 buf.几率_调用次数_播放概率 = dat[j];
         }
         // 
-        if (_SYS.随机数(0, 100) <= 播放概率) {
+        if (A.SYS.随机数(0, 100) <= 播放概率) {
             声音.设置播放();
         } else {
             声音.不播放();
