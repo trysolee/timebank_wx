@@ -168,10 +168,7 @@ const MISSION = {
         var d = A.DAT.get_任务(na);
         if (d) {
             // 
-            if (d.版本 == o.版本) {
-                MISSION.保存列表1(na, o);
-                return;
-            }
+          
             // 
             o.DAT = d.DAT
         } else {

@@ -14,7 +14,7 @@ const 版本 = 'tb';
 // 
 const arr = {
     登录: {
-        url: path() + 版本 + '9_login.php',
+        url: '9_login.php',
         login: true,
         dat: {
             // code: ['code', null, false],
@@ -22,7 +22,7 @@ const arr = {
     },
     // 
     修改存款: {
-        url: path() + 版本 + '9_fix_money.php',
+        url: '9_fix_money.php',
         dat: {
             UID: ['UID', null, false],
             m: ['money', null, false], //
@@ -30,7 +30,7 @@ const arr = {
     },
     // 
     更新执行包: {
-        url: path() + 版本 + '9_up_exec.php',
+        url: '9_up_exec.php',
         dat: {
             UID: ['UID', null, false],
             JSON: ['m_box', null, false], // 执行包
@@ -38,21 +38,21 @@ const arr = {
     },
     // 
     任务结束: {
-        url: path() + 版本 + '9_mission_end.php',
+        url: '9_mission_end.php',
         dat: {
             UID: ['UID', null, false],
             T: ['剩下时间', null, false], //
         },
     },
     任务取消: { // 暂时 借用<提款取消>
-        url: path() + 版本 + '9_takeback_cancle.php',
+        url: '9_takeback_cancle.php',
         dat: {
             UID: ['UID', null, false],
         },
     },
     // 
     提款结束: {
-        url: path() + 版本 + '9_takeback_end.php',
+        url: '9_takeback_end.php',
         dat: {
             UID: ['UID', null, false],
             T: ['用掉的时间', null, false], //
@@ -60,24 +60,24 @@ const arr = {
     },
     // 
     提款取消: {
-        url: path() + 版本 + '9_takeback_cancle.php',
+        url: '9_takeback_cancle.php',
         dat: {
             UID: ['UID', null, false],
         },
     },
     // 
     更新孩子数据: {
-        url: path() + 版本 + '9_update.php',
+        url: '9_update.php',
         dat: {},
     },
     添加孩子: {
-        url: path() + 版本 + '5_add_c.php',
+        url: '5_add_c.php',
         dat: {
             h_NA: ['input_name', null, false],
         },
     },
     添加家长: {
-        url: path() + 版本 + '9_add_m.php',
+        url: '9_add_m.php',
         dat: {
             // code: ['code', null, false], // 
             JID: ['JID', null, false], // 家庭ID
@@ -85,21 +85,21 @@ const arr = {
         },
     },
     家长_改密码: {
-        url: path() + 版本 + '5_fix_mm.php',
+        url: '5_fix_mm.php',
         dat: {
             UID: ['UID', null, false], //
             m: ['短密', null, false], // 昵称
         },
     },
     家长_改名: {
-        url: path() + 版本 + '5_rename.php',
+        url: '5_rename.php',
         dat: {
             UID: ['UID', null, false], //
             NA: ['家长称为', null, false], // 昵称
         },
     },
     孩子_改名: {
-        url: path() + 版本 + '5_rename.php',
+        url: '5_rename.php',
         dat: {
             UID: ['UID', null, false], //
             NA: ['孩子昵称', null, false], // 昵称
@@ -107,7 +107,7 @@ const arr = {
     },
     // 
     创建家庭: {
-        url: path() + 版本 + '9_login_in.php',
+        url: '9_login_in.php',
         login: true,
         dat: {
             // 孩子名称
@@ -120,24 +120,24 @@ const arr = {
     },
     // 
     获取项目的全部人员: {
-        url: path() + 版本 + '5_get_pro_all_user.php',
+        url: '5_get_pro_all_user.php',
         dat: {},
     },
     // 
     修改分组人员权限: {
-        url: path() + 版本 + '5_fix_group.php',
+        url: '5_fix_group.php',
         dat: {
             ARR: ['ARR', null, false],
         },
     },
     // 
     系统管理员列表: {
-        url: path() + 版本 + '1_get_sys_admin.php',
+        url: '1_get_sys_admin.php',
         dat: {},
     },
     // 
     系统管理员设置: {
-        url: path() + 版本 + '1_set_sys_admin.php',
+        url: '1_set_sys_admin.php',
         dat: {
             ARR: ['ARR', null, false],
         },
@@ -263,7 +263,8 @@ const OBJ = {
             _VAL: '连接_发送'
         });
         wx.request({
-            url: o.url,
+            // url: o.url,
+            url: A.SYS.post_URL(o.url),
             data: d,
             success: function(res) {
                 A.LOG({

@@ -11,6 +11,9 @@ App({
 // 
 var A = getApp();
 // 
+A.REC = require('class/recorder');
+A.A_PLAY = require('class/play_audio');
+// 
 A.SYS = require('class/sys');
 A.LOG = require('class/log');
 A.LOGIN = require('class/login.js');
@@ -33,3 +36,4 @@ A.TAKEBACK = require('class_tb/c_takeback');
 A.PLAY = require('class_tb/c_play');
 A.FUN = require('class_tb/s_fun');
 A.FIRST = require('class_tb/s_first');
+// 

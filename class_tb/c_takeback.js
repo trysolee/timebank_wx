@@ -82,10 +82,10 @@ const TAKEBACK = {
         var d = A.DAT.get_提款(na);
         if (d) {
             // 
-            if (d.版本 == o.版本) {
-                TAKEBACK.保存列表1(na, o);
-                return;
-            }
+            // if (d.版本 == o.版本) {
+            //     TAKEBACK.保存列表1(na, o);
+            //     return;
+            // }
             // 
             o.DAT = d.DAT
         } else {

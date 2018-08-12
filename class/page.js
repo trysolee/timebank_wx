@@ -10,7 +10,7 @@ const Page = {
     },
     声音测试: {
         url: '../list_chk/list_chk',
-        返回: null, // 没有返回键
+        返回: '首页', // 
         datList: function() {
             var li = [{
                 // primary
@@ -47,6 +47,13 @@ const Page = {
                 type: 'default',
                 na: '播放1',
                 fun: '播放1',
+            }, {
+                // primary
+                // default
+                // warn
+                type: 'default',
+                na: 'stop',
+                fun: 'stop',
             }];
             // TODO 
             // 只设置了<更多>键 , 
@@ -56,22 +63,25 @@ const Page = {
         // dList : 全部列表Arr
         // o : 被点击的obj
         录音: function(dList, o) {
-            REC.开始();
+            A.REC.开始();
         },
         结束: function(dList, o) {
-            REC.结束((res) => {
+            A.REC.结束((res) => {
                 console.log('recorder stop', res)
                 PAGE.set('tempFilePath', res.tempFilePath)
             });
         },
         回播: function(dList, o) {
-            PLAY.开始(PAGE.get('tempFilePath'));
+            A.A_PLAY.开始(PAGE.get('tempFilePath'));
         },
         播放: function(dList, o) {
-            PLAY.开始('https://kfqlh.com/a3.mp3');
+            A.A_PLAY.开始('https://kfqlh.com/a3.mp3');
         },
         播放1: function(dList, o) {
-            PLAY.开始('https://kfqlh.com/a1.m4a');
+            A.A_PLAY.开始('https://kfqlh.com/a1.m4a');
+        },
+        stop: function(dList, o) {
+            A.A_PLAY.结束();
         },
     },
     首页: {
@@ -485,20 +495,25 @@ const Page = {
         // 输入后 , 用'input_name'保存在page
         pageVN: 'input_name',
         getStr: function() {
-            return '测试码';
+            return '声音测试';
         },
         OK_fun: function(str) {
-            if (str == '') {
-                测试_执行包 = A.FIRST.测试1();
+            if (str == '重载数据') {
+                var 测试_执行包 = A.FIRST.测试1();
                 // 
             } else if (str == 'p') {
                 A.FIRST.测试2(测试_执行包);
                 // 
             } else if (str == 's') {
                 A.FIRST.测试3();
+                //     // 
+            } else if (str == '声音测试') { // 声音测试
+                var p = A.PAGE.当前page();
+                p.OK_page = '声音测试';
                 // 
             }
         },
+        msg: '重载数据\n声音测试'
     },
     // 
     // TODO

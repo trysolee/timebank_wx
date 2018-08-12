@@ -1,21 +1,5 @@
 // 
-// 
-var MISSION;
-var FUN;
-var DAT;
-var _SYS;
-// 
-var atFirst = true;
-const init = function() {
-    if (atFirst) {
-        atFirst = false;
-        // 
-        MISSION = require('./c_mission');
-        FUN = require('./s_fun');
-        DAT = require('./s_dat');
-        _SYS = require('../class/sys');
-    }
-}
+const A = getApp();
 // 
 // 元素
 const CLA = function(B) {
@@ -48,7 +32,7 @@ const CLA = function(B) {
             var f = arr[i].fun;
             var d = arr[i].dat;
             // 
-            FUN[f](执行包_dat, 元素, this, d);
+            A.FUN[f](执行包_dat, 元素, this, d);
             // 
             if (!this.继续exec) {
                 break;
@@ -77,16 +61,13 @@ const CLA = function(B) {
         }
         var url = arr[i];
         this.save();
-        if (_SYS.测试) {
-            return this.名称() + '_' + url;
-        }
-        return url;
+        return A.SYS.声音URL(url);
     };
     this.停止exec = function() { //
         this.继续exec = false;
     };
     this.save = function() { //
-        DAT.set_声音(this.名称(), this.BUF);
+        A.DAT.set_声音(this.名称(), this.BUF);
     };
 }
 // 
@@ -94,10 +75,9 @@ const CLA = function(B) {
 const SOUND = {
     getByNa: function(Na) {
         // 
-        init();
         // 
         return new CLA( //
-            DAT.get_声音(Na) //
+            A.DAT.get_声音(Na) //
         );
     },
     //
@@ -105,14 +85,13 @@ const SOUND = {
     // o : DAT ( JSON )
     初始化: function(na, o) {
         // 
-        init();
         // 
-        var d = DAT.get_声音(na);
+        var d = A.DAT.get_声音(na);
         if (d) {
             // 
-            if (d.版本 == o.版本) {
-                return;
-            }
+            // if (d.版本 == o.版本) {
+            //     return;
+            // }
             // 
             o.DAT = d.DAT
         } else {
@@ -133,7 +112,7 @@ const SOUND = {
         }
         // 
         o.Na = na; // 记录 声音的名称
-        DAT.set_声音(na, o);
+        A.DAT.set_声音(na, o);
     },
 };
 module.exports = SOUND;

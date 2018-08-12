@@ -181,9 +181,7 @@ const ELEMENT = {
         var d = A.DAT.get_元素(na);
         if (d) {
             // 
-            if (d.版本 == o.版本) {
-                return;
-            }
+           
             // 
             o.DAT = d.DAT
         } else {

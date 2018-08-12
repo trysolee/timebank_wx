@@ -1,4 +1,7 @@
-// 不能调用其他 exports
+// 
+const url1 = 'http://localhost/';
+const post版本 = 'tb';
+// 
 const SYS = {
     //
     //   
@@ -8,6 +11,7 @@ const SYS = {
     // 非正式测试: false, // 正式调试之前
     // 
     测试: true,
+    不播放声音: false,
     // 测试用户: 'admin',
     测试用户: 'user2q',
     //
@@ -16,6 +20,12 @@ const SYS = {
     // 
     LoginCode: '__LOGIN_CODE__',
     // 
+    声音URL: function(url) {
+        return url1 + 'sounds/' + url + '.m4a';
+    },
+    post_URL: function(url) {
+        return url1 + post版本 + url;
+    },
     // 
     // 包括 m1 和 m2
     随机数: function(m1, m2) {
