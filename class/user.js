@@ -24,6 +24,10 @@ const FUN = function(B) {
         return this.BUF.JSON.存款;
     };
     // 
+    this.刷新 = function() {
+        this.BUF = A.BUF.getOne('user', this.UID());
+    };
+    // 
     // 如果是孩子 , 返回 true
     this.is孩子 = function() {
         if (this.BUF.JSON.角色 != '孩子') return false;
@@ -99,7 +103,7 @@ const FUN = function(B) {
                 + ' [ 家长 ]';
         }
         return this.列表名称() //
-            + ' [ $' + this.存款() + ' ]';
+            + ' [ $' + A.SYS.秒ToStr(this.存款()) + ' ]';
     };
     // 
     // 角色 : 孩子 , 家长 , 管理员

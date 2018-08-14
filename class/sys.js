@@ -33,7 +33,7 @@ const SYS = {
         var i = Math.floor(Math.random() * j)
         return m1 + i;
     },
-    // 
+    // 用于<任务执行> 和 <提款>
     秒ToStr: function(s) {
         var f = '';
         if (Number(s) < 0) {

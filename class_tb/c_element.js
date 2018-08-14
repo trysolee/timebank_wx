@@ -80,6 +80,11 @@ const FUN = function(B) {
         return this.BUF.Na;
     };
     // 
+    // 
+    this.重置偏移量 = function(执行包_dat) {
+        执行包_dat.元素_开始偏移 = //
+            Math.round((new Date().getTime() - 执行包_dat.元素_开始时刻) / 1000);
+    }
     // 注意 : 不一定在 0 开始 // 单位 : 秒
     this.开始时刻 = function(执行包_dat) {
         return 执行包_dat.元素_开始偏移;
@@ -181,7 +186,6 @@ const ELEMENT = {
         var d = A.DAT.get_元素(na);
         if (d) {
             // 
-           
             // 
             o.DAT = d.DAT
         } else {

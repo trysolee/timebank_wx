@@ -8,6 +8,9 @@ const CLA = function(B) {
     this.继续exec = true;
     // 
     this.getBUF = function() { // 
+        return this.BUF;
+    };
+    this.getDAT = function() { // 
         return this.BUF.DAT;
     };
     // 
@@ -52,16 +55,21 @@ const CLA = function(B) {
         return this.播放OK;
     };
     this.getUrl = function() { //
-        var dat = this.getBUF();
-        var i = dat.上次index++;
-        var arr = this.BUF.URLs;
-        if (i >= arr.length) {
-            i = 0;
-            dat.上次index = 0;
+        var buf = this.getBUF();
+        var i = 0;
+        var arr = buf.URLs;
+        // 
+        if (buf.顺序 == '循环') {
+            i = buf.DAT.上次index++;
+            if (i >= arr.length) {
+                i = 0;
+                buf.DAT.上次index = 0;
+            }
+            this.save();
+        } else {
+            i = A.SYS.随机数(0, arr.length - 1);
         }
-        var url = arr[i];
-        this.save();
-        return A.SYS.声音URL(url);
+        return A.SYS.声音URL(arr[i]);
     };
     this.停止exec = function() { //
         this.继续exec = false;

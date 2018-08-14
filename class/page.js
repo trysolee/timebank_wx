@@ -384,6 +384,7 @@ const Page = {
         // 
         _孩子: function(dList, o) {
             var x = o.user;
+            x.刷新();
             // 
             var li = [{
                 na: '改昵称',
@@ -862,12 +863,12 @@ const PAGE = {
                 // 如果遇到<ready : false > (没有准备好)
                 // 的page
                 // 也不要他
-                if (!page_obj.data.ready) {
+                if (!cp.data.ready) {
                     wx.navigateBack();
                 }
                 if (cp._BOX_.page.标志 == o.返回) return;
                 // 
-                page_obj.data.ready = false;
+                cp.data.ready = false;
                 wx.navigateBack();
             }
         }

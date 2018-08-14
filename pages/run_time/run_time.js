@@ -17,6 +17,9 @@ var 执行包 = null;
 Page({
     // 
     OK_key: function(e) {
+        // 
+        A.PLAY.重置();
+        // 
         var m = A.MISSION.getBy执行包(执行包);
         if (m.下一个元素(执行包)) {
             // 
@@ -49,6 +52,13 @@ Page({
         A.Url.post('任务取消');
         // 
     },
+    重听: function(e) {
+        if (A.SYS.测试) {
+            A.MISSION.快进(执行包);
+            return;
+        }
+        A.PLAY.重听();
+    },
     // OK_end: function(OK) {
     //     if (OK) PAGE.pageBack()
     // },
@@ -66,10 +76,14 @@ Page({
     // default
     // warn
     onReady: function() {
+        A.PLAY.重置();
         A.PAGE.ready();
         // 
         执行包 = A.PAGE.get('m_box');
         var m = A.MISSION.getBy执行包(执行包);
+        var e = A.ELEMENT.getBy执行包(执行包);
+        e.重置偏移量(执行包);
+        //
         var ok_name = m.下一个元素Na(执行包) + '...>';
         this.setData({
             ready: true,
@@ -124,6 +138,7 @@ Page({
      */
     onUnload: function() {
         clearTimeout(time1000);
+        A.PLAY.重置();
         A.PAGE.pageBack_标志(this);
     },
     /**

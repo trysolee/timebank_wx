@@ -9,7 +9,7 @@ innerAudioContext.onError((res) => {
     A.ST.show('播放失败:' + lastURL);
 })
 // 
-const list = [];
+var list = [];
 var lastURL = null;
 // 
 var playing = false;
@@ -39,6 +39,17 @@ const PLAY = {
             playing = true;
             go();
         }
+    },
+    //
+    重置: function() {
+        list = [];
+        innerAudioContext.stop();
+        playing = false;
+        lastURL = null;
+    },
+    //
+    重听: function() {
+       this.play(lastURL);
     },
     //
 };

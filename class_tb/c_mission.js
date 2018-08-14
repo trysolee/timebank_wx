@@ -161,6 +161,13 @@ const MISSION = {
         return Math.round((d - 执行包_dat.任务_开始时刻) / 1000);
     },
     //
+    // 快进 60秒 
+    快进: function(执行包) {
+        var i = 60 * 1000;
+        执行包.任务_开始时刻 -= i;
+        执行包.元素_开始时刻 -= i;
+    },
+    //
     // na : 声音名称
     // o : DAT ( JSON )
     初始化: function(na, o) {
@@ -168,7 +175,6 @@ const MISSION = {
         var d = A.DAT.get_任务(na);
         if (d) {
             // 
-          
             // 
             o.DAT = d.DAT
         } else {
