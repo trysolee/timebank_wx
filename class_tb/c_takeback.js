@@ -12,6 +12,9 @@ const FUN = function(B) {
     this.名称 = function() { // 名称
         return this.BUF.Na;
     };
+    this.列表名称 = function() { //
+        return this.BUF.name;
+    };
     // 
     this.预留存款 = function() { // 
         return this.BUF.预留存款;
@@ -126,6 +129,14 @@ const TAKEBACK = {
             ar.push(TAKEBACK.getByNa(i));
         }
         return ar;
+    },
+    //
+    // 测试用
+    // 快进 60秒 
+    快进: function(执行包) {
+        var i = 60 * 1000;
+        执行包.提款_开始时刻 -= i;
+        执行包.元素_开始时刻 -= i;
     },
 };
 module.exports = TAKEBACK;

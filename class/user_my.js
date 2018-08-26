@@ -5,6 +5,7 @@ const DAT = {
     UID: '',
     用户名: '',
     家庭名称: '',
+    密码 : '',
     // 
     is系统管理员: false,
     is管理员: false,
@@ -29,6 +30,9 @@ const DAT = {
     },
     is当前分组: function(分组) {
         return 分组 == this.当前分组;
+    },
+    密码OK: function(str) {
+        return str == this.密码;
     },
 };
 module.exports = DAT;

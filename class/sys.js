@@ -1,6 +1,8 @@
 // 
 const url1 = 'http://localhost/';
+const post_url = 'http://localhost/tb2_10/';
 const post版本 = 'tb';
+const 二维码B = 'https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=12_um8DQF6a3cW1QkmEZmhzleNCvuPwaGG-OhKJwx3WNfQLr4FL6VfE49Q8jhhScYHQIsgj-PRxEC2oG4GXDS_jEZdWyXYVhbfHbnlwwccYwwjxEf_Rfb7-om6y9cnJBvzAUuTsQu2OPgLbolDwKHVbAJAOLZ';
 // 
 const SYS = {
     //
@@ -13,7 +15,9 @@ const SYS = {
     测试: true,
     不播放声音: false,
     // 测试用户: 'admin',
-    测试用户: 'user2q',
+    // 测试用户: 'user2q',
+    // 测试用户: 'userpptptpq', // 老虎泰格
+    测试用户: 'ukkc--k9921', // 小新
     //
     项目名_长度: 35,
     分组名_长度: 35,
@@ -24,7 +28,9 @@ const SYS = {
         return url1 + 'sounds/' + url + '.m4a';
     },
     post_URL: function(url) {
-        return url1 + post版本 + url;
+        if (url == '二维码B') return 二维码B;
+        // 
+        return post_url + post版本 + url;
     },
     // 
     // 包括 m1 和 m2
@@ -87,5 +93,11 @@ const SYS = {
         }
     },
     // 
+    // 
+    Each: function(arr, fun) {
+        for (var i in arr) {
+            fun(i, arr[i]);
+        }
+    },
 };
 module.exports = SYS;

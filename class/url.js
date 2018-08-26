@@ -29,6 +29,14 @@ const arr = {
         },
     },
     // 
+    发出邀请: {
+        url: '二维码B',
+        dat: {
+            scene: ['JID', null, false],
+            page: ['page接受邀请', null, false], //
+        },
+    },
+    // 
     更新执行包: {
         url: '9_up_exec.php',
         dat: {
@@ -76,6 +84,30 @@ const arr = {
             h_NA: ['input_name', null, false],
         },
     },
+    添加好友: {
+        url: '9_add_f.php',
+        dat: {
+            id: ['好友邀请码', null, false],
+        },
+    },
+    加入家庭: {
+        url: '9_login_in_old.php',
+        login: true,
+        dat: {
+            j_NA: ['家长称为', null, false],
+            invite: ['家长邀请码', null, false],
+        },
+    },
+    // 
+    获取家长邀请码: {
+        url: '9_login_get.php',
+        dat: {},
+    },
+    // 
+    获取好友邀请码: {
+        url: '9_add_f_get.php',
+        dat: {},
+    },
     添加家长: {
         url: '9_add_m.php',
         dat: {
@@ -99,6 +131,13 @@ const arr = {
         },
     },
     孩子_改名: {
+        url: '5_rename.php',
+        dat: {
+            UID: ['UID', null, false], //
+            NA: ['孩子昵称', null, false], // 昵称
+        },
+    },
+    删除孩子: {
         url: '5_rename.php',
         dat: {
             UID: ['UID', null, false], //

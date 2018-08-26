@@ -38,6 +38,9 @@ const RET = function(d) {
         if (OPT.Admin) {
             A.My.is系统管理员 = true;
         }
+        if (OPT.myJID) {
+            A.My.家庭id = OPT.myJID;
+        }
         if (OPT.freeBUF) {
             A.LOG({
                 _VAL: '清空指定BUF', //
@@ -61,6 +64,29 @@ const RET = function(d) {
                 DAT: OPT.call,
             })
         }
+        if (OPT.好友邀请码) {
+            A.PAGE.set('好友邀请码', OPT.好友邀请码);
+            A.LOG({
+                // 
+                VAL: {
+                    PageJump: '好友邀请码',
+                }
+            })
+        }
+        if (OPT.家长邀请码) {
+            A.PAGE.set('家长邀请码', OPT.家长邀请码);
+            A.LOG({
+                // 
+                VAL: {
+                    PageJump: '家长邀请码',
+                }
+            })
+        }
+        // 
+        A.LOG({
+            _VAL: '连接_成功', //
+        });
+        // 
         if (OPT.toPage) {
             A.LOG({
                 // 更换 首页 , 
@@ -72,10 +98,6 @@ const RET = function(d) {
                 }
             })
         }
-        // 
-        A.LOG({
-            _VAL: '连接_成功', //
-        });
     }
 };
 module.exports = RET;

@@ -160,6 +160,9 @@ const FUN = function(B) {
             已播放: false,
         });
     };
+    this.save = function() { //
+        A.DAT.set_元素(this.名称(), this.BUF);
+    };
 }
 // 
 // 

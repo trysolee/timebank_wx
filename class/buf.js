@@ -1,15 +1,4 @@
-var DAT;
-var MY;
-// 
-var atFirst = true;
-const init = function() {
-    if (atFirst) {
-        atFirst = false;
-        // 
-        DAT = require('./dat');
-        MY = require('./user_my');
-    }
-}
+const A = getApp();
 // 
 // 根据 tableList 
 // 把数据按<主键名>归整在一起
@@ -44,23 +33,32 @@ const inBUF = {
     user_my: function(dat) {
         时间串toDate(dat);
         //
-        MY.家庭id = dat.JID;
-        MY.UID = dat.UID;
-        var 角色 = MY.角色 = dat.JSON.角色;
-        MY.用户名 = dat.JSON.name;
+        A.My.家庭id = dat.JID;
+        A.My.UID = dat.UID;
+        var 角色 = A.My.角色 = dat.JSON.角色;
+        A.My.用户名 = dat.JSON.name;
+        A.My.密码 = dat.JSON.短密;
         // 
         if (角色 == '管理员') {
-            MY.is管理员 = true;
+            A.My.is管理员 = true;
         } else if (角色 == '系统管') {
-            MY.is管理员 = true;
-            MY.is系统管理员 = true;
+            A.My.is管理员 = true;
+            A.My.is系统管理员 = true;
         }
         return false; // 不缓存
     },
     jt: function(dat) {
         //
-        MY.家庭名称 = dat.NA;
+        A.My.家庭名称 = dat.NA;
         return false; // 不缓存
+    },
+    user: function(dat) {
+        //
+        var u = A.USER.getByBUF(dat);
+        if (u.is别家家长()) {
+            return false // 不缓存
+        }
+        return true; // 缓存
     },
 }
 // 发生变化 , 重新归纳统计
@@ -76,18 +74,15 @@ function _SDB_(tList) {
     this.tableList = tList;
     // n : 'pro_work'  //表名
     this.freeBUF = function(n) {
-        init();
         // 
         delete this.BOX[n];
     };
     this.getOne = function(n, id) {
-        init();
         // 
         var o = this.getBUF(n);
         return o[id];
     };
     this.getBUF = function(n) {
-        init();
         // 
         if (!this.BOX[n]) {
             return [];
@@ -95,12 +90,10 @@ function _SDB_(tList) {
         return this.BOX[n];
     };
     this.setBUF = function(n, arr) {
-        init();
         // 
         this.BOX[n] = arr;
     };
     this.jsonIN = function(D) {
-        init();
         // 
         var o = this.tableList;
         for (var x in o) {

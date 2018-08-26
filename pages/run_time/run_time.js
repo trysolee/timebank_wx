@@ -32,14 +32,15 @@ Page({
             })
             // 
         } else {
-            this.setData({
-                ready: false,
-                BKeyTxt: '结束...',
-            })
+            // this.setData({
+            //     ready: false,
+            //     BKeyTxt: '结束...',
+            // })
             // 
             A.PAGE.set('剩下时间', m.剩下时间(执行包));
-            A.Url.setBackCall('OK_end');
-            A.Url.post('任务结束');
+            // A.Url.setBackCall('OK_end');
+            // A.Url.post('任务结束');
+            A.PAGE.open('结束任务_密码');
         }
     },
     取消: function(e) {
@@ -131,7 +132,7 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide: function() {
-        clearTimeout(time1000);
+        // clearTimeout(time1000);
     },
     /**
      * 生命周期函数--监听页面卸载

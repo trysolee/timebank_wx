@@ -8,7 +8,7 @@
 
 <view class="bg" wx:if="{{ready}}">
   <view class="input_txt">
-    <input bindblur="input_name" placeholder="{{name}}" />
+    <input bindblur="input_name"  maxlength="{{input_max}}" password="{{password}}" type="{{input_type}}" placeholder="{{name}}" />
   </view>
   <view>
     <button  class="OK_key" bindtap='OK_key' type="primary">{{keyName}}</button>

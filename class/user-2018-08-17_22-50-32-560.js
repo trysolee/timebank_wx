@@ -62,12 +62,6 @@ const FUN = function(B) {
     };
     // 
     // 
-    this.is别家家长 = function() {
-        if (!this.is家长()) return false;
-        if (this.JID() - A.My.家庭id == 0) return false;
-        return true;
-    };
-    // 
     this.is空闲中 = function() {
         var m = this.get执行包();
         return m.类型 == '空闲';
@@ -184,7 +178,7 @@ const OBJ = {
             ar2.push(new FUN(ar1[i]));
         //
         ar2.sort(function(a, b) {
-            return b.排序s() - a.排序s();
+            return a.排序s() - b.排序s();
         });
         return ar2;
     },

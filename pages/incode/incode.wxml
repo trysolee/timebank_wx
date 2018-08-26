@@ -1,17 +1,7 @@
-<!--pages/incode/incode.wxml-->
 
 <view class="container">
 
-  <view class="section">
-    <input placeholder="输入邀请码..." />
+   <view class="bg_back_text" >
+    <text class="back_text">{{Msg}}</text>
   </view>
-  <view>
-    <button class='OK_key' type="primary">注册</button>
-  </view>
-  <view style="height: 300px;flex-direction:column;">
-
-    <textarea>你还可以通过“微信扫一扫”， \n扫描其他用户分享的“邀请码”注册。
-    </textarea>
-  </view>
-
 </view>

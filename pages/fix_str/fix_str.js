@@ -4,7 +4,7 @@ const A = getApp();
 var input_str = '';
 var 测试_执行包 = null;
 // 
-var END_page = null;
+var back_标志 = null;
 // 
 Page({
     //
@@ -14,7 +14,7 @@ Page({
         var p = A.PAGE.当前page();
         if (p.OK_fun) {
             var s = A.PAGE.get(p.pageVN);
-            p.OK_fun(s);
+            if (!p.OK_fun(s)) return;
         }
         if (p.OK_page) {
             A.PAGE.open(p.OK_page);
@@ -47,8 +47,7 @@ Page({
         A.PAGE.ready();
         // 
         var p = A.PAGE.当前page();
-        var msg = '';
-        END_page = p.END_page;
+        back_标志 = p.back_标志;
         // 
         var ok_name = '确定';
         var name; // 输入提示
@@ -60,15 +59,28 @@ Page({
         } else {
             name = A.PAGE.get(p.pageVN)
         }
-        // 
-        if (p.msg) msg = p.msg;
-        // 
-        this.setData({
+        var dat = {
             ready: true,
             name: name,
             keyName: ok_name,
-            Msg: msg,
-        })
+            Msg: '',
+            password: false,
+            input_type: 'text',
+            input_max: '64',
+        };
+        if (p.类型 == '数字') {
+            dat.input_type = 'number';
+        };
+        if (p.密码) {
+            dat.password = true;
+        };
+        if (p.长度) {
+            dat.input_max = p.长度;
+        };
+        // 
+        if (p.msg) dat.Msg = p.msg;
+        // 
+        this.setData(dat);
         // 
     },
     // 
@@ -88,15 +100,15 @@ Page({
     //
     OK_end: function(OK) {
         if (OK) {
-            if (END_page) {
-                A.PAGE.open(END_page);
+            if (back_标志) {
+                A.PAGE.pageBackTo(back_标志);
                 return;
             }
             A.PAGE.pageBack()
         } else {
             this.setData({
                 ready: false,
-                BKeyTxt: '请稍后...',
+                BKeyTxt: '错误...',
             })
         }
     },
@@ -104,7 +116,7 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
-        if (!END_page) // 
+        if (!back_标志) // 
             A.PAGE.pageBack_标志(this);
     },
 })

@@ -138,6 +138,9 @@ const FUN = function(B) {
             }
         }
     };
+    this.save = function() { //
+        A.DAT.set_任务(this.名称(), this.BUF);
+    };
 }
 // 
 const MISSION = {
@@ -161,6 +164,7 @@ const MISSION = {
         return Math.round((d - 执行包_dat.任务_开始时刻) / 1000);
     },
     //
+    // 测试用
     // 快进 60秒 
     快进: function(执行包) {
         var i = 60 * 1000;

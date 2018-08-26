@@ -74,7 +74,7 @@ const VAL = {
     还没注册: {
         TXT: '还没注册',
         // PageJump: '邀请码',
-        PageJump: '注册_孩子昵称',
+        PageJump: '注册',
     },
     参数不全: {
         TXT: '参数不全',
