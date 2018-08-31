@@ -11,7 +11,7 @@
     <input bindblur="input_name"  maxlength="{{input_max}}" password="{{password}}" type="{{input_type}}" placeholder="{{name}}" />
   </view>
   <view>
-    <button  class="OK_key" bindtap='OK_key' type="primary">{{keyName}}</button>
+    <button  class="OK_key" bindtap='' type="primary">{{keyName}}</button>
 
       <view class="bg_back_text" >
     <text class="back_text">{{Msg}}</text>

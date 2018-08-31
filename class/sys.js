@@ -1,6 +1,10 @@
 // 
-const url1 = 'http://localhost/';
-const post_url = 'http://localhost/tb2_10/';
+// const url1 = 'http://localhost/';
+// const post_url = 'http://localhost/tb2_10/';
+// 
+const url1 = 'https://www.kfqlh.com/';
+const post_url = 'https://www.kfqlh.com/tb2_10/';
+// 
 const post版本 = 'tb';
 const 二维码B = 'https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=12_um8DQF6a3cW1QkmEZmhzleNCvuPwaGG-OhKJwx3WNfQLr4FL6VfE49Q8jhhScYHQIsgj-PRxEC2oG4GXDS_jEZdWyXYVhbfHbnlwwccYwwjxEf_Rfb7-om6y9cnJBvzAUuTsQu2OPgLbolDwKHVbAJAOLZ';
 // 
@@ -9,15 +13,16 @@ const SYS = {
     //   
     // ===== 常量 =====
     // 
-    非正式测试: true, // 正式调试之前
-    // 非正式测试: false, // 正式调试之前
+    // 非正式测试: true, // 正式调试之前
+    非正式测试: false, // 正式调试之前
     // 
-    测试: true,
+    // 测试: true,
+    测试: false,
     不播放声音: false,
-    // 测试用户: 'admin',
+    测试用户: 'admin',
     // 测试用户: 'user2q',
     // 测试用户: 'userpptptpq', // 老虎泰格
-    测试用户: 'ukkc--k9921', // 小新
+    // 测试用户: 'ukkc--k9921', // 小新
     //
     项目名_长度: 35,
     分组名_长度: 35,

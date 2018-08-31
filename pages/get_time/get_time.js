@@ -70,6 +70,10 @@ Page({
         })
         // 
         TO();
+        // 
+        wx.setKeepScreenOn({
+            keepScreenOn: true
+        });
     },
     // 
     input_name: function(e) {
@@ -102,5 +106,15 @@ Page({
     onUnload: function() {
         clearTimeout(time1000);
         A.PAGE.pageBack_标志(this);
+        // 
+        wx.setKeepScreenOn({
+            keepScreenOn: false
+        });
+    },
+    onShow: function() {
+        // 
+        wx.setKeepScreenOn({
+            keepScreenOn: true
+        });
     },
 })

@@ -19,6 +19,7 @@ Page({
     OK_key: function(e) {
         // 
         A.PLAY.重置();
+        // var 执行包 = A.DAT.get_当前执行包();
         // 
         var m = A.MISSION.getBy执行包(执行包);
         if (m.下一个元素(执行包)) {
@@ -94,12 +95,16 @@ Page({
         })
         // 
         TO();
+        // 
+        wx.setKeepScreenOn({
+            keepScreenOn: true
+        });
     },
     // 
-    input_name: function(e) {
-        input_str = e.detail.value;
-        A.PAGE.set(A.PAGE.当前page().pageVN, input_str);
-    },
+    // input_name: function(e) {
+    //     input_str = e.detail.value;
+    //     A.PAGE.set(A.PAGE.当前page().pageVN, input_str);
+    // },
     // 
     BKey: function(e) {
         if (A.SYS.非正式测试) {
@@ -127,12 +132,19 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function() {},
+    onShow: function() {
+        // 
+        wx.setKeepScreenOn({
+            keepScreenOn: true
+        });
+        // 执行包 = A.DAT.get_当前执行包();
+    },
     /**
      * 生命周期函数--监听页面隐藏
      */
     onHide: function() {
         // clearTimeout(time1000);
+        A.DAT.set_当前执行包(执行包);
     },
     /**
      * 生命周期函数--监听页面卸载
@@ -141,6 +153,10 @@ Page({
         clearTimeout(time1000);
         A.PLAY.重置();
         A.PAGE.pageBack_标志(this);
+        wx.setKeepScreenOn({
+            keepScreenOn: false
+        });
+        A.DAT.set_当前执行包(执行包);
     },
     /**
      * 页面相关事件处理函数--监听用户下拉动作

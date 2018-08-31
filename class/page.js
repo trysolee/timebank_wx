@@ -131,7 +131,7 @@ const Page = {
         url: '../fix_str/fix_str',
         OK_name: '确定',
         OK_page: '系统',
-        msg: '提示：\n童锁默认:123，\n管理员有权修改。',
+        msg: '提示：\n童锁默认:123，\n管理员可修改童锁。',
         // 
         // 输入后 , 用'h_name'保存在page
         pageVN: '短密',
@@ -373,7 +373,7 @@ const Page = {
             var m = A.TAKEBACK.getByNa(PAGE.get('任务Na'));
             var user = A.USER.getByID(PAGE.get('UID'));
             if (user.存款() < m.预留存款()) {
-                A.ST.show('存款不足' + m.预留存款());
+                A.ST.show('存款不足 : ' + A.SYS.秒ToStr(m.预留存款()));
                 return null;
             }
             var b = m.创建_执行包();
@@ -401,7 +401,7 @@ const Page = {
         back_标志: '首页',
         OK_name: '确定',
         OK_URL: '任务结束',
-        // msg: '提示：\n还可以通过 [ 扫一扫 ] 分享码，\n加入已有家庭。',
+        msg: '提示：\n童锁默认:123，\n管理员可修改童锁。',
         // 
         // 输入后 , 用'h_name'保存在page
         pageVN: '短密',
@@ -461,7 +461,7 @@ const Page = {
         back_标志: '首页',
         OK_name: '确定',
         OK_URL: '提款结束',
-        // msg: '提示：\n还可以通过 [ 扫一扫 ] 分享码，\n加入已有家庭。',
+        msg: '提示：\n童锁默认:123，\n管理员可修改童锁。',
         // 
         // 输入后 , 用'h_name'保存在page
         pageVN: '短密',
@@ -618,7 +618,7 @@ const Page = {
     },
     注册: {
         url: '../list_chk/list_chk',
-        // 返回: '首页',
+        标志: '首页',
         // 载入数据url: '更新孩子数据',
         datList: function() {
             // 用于 列表的list
@@ -661,7 +661,7 @@ const Page = {
     },
     注册_加入家庭1: {
         url: '../fix_str/fix_str',
-        返回: '首页',
+        返回: '上一页',
         OK_page: '注册_加入家庭2',
         OK_name: '下一步',
         msg: '提示：\n可以通过[ 家长邀请码... ]获得邀请码。',
@@ -686,12 +686,13 @@ const Page = {
         },
         // OK_fun: function(str) {},
     },
+    // ------------------
     注册_孩子昵称: {
         url: '../fix_str/fix_str',
         返回: '上一页',
         OK_page: '注册_家长称为',
         OK_name: '下一步',
-        msg: '提示：\n还可以通过 [ 扫一扫 ] 分享码，\n加入已有家庭。',
+        msg: '提示：\n注册完成后,可以再添加第二个孩子。',
         // 
         // 输入后 , 用'h_name'保存在page
         pageVN: 'h_name',
@@ -705,6 +706,7 @@ const Page = {
         返回: '上一页',
         OK_URL: '创建家庭',
         OK_name: '注册',
+        msg: '提示：\n你是第一个家长,也是管理员。',
         // 
         // back_标志: '首页',
         // 

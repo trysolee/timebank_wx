@@ -8,7 +8,7 @@ var back_标志 = null;
 // 
 Page({
     //
-    // 测试入口
+    // 
     OK_key: function(e) {
         // 
         var p = A.PAGE.当前page();
@@ -87,6 +87,8 @@ Page({
     input_name: function(e) {
         input_str = e.detail.value;
         A.PAGE.set(A.PAGE.当前page().pageVN, input_str);
+        // 
+        this.OK_key();
     },
     // 
     BKey: function(e) {

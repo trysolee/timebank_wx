@@ -3,7 +3,6 @@
 //  
 const A = getApp();
 // 
-
 function set1(na, obj) {
     wx.setStorage({
         key: na,
@@ -64,6 +63,14 @@ const DAT = {
     },
     set_SYS: function(na, obj) {
         set1('SYS_' + na, obj);
+    },
+    get_当前执行包: function() {
+        var uid = A.PAGE.get('UID');
+        return get1('ZXB_' + uid);
+    },
+    set_当前执行包: function(obj) {
+        var uid = A.PAGE.get('UID');
+        set1('ZXB_' + uid, obj);
     },
 };
 module.exports = DAT;
