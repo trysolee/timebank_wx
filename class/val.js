@@ -128,6 +128,18 @@ const VAL = {
         // TODO
     },
     // 
+    任务结束: {
+        FUN: function(DAT) {
+            A.DAT.set_当前执行包('');
+        },
+    },
+    // 
+    提款结束: {
+        FUN: function(DAT) {
+            A.DAT.set_当前执行包('');
+        },
+    },
+    // 
     地图: {
         // TODO
     },

@@ -77,6 +77,11 @@ function _SDB_(tList) {
         // 
         delete this.BOX[n];
     };
+    this.delOne = function(n, id) {
+        // 
+        var o = this.getBUF(n);
+        delete o[id];
+    };
     this.getOne = function(n, id) {
         // 
         var o = this.getBUF(n);

@@ -41,7 +41,7 @@ A.FIRST = require('class_tb/s_first');
 // A.CS = require('class_tb/cs');
 // A.CS.检查版本();
 // 
-const CS版本 = 4;
+const CS版本 = 12;
 const 检查版本 = function() {
     // var A = getApp();
     var s = 'CS版本';

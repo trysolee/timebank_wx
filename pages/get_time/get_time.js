@@ -6,11 +6,13 @@ function TO() {
     var m = A.TAKEBACK.getBy执行包(执行包);
     var e = A.ELEMENT.getBy执行包(执行包);
     p.setData({
+        xiaoji: A.SYS.秒ToStr(存款 - m.用掉的时间(执行包)),
         timeStr: A.SYS.秒ToStr(e.剩下时间(执行包)),
     });
     m.循环执行(执行包);
     time1000 = setTimeout(TO, 1000);
 }
+var 存款;
 var time1000;
 var 执行包 = null;
 // 
@@ -62,6 +64,8 @@ Page({
     // warn
     onReady: function() {
         A.PAGE.ready();
+        var u = A.USER.getByID(A.PAGE.get('UID'));
+        存款 = u.存款();
         // 
         执行包 = A.PAGE.get('m_box');
         var m = A.TAKEBACK.getBy执行包(执行包);
@@ -105,16 +109,29 @@ Page({
      */
     onUnload: function() {
         clearTimeout(time1000);
+        A.PLAY.重置();
         A.PAGE.pageBack_标志(this);
         // 
         wx.setKeepScreenOn({
             keepScreenOn: false
         });
+          A.DAT.set_当前执行包(执行包);
     },
     onShow: function() {
         // 
         wx.setKeepScreenOn({
             keepScreenOn: true
         });
+        执行包 = A.DAT.get_当前执行包();
+        // 
+        var e = A.ELEMENT.getBy执行包(执行包);
+        e.取消漏播声音(执行包);
+    },
+    // 
+    onHide: function() {
+        // clearTimeout(time1000);
+        A.DAT.set_当前执行包(执行包);
+        // 
+        执行包 = '';
     },
 })

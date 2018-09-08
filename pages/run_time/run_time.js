@@ -5,9 +5,13 @@ function TO() {
     var p = A.PAGE.pageObj();
     var m = A.MISSION.getBy执行包(执行包);
     var e = A.ELEMENT.getBy执行包(执行包);
-    p.setData({
+    var o = {
         timeStr: A.SYS.秒ToStr(e.剩下时间(执行包)),
-    });
+    };
+    if (执行包.小计) {
+        o.xiaoji = 执行包.小计;
+    }
+    p.setData(o);
     m.循环执行(执行包);
     time1000 = setTimeout(TO, 1000);
 }
@@ -27,9 +31,7 @@ Page({
             var ok_name = m.下一个元素Na(执行包) + '...>';
             this.setData({
                 ready: true,
-                // name: name,
                 keyName: ok_name,
-                // timeStr: SYS.秒ToStr('4512'),
             })
             // 
         } else {
@@ -84,15 +86,14 @@ Page({
         执行包 = A.PAGE.get('m_box');
         var m = A.MISSION.getBy执行包(执行包);
         var e = A.ELEMENT.getBy执行包(执行包);
-        e.重置偏移量(执行包);
+        e.取消漏播声音(执行包);
         //
         var ok_name = m.下一个元素Na(执行包) + '...>';
-        this.setData({
+        var o = {
             ready: true,
-            // name: name,
             keyName: ok_name,
-            // timeStr: SYS.秒ToStr('4512'),
-        })
+        };
+        this.setData(o)
         // 
         TO();
         // 
@@ -137,7 +138,10 @@ Page({
         wx.setKeepScreenOn({
             keepScreenOn: true
         });
-        // 执行包 = A.DAT.get_当前执行包();
+        执行包 = A.DAT.get_当前执行包();
+        // 
+        var e = A.ELEMENT.getBy执行包(执行包);
+        e.取消漏播声音(执行包);
     },
     /**
      * 生命周期函数--监听页面隐藏
@@ -145,6 +149,8 @@ Page({
     onHide: function() {
         // clearTimeout(time1000);
         A.DAT.set_当前执行包(执行包);
+        // 
+        执行包 = '';
     },
     /**
      * 生命周期函数--监听页面卸载

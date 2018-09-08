@@ -1,6 +1,6 @@
 view {
-  margin-top: 5em;
-  margin-bottom: 5em;
+  margin-top: 2em;
+  margin-bottom: 1em;
 }
 
 input {

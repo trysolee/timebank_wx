@@ -2,11 +2,12 @@
 const A = getApp();
 const innerAudioContext = wx.createInnerAudioContext()
 innerAudioContext.autoplay = false;
+innerAudioContext.volume = 1;
 innerAudioContext.onEnded(() => {
     go();
 })
 innerAudioContext.onError((res) => {
-    A.ST.show('播放失败:' + lastURL);
+    // A.ST.show('播放失败:' + lastURL);
 })
 // 
 var list = [];
@@ -49,7 +50,7 @@ const PLAY = {
     },
     //
     重听: function() {
-       this.play(lastURL);
+        if (lastURL) this.play(lastURL);
     },
     //
 };

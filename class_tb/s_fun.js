@@ -3,6 +3,16 @@ const A = getApp();
 // 
 const S_FUN = {
     //
+    不重复占用时刻: function(执行包_dat, 元素, //
+        声音, dat) {
+        var s = 声音.get时刻();
+        // 
+        if (元素.时间轴_被占(s)) {
+            声音.不播放();
+            声音.停止exec();
+        }
+    },
+    //
     元素时长大于: function(执行包_dat, 元素, //
         声音, dat) {
         if (元素.时长() <= dat.时长) {
@@ -37,6 +47,7 @@ const S_FUN = {
         // 
         for (var i = 执行包_dat.元素_开始偏移 + s; //
             i < l - e; i += s) {
+            if (元素.时间轴_被占(i)) continue;
             元素.时间轴_设置_播放(声音.getUrl(), i);
         }
         // 

@@ -47,6 +47,17 @@ const FUN = function(B) {
     this.时长 = function() { //
         return this.BUF.DAT.时长;
     };
+    this.时间小计 = function(执行包_dat) { //
+        var d = new Date();
+        var s = Math.round((d - 执行包_dat.任务_开始时刻) / 1000);
+        var l = 0;
+        var arr = this.BUF.元素;
+        for (var i = 0; i < 执行包_dat.当前元素下标; i++) {
+            var e = A.ELEMENT.getByNa(arr[i]);
+            l += e.时长();
+        }
+        return l - s;
+    };
     this.剩下时间 = function(执行包_dat) { //
         var d = new Date();
         var s = Math.round((d - 执行包_dat.任务_开始时刻) / 1000);
@@ -83,15 +94,17 @@ const FUN = function(B) {
         执行包_dat.元素_开始时刻 = new Date().getTime();
         // 
         // 计算 剩下的秒数
-        var s1 = this.剩下时间(执行包_dat);
-        var s2 = e.时长();
-        if (s2 > s1) {
-            执行包_dat.元素_开始偏移 = s2 - s1;
-        } else {
-            执行包_dat.元素_开始偏移 = 0;
-        }
+        // var s1 = this.剩下时间(执行包_dat);
+        // var s2 = e.时长();
+        // if (s2 > s1) {
+        //     执行包_dat.元素_开始偏移 = s2 - s1;
+        // } else {
+        //     执行包_dat.元素_开始偏移 = 0;
+        // }
         // 
         e.创建_时刻轴(执行包_dat);
+        // 
+        执行包_dat.小计 = A.SYS.秒ToStr(this.时间小计(执行包_dat));
         return true;
     };
     this.创建_执行包 = function() { // 任务id
@@ -115,6 +128,8 @@ const FUN = function(B) {
             元素_开始时刻: new Date().getTime(),
             时间轴: null,
             最后一个元素: 最后一个,
+            // 
+            小计: null, // 字串 : '2:32'
         };
         元素obj.创建_时刻轴(dat);
         // 
@@ -124,7 +139,7 @@ const FUN = function(B) {
         // 
         var e, a, b;
         e = A.ELEMENT.getBy执行包(执行包_dat);
-        a = e.开始时刻(执行包_dat);
+        // a = e.开始时刻(执行包_dat);
         b = e.当前时刻(执行包_dat);
         // 
         var arr = 执行包_dat.时间轴;
@@ -132,7 +147,8 @@ const FUN = function(B) {
             var o = arr[i];
             if (o.已播放) continue;
             // 
-            if (a <= o.时差 && o.时差 <= b) {
+            // if (a <= o.时差 && o.时差 <= b) {
+            if (o.时差 <= b) {
                 A.PLAY.play(o.声音URL);
                 o.已播放 = true;
             }

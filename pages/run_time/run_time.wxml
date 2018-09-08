@@ -8,10 +8,13 @@
 
 <view class="bg" wx:if="{{ready}}">
   <view>
-    <button class="OK_key" bindtap='重听' >重听上一条</button>
+    <button class="OK_key" bindtap='重听' >重听一次</button>
   </view>
-  <view class="input_txt">
-    <text class="time_txt">{{timeStr}}</text>
+  <view class="input_txt" style="flex-direction:column;">
+  <view   wx:if="{{xiaoji}}"><text class="back_text">任务小计 : {{xiaoji}}</text></view>
+
+    <view><text class="time_txt">{{timeStr}}</text>
+    </view>
   </view>
   <view>
     <button class="OK_key" bindtap='OK_key' type="primary">{{keyName}}</button>

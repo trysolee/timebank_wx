@@ -81,9 +81,24 @@ const FUN = function(B) {
     };
     // 
     // 
-    this.重置偏移量 = function(执行包_dat) {
-        执行包_dat.元素_开始偏移 = //
-            Math.round((new Date().getTime() - 执行包_dat.元素_开始时刻) / 1000);
+    // this.重置偏移量 = function(执行包_dat) {
+    //     执行包_dat.元素_开始偏移 = //
+    //         Math.round((new Date().getTime() - 执行包_dat.元素_开始时刻) / 1000);
+    // }
+    // 
+    this.取消漏播声音 = function(执行包_dat) {
+        var e, a, b;
+        e = A.ELEMENT.getBy执行包(执行包_dat);
+        b = e.当前时刻(执行包_dat) - 10; // 10秒前
+        // 
+        var arr = 执行包_dat.时间轴;
+        for (var i in arr) {
+            var o = arr[i];
+            // 
+            if (o.时差 <= b) {
+                o.已播放 = true;
+            }
+        }
     }
     // 注意 : 不一定在 0 开始 // 单位 : 秒
     this.开始时刻 = function(执行包_dat) {
@@ -94,10 +109,9 @@ const FUN = function(B) {
         var d = new Date();
         // 
         var a = this.开始时刻(执行包_dat); // 
-        var b = a + //
-            Math.round((d - 执行包_dat.元素_开始时刻) / 1000);
+        var b = Math.round((d - 执行包_dat.元素_开始时刻) / 1000);
         // 
-        return b;
+        return a + b;
     };
     // 
     this.剩下时间 = function(执行包_dat) {
@@ -148,6 +162,18 @@ const FUN = function(B) {
     // 
     this.时间轴 = [];
     // 
+    //   
+    this.时间轴_被占 = function(s) {
+        var l = 5; // +- 时间差
+        var a = s - l;
+        var b = s + l;
+        var arr = this.时间轴;
+        // 
+        for (var i in arr) {
+            if (a <= arr[i].时差 && arr[i].时差 <= b) return true;
+        }
+        return false;
+    };
     //   
     this.时间轴_倒设_时刻 = function(s) {
         return this.时长() - s;

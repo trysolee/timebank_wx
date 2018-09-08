@@ -196,17 +196,6 @@ const Page = {
             // 
             return li;
         },
-        // 
-        // dList : 全部列表Arr
-        // o : 被点击的obj
-        // m : 被点击的 <下拉菜单>的obj
-        添加家长: function(dList, o, m) {
-            A.PAGE.set('_SCENE_', A.My.家庭id);
-            A.PAGE.set('_接受PAGE_' //
-                , 'pages/incode/incode');
-            // A.Url.post('发出邀请');
-            A.SHOW_CODE();
-        },
     },
     // 
     // 点击 '孩子' 后 
@@ -215,17 +204,17 @@ const Page = {
     任务列表: {
         url: '../list_chk/list_chk',
         返回: '上一页',
-        载入数据url: '更新孩子数据',
+        // 载入数据url: '更新孩子数据',
         datList: function() {
             // 用于 列表的list
             // 
-            var user = A.USER.getByID(PAGE.get('UID'));
-            if (!user.is空闲中()) {
-                PAGE.set('m_box', user.get执行包());
-                if (user.is任务中()) {
+            var 执行包 = A.DAT.get_当前执行包();
+            if (A.SYS.isObject(执行包)) {
+                PAGE.set('m_box', 执行包);
+                if (执行包.类型 == '任务') {
                     PAGE.open('执行任务');
                 }
-                if (user.is提款中()) {
+                if (执行包.类型 == '提款') {
                     PAGE.open('提款');
                 }
                 return '无用页';
@@ -242,12 +231,20 @@ const Page = {
             var arr = A.MISSION.任务列表();
             for (var i in arr) {
                 var x = arr[i];
+                var n = x.名称() + ' [' //
+                    + A.SYS.秒ToStr(x.时长()) // 
+                    + ']';
+                // 
+                if (x.名称() == '临时') {
+                    n = '临时任务 [自定义]'
+                }
+                // 
                 if (最近期的任务 < 0) {
                     if (x.未到时间段()) 最近期的任务 = i;
                 }
                 li.push({
                     type: 'default',
-                    na: x.名称(),
+                    na: n,
                     // _URL: '执行任务', // TODO 
                     fun: '执行任务',
                     任务Na: x.名称(),
@@ -282,13 +279,11 @@ const Page = {
             // 
             var m = A.MISSION.getByNa(na);
             var b = m.创建_执行包();
-            var user = A.USER.getByID(PAGE.get('UID'));
-            user.set执行包(b);
             // 
             PAGE.set('m_box', b);
-            // A. PAGE.open('执行任务');
-            A.Url.setPageBack('执行任务');
-            A.Url.post('更新执行包');
+            A.PAGE.open('执行任务');
+            // A.Url.setPageBack('执行任务');
+            // A.Url.post('更新执行包');
             // 
             return null;
         },
@@ -323,13 +318,9 @@ const Page = {
             m.save();
             // 
             var b = m.创建_执行包();
-            var user = A.USER.getByID(PAGE.get('UID'));
-            user.set执行包(b);
             // 
             PAGE.set('m_box', b);
-            // A. PAGE.open('执行任务');
-            A.Url.setPageBack('执行任务');
-            A.Url.post('更新执行包');
+            A.PAGE.open('执行任务');
             return false;
         },
     },
@@ -377,12 +368,12 @@ const Page = {
                 return null;
             }
             var b = m.创建_执行包();
-            user.set执行包(b);
+            // user.set执行包(b);
             // 
             PAGE.set('m_box', b);
-            // PAGE.open('执行任务');
-            A.Url.setPageBack('提款');
-            A.Url.post('更新执行包');
+            PAGE.open('提款');
+            // A.Url.setPageBack('提款');
+            // A.Url.post('更新执行包');
             // 
             return null;
         },
@@ -553,12 +544,14 @@ const Page = {
             if (x.is提款中()) {
                 li.unshift({
                     na: '取消提款',
-                    _URL: '提款取消',
+                    fun: '删除执行包',
+                    // _URL: '提款取消',
                 })
             } else if (x.is任务中()) {
                 li.unshift({
                     na: '取消任务',
-                    _URL: '任务取消',
+                    fun: '删除执行包',
+                    // _URL: '任务取消',
                 })
             }
             // 
@@ -573,6 +566,11 @@ const Page = {
             }];
             // 
             return li;
+        },
+        // 
+        删除执行包: function(dList, o, c) {
+            // abc
+            A.DAT.set_当前执行包('');
         },
     },
     家长_改密码: {

@@ -69,19 +69,19 @@ const FUN = function(B) {
     };
     // 
     this.is空闲中 = function() {
-        var m = this.get执行包();
-        return m.类型 == '空闲';
+        var o = A.DAT.get_当前执行包();
+        return A.SYS.isObject(o);
     };
     // 
     // 正在执行任务
     this.is任务中 = function() {
-        var m = this.get执行包();
-        return m.类型 == '任务';
+        var o = A.DAT.get_当前执行包();        
+        return o.类型 == '任务';
     };
     // 
     this.is提款中 = function() {
-        var m = this.get执行包();
-        return m.类型 == '提款';
+        var o = A.DAT.get_当前执行包();   
+        return o.类型 == '提款';
     };
     // 
     this.set执行包 = function(b) {

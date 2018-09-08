@@ -138,10 +138,16 @@ const arr = {
         },
     },
     删除孩子: {
-        url: '5_rename.php',
+        url: '5_del_c.php',
         dat: {
             UID: ['UID', null, false], //
-            NA: ['孩子昵称', null, false], // 昵称
+        },
+        backCall: function(isOk) {
+            // 
+            if (isOk) {
+                var uid = A.PAGE.get('UID');
+                A.BUF.delOne('user', uid);
+            }
         },
     },
     // 
@@ -187,6 +193,7 @@ const toObj = ['ARR', 'ARR1', 'JSON'];
 // 
 var backCall = null;
 var pageBack = null;
+var urlOBJ = null;
 // 
 const OBJ = {
     setBackCall: function(fun) {
@@ -196,6 +203,11 @@ const OBJ = {
         pageBack = page;
     },
     execBackCall: function(ok) {
+        if (urlOBJ.backCall) {
+            urlOBJ.backCall(ok);
+        }
+        urlOBJ = null;
+        // 
         if (backCall) {
             var bc = backCall;
             backCall = null;
@@ -262,6 +274,7 @@ const OBJ = {
         this.post_(o);
     },
     post_: function(o) {
+        urlOBJ = o;
         // 
         var d = [];
         var dat = o.dat;

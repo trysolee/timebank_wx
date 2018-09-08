@@ -104,5 +104,8 @@ const SYS = {
             fun(i, arr[i]);
         }
     },
+    isObject: function(val) {
+        return val != null && typeof val === 'object' && Array.isArray(val) === false;
+    },
 };
 module.exports = SYS;
