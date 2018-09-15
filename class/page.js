@@ -3,11 +3,6 @@ const A = getApp();
 //
 // 
 const Page = {
-    // 接受邀请 , 输入二维码
-    邀请码: {
-        url: '../incode/incode',
-        返回: null, // 没有返回键
-    },
     声音测试: {
         url: '../list_chk/list_chk',
         返回: '首页', // 
@@ -168,20 +163,20 @@ const Page = {
                 pageJump: '人员列表',
                 // fun: '点击',
             });
-            li.push({
-                na: '好友邀请码...',
-                _URL: '获取好友邀请码',
-            });
+            // li.push({
+            //     na: '好友邀请码...',
+            //     _URL: '获取好友邀请码',
+            // });
             li.push({
                 na: '家长邀请码...',
                 // _URL: '二维码B',
                 // fun: '添加家长',
                 _URL: '获取家长邀请码',
             });
-            li.push({
-                na: '添加好友',
-                pageJump: '添加好友',
-            });
+            // li.push({
+            //     na: '添加好友',
+            //     pageJump: '添加好友',
+            // });
             li.push({
                 na: '添加孩子',
                 pageJump: '添加孩子',
@@ -379,7 +374,7 @@ const Page = {
         },
     },
     执行任务: {
-        url: '../run_time/run_time',
+        url: '../run_time1/run_time1',
         返回: '首页',
     },
     提款: {
@@ -392,7 +387,11 @@ const Page = {
         back_标志: '首页',
         OK_name: '确定',
         OK_URL: '任务结束',
-        msg: '提示：\n童锁默认:123，\n管理员可修改童锁。',
+        msg_fun: function() {
+            var s = '提示：\n童锁默认:123，\n管理员可修改童锁。';
+            s += '\n\n小计 :' + A.SYS.秒ToStr(A.PAGE.get('剩下时间'));
+            return s;
+        },
         // 
         // 输入后 , 用'h_name'保存在page
         pageVN: '短密',
@@ -404,6 +403,33 @@ const Page = {
         },
         OK_fun: function(str) {
             return A.My.密码OK(str);
+        },
+    },
+    // 
+    取消任务_密码: {
+        url: '../fix_str/fix_str',
+        back_标志: '首页',
+        OK_name: '取消任务',
+        // OK_URL: '任务结束',
+        msg_fun: function() {
+            var s = '提示：\n童锁默认:123，\n管理员可修改童锁。';
+            return s;
+        },
+        // 
+        // 输入后 , 用'h_name'保存在page
+        pageVN: '短密',
+        类型: '数字',
+        密码: true,
+        // 长度: 3,
+        getStr: function() {
+            return '输入童锁...';
+        },
+        OK_fun: function(str) {
+            if (A.My.密码OK(str)) {
+                A.DAT.set_当前执行包('');
+                return true;
+            }
+            return false;
         },
     },
     // 
@@ -960,6 +986,7 @@ const PAGE = {
     },
     // 
     pageBackTo: function(标志) {
+        var b = 0;
         var p = getCurrentPages();
         // i 从倒数第二page 开始 , 到 顺数第二page结束
         for (var i = p.length - 1; i >= 1; i--) {
@@ -978,8 +1005,11 @@ const PAGE = {
             if (cp._BOX_.page.标志 == 标志) return;
             // 
             cp.data.ready = false;
-            wx.navigateBack();
+            b++;
         }
+        if (b > 0) wx.navigateBack({
+            delta: b
+        });
     },
     // 
     // 
@@ -989,6 +1019,8 @@ const PAGE = {
     // 每返回一个page , 就把他的<data.ready>设为false
     // 
     pageBack_标志: function(page_obj) {
+        var b = 0;
+        
         // 有重开<首页>标记 
         if (page_obj.data.重开首页) {
             return;
@@ -1013,15 +1045,33 @@ const PAGE = {
                 // 的page
                 // 也不要他
                 if (!cp.data.ready) {
-                    wx.navigateBack();
+                    // wx.navigateBack();
+                    b++;
                     continue;
                 }
-                if (cp._BOX_.page.标志 == o.返回) return;
+                if (cp._BOX_.page.标志 == o.返回) {
+                    if (b > 0) wx.navigateBack({
+                        delta: b
+                    });
+                    return;
+                }
                 // 
                 cp.data.ready = false;
-                wx.navigateBack();
+                // wx.navigateBack();
+                b++;
             }
+            if (b > 0) wx.navigateBack({
+                delta: b
+            });
         }
+    },
+    // 
+    isDEL: function(page_obj) {
+        return page_obj.data._DELed;
+    },
+    // 
+    DEL: function(page_obj) {
+        page_obj.data._DELed = true;
     },
     // 
     当前page: function() {

@@ -27,7 +27,7 @@ const CLA = function(B) {
     this.名称 = function() { // 声音名称
         return this.BUF.Na;
     };
-    this.exec = function(执行包_dat, 元素) {
+    this.exec = function( 元素) {
         // 
         var arr = this.BUF.exec;
         // 
@@ -35,7 +35,7 @@ const CLA = function(B) {
             var f = arr[i].fun;
             var d = arr[i].dat;
             // 
-            A.FUN[f](执行包_dat, 元素, this, d);
+            A.FUN[f]( 元素, this, d);
             // 
             if (!this.继续exec) {
                 break;

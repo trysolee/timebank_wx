@@ -1,7 +1,0 @@
-
-<view class="container">
-
-   <view class="bg_back_text" >
-    <text class="back_text">{{Msg}}</text>
-  </view>
-</view>

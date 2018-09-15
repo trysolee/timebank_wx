@@ -79,43 +79,21 @@ const FUN = function(B) {
     this.名称 = function() { // 名称
         return this.BUF.Na;
     };
-    // 
-    // 
-    // this.重置偏移量 = function(执行包_dat) {
-    //     执行包_dat.元素_开始偏移 = //
-    //         Math.round((new Date().getTime() - 执行包_dat.元素_开始时刻) / 1000);
-    // }
-    // 
-    this.取消漏播声音 = function(执行包_dat) {
-        var e, a, b;
-        e = A.ELEMENT.getBy执行包(执行包_dat);
-        b = e.当前时刻(执行包_dat) - 10; // 10秒前
-        // 
-        var arr = 执行包_dat.时间轴;
-        for (var i in arr) {
-            var o = arr[i];
-            // 
-            if (o.时差 <= b) {
-                o.已播放 = true;
-            }
-        }
-    }
-    // 注意 : 不一定在 0 开始 // 单位 : 秒
-    this.开始时刻 = function(执行包_dat) {
-        return 执行包_dat.元素_开始偏移;
+    this.计时开始 = function(执行包_dat) {
+        var na = this.名称();
+        执行包_dat.元素组[na].开始时刻 = //
+            new Date().getTime();
     };
-    // 
-    this.当前时刻 = function(执行包_dat) {
-        var d = new Date();
-        // 
-        var a = this.开始时刻(执行包_dat); // 
-        var b = Math.round((d - 执行包_dat.元素_开始时刻) / 1000);
-        // 
-        return a + b;
+    this.计算剩下时间 = function(执行包_dat) {
+        var na = this.名称();
+        var o = 执行包_dat.元素组[na];
+        return o.剩下时间 = //
+            this.时长() - //
+            (new Date().getTime() - o.开始时刻) / 1000;
     };
-    // 
     this.剩下时间 = function(执行包_dat) {
-        return this.时长() - this.当前时刻(执行包_dat);
+        var na = this.名称();
+        return 执行包_dat.元素组[na].剩下时间;
     };
     this.时长 = function() { //
         return this.BUF.时长;
@@ -123,22 +101,25 @@ const FUN = function(B) {
     this.声音s = function() { //
         return this.BUF.声音;
     };
-    this.创建_时刻轴 = function(执行包_dat) { // 元素名称
+    //
+    // 
+    this.get_时间轴 = function() { //
         var arr = this.声音s();
         for (var i in arr) {
             // 
-            this.KEY = new KEY[arr[i].key]();
+            var key = new KEY[arr[i].key]();
             // 
-            this.创建_时刻轴1(执行包_dat //
+            this.创建_时刻轴1(key //
                 , i, arr[i].arr);
         }
-        执行包_dat.时间轴 = this.时间轴;
+        // 执行包_dat.时间轴 = this.时间轴;
+        return this.时间轴;
     };
-    this.KEY = null;
-    this.创建_时刻轴1 = function(执行包_dat //
+    // 
+    this.创建_时刻轴1 = function(key //
         , T, arr) { // 
         // 
-        var key = this.KEY;
+        // var 时间轴 = {};
         // 
         for (var i in arr) {
             // 
@@ -147,7 +128,7 @@ const FUN = function(B) {
             s.set时刻(T);
             // 
             key.判断记录(n);
-            if (s.exec(执行包_dat, this)) {
+            if (s.exec(this)) {
                 var u = s.getUrl();
                 key.播放记录(n, u);
                 // 
@@ -207,6 +188,101 @@ const ELEMENT = {
         var o = ELEMENT.getByNa(dat.元素);
         o.时间轴 = dat.时间轴;
         return o;
+    },
+    //
+    当前元素_数据: function(执行包) {
+        return 执行包.元素组[执行包.当前元素下标];
+    },
+    // 
+    元素转换: function(执行包, 下标) {
+        // 
+        var list = 执行包.元素组;
+        var 当前 = 执行包.当前元素下标;
+        // 
+        ELEMENT.取消按键(list, Number(当前) + 1);
+        ELEMENT.取消按键(list, Number(当前) - 1);
+        ELEMENT.计算显示(list[当前]);
+        ELEMENT.取消显示(list[当前]);
+        // 
+        ELEMENT.设定按键(list, Number(下标) + 1);
+        ELEMENT.设定按键(list, Number(下标) - 1);
+        ELEMENT.设定显示(list[下标]);
+        ELEMENT.计算显示(list[下标]);
+        // 
+        执行包.当前元素下标 = 下标;
+    },
+    //
+    播放声音: function(e) {
+        var s = e.时长 - e.剩下时间; //
+        var arr = e.时间轴;
+        // 
+        for (var i in arr) {
+            var o = arr[i];
+            if (o.已播放) continue;
+            // 
+            if (o.时差 <= s) {
+                A.PLAY.play(o.声音URL);
+                o.已播放 = true;
+            }
+        }
+    },
+    //
+    取消漏播声音: function(执行包) {
+        var e = ELEMENT.当前元素_数据(执行包);
+        var s = e.时长 - e.剩下时间 - 5; // 提前 5 秒
+        var arr = e.时间轴;
+        // 
+        for (var i in arr) {
+            var o = arr[i];
+            // 
+            if (o.时差 <= s) {
+                o.已播放 = true;
+            }
+        }
+    },
+    //
+    剩下时间: function(执行包) {
+        var l = 0;
+        var arr = 执行包.元素组;
+        // 
+        for (var i in arr) {
+            l = Number(l) + Number(arr[i].剩下时间);
+        }
+        return l;
+    },
+    //
+    设定按键: function(arr, 下标) {
+        if (下标 < 0) return;
+        if (下标 >= arr.length) return;
+        // 
+        var obj = arr[下标];
+        obj.isKey = true;
+        obj.type = 'primary';
+    },
+    //
+    取消按键: function(arr, 下标) {
+        if (下标 < 0) return;
+        if (下标 >= arr.length) return;
+        // 
+        var obj = arr[下标];
+        obj.isKey = false;
+        obj.type = 'default';
+    },
+    //
+    设定显示: function(obj) {
+        obj.开始时刻 = new Date().getTime();
+        obj.原剩下时间 = obj.剩下时间;
+    },
+    //
+    计算显示: function(obj) {
+        var s = new Date().getTime();
+        var t = Math.round((s - obj.开始时刻) / 1000);
+        obj.剩下时间 = obj.原剩下时间 - t;
+        obj.time = A.SYS.秒ToStr(obj.剩下时间);
+    },
+    //
+    取消显示: function(obj) {
+        obj.开始时刻 = null;
     },
     // na : 元素名称
     // o : DAT ( JSON )

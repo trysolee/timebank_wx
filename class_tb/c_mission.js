@@ -47,112 +47,49 @@ const FUN = function(B) {
     this.时长 = function() { //
         return this.BUF.DAT.时长;
     };
-    this.时间小计 = function(执行包_dat) { //
-        var d = new Date();
-        var s = Math.round((d - 执行包_dat.任务_开始时刻) / 1000);
-        var l = 0;
-        var arr = this.BUF.元素;
-        for (var i = 0; i < 执行包_dat.当前元素下标; i++) {
-            var e = A.ELEMENT.getByNa(arr[i]);
-            l += e.时长();
-        }
-        return l - s;
-    };
-    this.剩下时间 = function(执行包_dat) { //
-        var d = new Date();
-        var s = Math.round((d - 执行包_dat.任务_开始时刻) / 1000);
-        return this.时长() - s;
+    this.元素Na_arr = function() { //
+        return this.BUF.元素;
     };
     this.元素个数 = function() { //
         return this.BUF.元素.length;
     };
-    this.第一个元素Na = function() { //
-        return this.BUF.元素[0];
-    };
-    this.下一个元素Na = function(执行包_dat) { //
-        var i = 执行包_dat.当前元素下标 + 1;
-        var m = this.BUF.元素.length;
-        if (i >= m) {
-            return '[ 完成 ] ';
-        }
-        return this.BUF.元素[i];
-    };
-    //
-    // true : 有下一个元素
-    // false : 没有下一个元素
-    this.下一个元素 = function(执行包_dat) { //
-        var i = ++执行包_dat.当前元素下标;
-        var m = this.BUF.元素.length;
-        if (i >= m) {
-            // ST.showtxt('- 任务结束 -');
-            return false;
-        }
-        var na = this.BUF.元素[i];
-        var e = A.ELEMENT.getByNa(na);
-        // 
-        执行包_dat.元素 = na;
-        执行包_dat.元素_开始时刻 = new Date().getTime();
-        // 
-        // 计算 剩下的秒数
-        // var s1 = this.剩下时间(执行包_dat);
-        // var s2 = e.时长();
-        // if (s2 > s1) {
-        //     执行包_dat.元素_开始偏移 = s2 - s1;
-        // } else {
-        //     执行包_dat.元素_开始偏移 = 0;
-        // }
-        // 
-        e.创建_时刻轴(执行包_dat);
-        // 
-        执行包_dat.小计 = A.SYS.秒ToStr(this.时间小计(执行包_dat));
-        return true;
-    };
     this.创建_执行包 = function() { // 任务id
-        var 元素na = this.第一个元素Na();
-        var 元素obj = A.ELEMENT.getByNa(元素na);
-        // 
-        var 最后一个 = false;
-        if (this.元素个数() <= 1) 最后一个 = true;
         // 
         var dat = {
             类型: '任务',
             任务: this.名称(),
-            元素: 元素na,
             // 
-            // 如果<任务>剩下时间不够执行<元素>
-            // <元素> 就不是从0 开始播放
-            元素_开始偏移: 0,
+            元素组: null, // 
             // 
             当前元素下标: 0, // 
-            任务_开始时刻: new Date().getTime(),
-            元素_开始时刻: new Date().getTime(),
-            时间轴: null,
-            最后一个元素: 最后一个,
             // 
-            小计: null, // 字串 : '2:32'
         };
-        元素obj.创建_时刻轴(dat);
+        // 
+        // 计算整理 元素组
+        var arr = this.元素Na_arr();
+        var d = dat.元素组 = [];
+        for (var i = 0; i < arr.length; i++) {
+            var na = arr[i];
+            var e = A.ELEMENT.getByNa(na);
+            var s = e.时长();
+            // 
+            d.push({
+                keyNa: na,
+                time: A.SYS.秒ToStr(s),
+                isKey: false,
+                type: 'default',
+                // 
+                时长: s, // 
+                原剩下时间: s,
+                剩下时间: s,
+                时间轴: e.get_时间轴(),
+            });
+        }
+        A.ELEMENT.设定按键(d, 1);
+        A.ELEMENT.设定显示(d[0]);
+        // A.ELEMENT.计算显示(d[0]);
         // 
         return dat;
-    };
-    this.循环执行 = function(执行包_dat) {
-        // 
-        var e, a, b;
-        e = A.ELEMENT.getBy执行包(执行包_dat);
-        // a = e.开始时刻(执行包_dat);
-        b = e.当前时刻(执行包_dat);
-        // 
-        var arr = 执行包_dat.时间轴;
-        for (var i in arr) {
-            var o = arr[i];
-            if (o.已播放) continue;
-            // 
-            // if (a <= o.时差 && o.时差 <= b) {
-            if (o.时差 <= b) {
-                A.PLAY.play(o.声音URL);
-                o.已播放 = true;
-            }
-        }
     };
     this.save = function() { //
         A.DAT.set_任务(this.名称(), this.BUF);
@@ -173,7 +110,6 @@ const MISSION = {
         var o = MISSION.getByNa(dat.任务);
         return o;
     },
-    //
     // 单位 : 秒
     剩下的时间: function(执行包) {
         var d = new Date().getTime();

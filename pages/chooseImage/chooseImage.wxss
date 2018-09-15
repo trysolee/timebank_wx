@@ -1,5 +1,0 @@
-/* pages/chooseImage/chooseImage.wxss */
-button {
-  margin-top: 20px;
-  margin: 40rpx;
-}

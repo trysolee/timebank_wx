@@ -1,0 +1,29 @@
+
+.txt1 {
+  
+	font-size: 1.5em;
+}
+
+.key1 {
+ 	width : 5em;
+	height :2.3em;
+	font-size: 1.3em;
+}
+
+.view_l {
+	margin-top: 0.5em;
+	margin-left: 1em;
+	margin-right: auto;
+}
+
+.view_r {
+  	margin-left: auto;
+	margin-right: 1em;
+}
+
+.view1 {
+	display: flex;
+ 	flex-direction:row;
+	margin-top: 1em;
+  	margin-bottom: 1em;
+}

@@ -78,7 +78,11 @@ Page({
             dat.input_max = p.长度;
         };
         // 
-        if (p.msg) dat.Msg = p.msg;
+        if (p.msg) {
+            dat.Msg = p.msg;
+        } else if (p.msg_fun) {
+            dat.Msg = p.msg_fun();
+        }
         // 
         this.setData(dat);
         // 

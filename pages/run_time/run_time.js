@@ -149,6 +149,9 @@ Page({
     onHide: function() {
         // clearTimeout(time1000);
         A.DAT.set_当前执行包(执行包);
+        wx.setKeepScreenOn({
+            keepScreenOn: false
+        });
         // 
         执行包 = '';
     },

@@ -23,6 +23,7 @@ const go = function() {
         playing = false;
     }
 };
+var 静音 = false;
 // 
 const PLAY = {
     // 
@@ -32,6 +33,7 @@ const PLAY = {
             A.ST.show('播放 : ' + url);
             return;
         }
+        if (静音) return;
         // 
         list.push(url);
         if (playing) {
@@ -53,5 +55,17 @@ const PLAY = {
         if (lastURL) this.play(lastURL);
     },
     //
+    get静音: function() {
+        return 静音;
+    },
+    //
+    set静音: function() {
+        if (静音) {
+            静音 = false;
+        } else {
+            静音 = true;
+            PLAY.重置();
+        }
+    },
 };
 module.exports = PLAY;

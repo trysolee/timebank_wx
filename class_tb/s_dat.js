@@ -7,8 +7,12 @@ function set1(na, obj) {
     wx.setStorage({
         key: na,
         data: obj,
-        success: function(res) {},
-        fail: function(res) {},
+        success: function(res) {
+            var a = res;
+        },
+        fail: function(res) {
+            var a = res;
+        },
     })
 }
 // 

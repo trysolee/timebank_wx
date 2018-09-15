@@ -15,9 +15,9 @@ Page({
      */
     onReady: function() {
         A.LOG({
-            // _VAL: 'GO_LOGIN',
+            _VAL: '主入口',
             // 
-            _URL: '登录',
+            // _URL: '登录',
         });
     },
     /**
