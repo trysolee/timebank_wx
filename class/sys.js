@@ -1,9 +1,11 @@
 // 
 // const url1 = 'http://localhost/';
-// const post_url = 'http://localhost/tb2_10/';
+// // const post_url = 'http://localhost/tb2_10/';
+// const post_url = 'http://localhost/tb2_11/';
 // 
 const url1 = 'https://www.kfqlh.com/';
-const post_url = 'https://www.kfqlh.com/tb2_10/';
+// const post_url = 'https://www.kfqlh.com/tb2_10/';
+const post_url = 'https://www.kfqlh.com/tb2_11/';
 // 
 const post版本 = 'tb';
 const 二维码B = 'https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=12_um8DQF6a3cW1QkmEZmhzleNCvuPwaGG-OhKJwx3WNfQLr4FL6VfE49Q8jhhScYHQIsgj-PRxEC2oG4GXDS_jEZdWyXYVhbfHbnlwwccYwwjxEf_Rfb7-om6y9cnJBvzAUuTsQu2OPgLbolDwKHVbAJAOLZ';

@@ -78,6 +78,7 @@ const FUN = function(B) {
                 time: A.SYS.秒ToStr(s),
                 isKey: false,
                 type: 'default',
+                View: 'view1',
                 // 
                 时长: s, // 
                 原剩下时间: s,
@@ -135,14 +136,16 @@ const MISSION = {
             o.DAT = d.DAT
         } else {
             o.DAT = {};
-            var y = o.元素;
-            var i = 0;
-            for (var x in y) {
-                var o1 = A.ELEMENT.getByNa(y[x]);
-                i += Number(o1.时长());
-            }
-            o.DAT.时长 = i;
         }
+        //  计算 总时间
+        var y = o.元素;
+        var i = 0;
+        for (var x in y) {
+            var o1 = A.ELEMENT.getByNa(y[x]);
+            i += Number(o1.时长());
+        }
+        o.DAT.时长 = i;
+        // 
         o.Na = na; // 记录 名称
         // 
         A.DAT.set_任务(na, o);

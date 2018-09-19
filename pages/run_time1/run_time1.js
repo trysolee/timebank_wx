@@ -2,16 +2,19 @@
 const A = getApp();
 // 
 function TO() {
-    var p = A.PAGE.pageObj();
-    //
-    var e = A.ELEMENT.当前元素_数据(执行包);
-    A.ELEMENT.计算显示(e);
-    A.ELEMENT.播放声音(e);
-    p.setData({
-        _List: 执行包.元素组
-    });
-    time1000 = setTimeout(TO, 1000);
+    if (run标记) {
+        var p = A.PAGE.pageObj();
+        //
+        var e = A.ELEMENT.当前元素_数据(执行包);
+        A.ELEMENT.计算显示(e);
+        A.ELEMENT.播放声音(e);
+        p.setData({
+            _List: 执行包.元素组
+        });
+        time1000 = setTimeout(TO, 1000);
+    }
 }
+var run标记 = false;
 var time1000;
 var 执行包 = null;
 
@@ -34,13 +37,13 @@ function 重启() {
         keepScreenOn: true
     });
     // 
+    run标记 = true;
     TO();
 }
 
 function 关掉() {
-    var p = A.PAGE.pageObj();
-    if (!p.data.ready) return;
     // 
+    run标记 = false;
     clearTimeout(time1000);
     A.PLAY.重置();
     wx.setKeepScreenOn({
@@ -87,6 +90,7 @@ Page({
     },
     key_next: function(r) {
         var index = r.target.id;
+        A.PLAY.重置();
         // 
         A.ELEMENT.元素转换(执行包, index);
         // 
@@ -95,22 +99,17 @@ Page({
         重启();
         A.PAGE.ready();
         // 
-        var list = [{
-            keyNa: '起床',
-            time: '12:00',
-            isKey: true,
-            type: 'primary',
-        }, {
-            keyNa: '刷牙洗脸',
-            time: '5:00',
-            isKey: false,
-            type: 'default',
-        }, ];
+        // ready 立即 save
+        // 避免 在<run_time>页面意外退出 ,
+        // 没有保存到本地
+        A.DAT.set_当前执行包(执行包);
     },
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
+        if (A.PAGE.isDEL(this)) return;
+        // 
         重启();
     },
     /**
@@ -123,7 +122,9 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
+        if (A.PAGE.isDEL(this)) return;
+        // 
         关掉();
-        A.PAGE.pageBack_标志(this);
+        A.PAGE.pageBack_onUnload();
     },
 })

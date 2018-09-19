@@ -8,7 +8,7 @@
 
 <view class="bg" wx:if="{{ready}}">
   <view>
-    <button class="OK_key" bindtap='重听' >重听一次</button>
+    <button class="OK_key" type="warn" bindtap='cancel_key' >取消</button>
   </view>
   <view class="input_txt" style="flex-direction:column;">
     <view   wx:if="{{xiaoji}}">
@@ -22,3 +22,4 @@
     <button class="OK_key" bindtap='OK_key' type="primary">{{keyName}}</button>
   </view>
 </view>
+

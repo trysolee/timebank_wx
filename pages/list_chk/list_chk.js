@@ -32,6 +32,8 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
+        if (A.PAGE.isDEL(this)) return;
+        // 
         if (this.data.ready) {
             this.callBack(true);
         }
@@ -95,7 +97,9 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
-        A.PAGE.pageBack_标志(this);
+        if (A.PAGE.isDEL(this)) return;
+        // 
+        A.PAGE.pageBack_onUnload();
     },
     //
     // 主要判断执行 <pageJump> 和 <fun>

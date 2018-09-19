@@ -29,20 +29,21 @@ const FUN = function(B) {
     };
     this.创建_执行包 = function() {
         var 元素na = this.BUF.元素[0];
-        var 元素obj = A.ELEMENT.getByNa(元素na);
-        var t = new Date().getTime();
+        var e = A.ELEMENT.getByNa(元素na);
+        // var t = new Date().getTime();
+        var s = e.时长();
         var dat = {
             类型: '提款',
             提款: this.名称(),
-            元素: 元素na,
-            提款_开始时刻: t,
-            元素_开始时刻: t,
             // 
-            // 为了与<任务>统一
-            // 需要设置<元素_开始偏移>
-            元素_开始偏移: 0,
+            元素: {
+                开始时刻 : new Date().getTime(),
+                时长: s, // 
+                原剩下时间: s,
+                剩下时间: s,
+                时间轴: e.get_时间轴(),
+            },
         };
-        元素obj.创建_时刻轴(dat);
         // 
         return dat;
     };
@@ -76,6 +77,15 @@ const TAKEBACK = {
     getBy执行包: function(dat) {
         var o = TAKEBACK.getByNa(dat.提款);
         return o;
+    },
+    //
+    元素_数据: function(执行包) {
+        return 执行包.元素;
+    },
+    //
+    用掉的时间: function(执行包) {
+        var e = TAKEBACK.元素_数据(执行包);
+        return e.时长 - e.剩下时间; //
     },
     //
     // na : 声音名称

@@ -88,23 +88,27 @@ const Page = {
             var arr = A.USER.孩子列表();
             for (var i = 0; i < arr.length; i++) {
                 var x = arr[i];
-                li.push({
+                var o = {
                     type: 'primary',
                     na: x.名称_存款(),
                     pageJump: '任务列表',
                     UID: x.UID(),
                     _page_set_: ['UID'],
+                };
+                // 
+                li.push(o);
+            }
+            if (A.My.管理员) {
+                li.push({
+                    // primary
+                    // default
+                    // warn
+                    type: 'default',
+                    na: '系统',
+                    pageJump: '进入更多_密码',
+                    // fun: '更多',
                 })
             }
-            li.push({
-                // primary
-                // default
-                // warn
-                type: 'default',
-                na: '系统',
-                pageJump: '进入更多_密码',
-                // fun: '更多',
-            })
             return li;
         },
         // 
@@ -226,9 +230,9 @@ const Page = {
             var arr = A.MISSION.任务列表();
             for (var i in arr) {
                 var x = arr[i];
-                var n = x.名称() + ' [' //
+                var n = x.名称() + ' [ ' //
                     + A.SYS.秒ToStr(x.时长()) // 
-                    + ']';
+                    + ' ]';
                 // 
                 if (x.名称() == '临时') {
                     n = '临时任务 [自定义]'
@@ -492,6 +496,33 @@ const Page = {
             return A.My.密码OK(str);
         },
     },
+    // 
+    取消提款_密码: {
+        url: '../fix_str/fix_str',
+        back_标志: '首页',
+        OK_name: '取消提款',
+        // OK_URL: '任务结束',
+        msg_fun: function() {
+            var s = '提示：\n童锁默认:123，\n管理员可修改童锁。';
+            return s;
+        },
+        // 
+        // 输入后 , 用'h_name'保存在page
+        pageVN: '短密',
+        类型: '数字',
+        密码: true,
+        // 长度: 3,
+        getStr: function() {
+            return '输入童锁...';
+        },
+        OK_fun: function(str) {
+            if (A.My.密码OK(str)) {
+                A.DAT.set_当前执行包('');
+                return true;
+            }
+            return false;
+        },
+    },
     人员列表: {
         url: '../list_chk/list_chk',
         返回: '上一页',
@@ -533,11 +564,11 @@ const Page = {
         // 
         _家长: function(dList, o) {
             // 
-            var an = '设为管理员';
-            var x = o.user;
-            if (x.is管理员()) {
-                an = '撤销管理员';
-            }
+            // var an = '设为管理员';
+            // var x = o.user;
+            // if (x.is管理员()) {
+            //     an = '撤销管理员';
+            // }
             // 
             var li = [{
                 na: '改称为',
@@ -545,13 +576,18 @@ const Page = {
             }, {
                 na: '改童锁',
                 pageJump: '家长_改密码',
-            }, {
-                na: an,
-                _URL: '管理员_转换',
-            }, {
-                na: '删除',
-                _URL: '删除家长',
-            }];
+                // }, {
+                //     na: an,
+                //     _URL: '管理员_转换',
+            }, ];
+            var x = o.user;
+            if (!x.is管理员()) {
+                li.push({
+                    na: '删除',
+                    _URL: '删除家长',
+                })
+            }
+            // 
             // 
             return li;
         },
@@ -797,7 +833,8 @@ const Page = {
     },
     添加孩子: {
         url: '../fix_str/fix_str',
-        返回: '首页',
+        // 返回: '首页',
+        back_标志: '首页',
         OK_URL: '添加孩子',
         OK_name: '添加孩子',
         // 
@@ -963,8 +1000,7 @@ const PAGE = {
         if (o.标志 == '首页') {
             var p = getCurrentPages();
             for (var i = p.length - 1; i >= 0; i--) {
-                var cp = p[i];
-                cp.data.重开首页 = true;
+                PAGE.DEL(p[i]);
             }
             // 
             wx.reLaunch({
@@ -978,33 +1014,62 @@ const PAGE = {
     },
     // 
     pageBack: function() {
-        var cp = this.pageObj();
-        if (cp.data.重开首页) {
-            return;
-        }
         wx.navigateBack();
     },
     // 
     pageBackTo: function(标志) {
+        PAGE.pageBack_直到标志(1, 标志);
+    },
+    // 
+    // 
+    pageBack_直到有效页: function() {
         var b = 0;
         var p = getCurrentPages();
         // i 从倒数第二page 开始 , 到 顺数第二page结束
-        for (var i = p.length - 1; i >= 1; i--) {
+        for (var i = p.length - 2; i >= 1; i--) {
             var cp = p[i];
-            if (cp.data.重开首页) {
-                return;
-            }
-            //
-            // 如果遇到<ready : false > (没有准备好)
-            // 的page
-            // 也不要他
             if (!cp.data.ready) {
-                wx.navigateBack();
+                PAGE.DEL(cp);
+                b++;
                 continue;
             }
-            if (cp._BOX_.page.标志 == 标志) return;
+            if (PAGE.isDEL(cp)) {
+                b++;
+                continue;
+            }
+            break;
+        }
+        if (b > 0) wx.navigateBack({
+            delta: b
+        });
+    },
+    // 
+    pageBack_直到标志: function(调整, 标志) {
+        //
+        // 调整 : 
+        // 如果是<onUnload.触发> , 
+        // <当前页>已经navigateBack() 
+        // 不需要调整 ( 调整=0 )
+        // 
+        // 如果是<按键.触发>
+        // <当前页>还没navigateBack() 
+        // 需要调整 ( 调整 = 1 )
+        var b = 调整; // 调整 : 0 或 1 // 
+        var p = getCurrentPages();
+        for (var i = p.length - 2; i >= 1; i--) {
+            var cp = p[i];
+            if (!cp.data.ready) {
+                PAGE.DEL(cp);
+                b++;
+                continue;
+            }
+            if (PAGE.isDEL(cp)) {
+                b++;
+                continue;
+            }
+            if (cp._BOX_.page.标志 == 标志) break;
             // 
-            cp.data.ready = false;
+            PAGE.DEL(cp);
             b++;
         }
         if (b > 0) wx.navigateBack({
@@ -1012,57 +1077,18 @@ const PAGE = {
         });
     },
     // 
-    // 
-    // 有可能一次返回多个page ,
-    // 导致每个页面都触发<onunload>
-    // 为了避免这种情况,
-    // 每返回一个page , 就把他的<data.ready>设为false
-    // 
-    pageBack_标志: function(page_obj) {
+    pageBack_onUnload: function() {
         var b = 0;
-        
-        // 有重开<首页>标记 
-        if (page_obj.data.重开首页) {
-            return;
-        }
-        // 
-        if (!page_obj.data.ready) {
-            return;
-        }
         // 
         var o = this.当前page();
         if (o.返回 == '上一页') {
+            PAGE.pageBack_直到有效页();
             return;
         } else if (!o.返回) {
+            PAGE.pageBack_直到有效页();
             return;
         } else {
-            var p = getCurrentPages();
-            // i 从倒数第二page 开始 , 到 顺数第二page结束
-            for (var i = p.length - 2; i >= 1; i--) {
-                var cp = p[i];
-                //
-                // 如果遇到<ready : false > (没有准备好)
-                // 的page
-                // 也不要他
-                if (!cp.data.ready) {
-                    // wx.navigateBack();
-                    b++;
-                    continue;
-                }
-                if (cp._BOX_.page.标志 == o.返回) {
-                    if (b > 0) wx.navigateBack({
-                        delta: b
-                    });
-                    return;
-                }
-                // 
-                cp.data.ready = false;
-                // wx.navigateBack();
-                b++;
-            }
-            if (b > 0) wx.navigateBack({
-                delta: b
-            });
+            PAGE.pageBack_直到标志(0, o.返回);
         }
     },
     // 

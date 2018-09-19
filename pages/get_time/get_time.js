@@ -3,18 +3,52 @@ const A = getApp();
 // 
 function TO() {
     var p = A.PAGE.pageObj();
-    var m = A.TAKEBACK.getBy执行包(执行包);
-    var e = A.ELEMENT.getBy执行包(执行包);
+    var e = A.TAKEBACK.元素_数据(执行包);
+    A.ELEMENT.计算显示(e);
+    A.ELEMENT.播放声音(e);
     p.setData({
-        xiaoji: A.SYS.秒ToStr(存款 - m.用掉的时间(执行包)),
-        timeStr: A.SYS.秒ToStr(e.剩下时间(执行包)),
+        xiaoji: A.SYS.秒ToStr(存款 - A.TAKEBACK.用掉的时间(执行包)),
+        timeStr: e.time,
     });
-    m.循环执行(执行包);
+    // m.循环执行(执行包);
     time1000 = setTimeout(TO, 1000);
 }
 var 存款;
 var time1000;
 var 执行包 = null;
+// 
+// 
+function 重启() {
+    var p = A.PAGE.pageObj();
+    //
+    A.PLAY.重置();
+    // 
+    执行包 = A.PAGE.get('m_box');
+    var e = A.TAKEBACK.元素_数据(执行包);
+    A.ELEMENT.取消漏播声音(e);
+    // 
+    p.setData({
+        ready: true,
+    });
+    // 
+    wx.setKeepScreenOn({
+        keepScreenOn: true
+    });
+    // 
+    TO();
+}
+
+function 关掉() {
+    // 
+    // run标记 = false;
+    clearTimeout(time1000);
+    A.PLAY.重置();
+    wx.setKeepScreenOn({
+        keepScreenOn: false
+    });
+    A.DAT.set_当前执行包(执行包);
+}
+// 
 // 
 Page({
     // 
@@ -24,22 +58,17 @@ Page({
         //   BKeyTxt: '结束...',
         // })
         // 
-        var m = A.TAKEBACK.getBy执行包(执行包);
-        A.PAGE.set('用掉的时间', m.用掉的时间(执行包));
+        var e = A.TAKEBACK.元素_数据(执行包);
+        // var m = A.TAKEBACK.getBy执行包(执行包);
+        A.PAGE.set('用掉的时间', A.TAKEBACK.用掉的时间(执行包));
         // A.Url.setBackCall('OK_end');
         // A.Url.post('提款结束');
         // 
         A.PAGE.open('结束提款_密码');
     },
-    取消: function(e) {
-        this.setData({
-            ready: false,
-            BKeyTxt: '结束...',
-        })
-        // 
-        A.Url.setBackCall('OK_end');
-        A.Url.post('提款取消');
-        // 
+    cancel_key: function(e) { // 
+        //
+        A.PAGE.open('取消提款_密码');
     },
     重听: function(e) {
         if (A.SYS.测试) {
@@ -67,17 +96,7 @@ Page({
         var u = A.USER.getByID(A.PAGE.get('UID'));
         存款 = u.存款();
         // 
-        执行包 = A.PAGE.get('m_box');
-        var m = A.TAKEBACK.getBy执行包(执行包);
-        this.setData({
-            ready: true,
-        })
-        // 
-        TO();
-        // 
-        wx.setKeepScreenOn({
-            keepScreenOn: true
-        });
+        重启();
     },
     // 
     input_name: function(e) {
@@ -108,30 +127,18 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
-        clearTimeout(time1000);
-        A.PLAY.重置();
-        A.PAGE.pageBack_标志(this);
+        if (A.PAGE.isDEL(this)) return;
         // 
-        wx.setKeepScreenOn({
-            keepScreenOn: false
-        });
-          A.DAT.set_当前执行包(执行包);
+        关掉();
+        A.PAGE.pageBack_onUnload();
     },
     onShow: function() {
+        if (A.PAGE.isDEL(this)) return;
         // 
-        wx.setKeepScreenOn({
-            keepScreenOn: true
-        });
-        执行包 = A.DAT.get_当前执行包();
-        // 
-        var e = A.ELEMENT.getBy执行包(执行包);
-        e.取消漏播声音(执行包);
+        重启();
     },
     // 
     onHide: function() {
-        // clearTimeout(time1000);
-        A.DAT.set_当前执行包(执行包);
-        // 
-        执行包 = '';
+        关掉();
     },
 })

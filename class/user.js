@@ -75,12 +75,12 @@ const FUN = function(B) {
     // 
     // 正在执行任务
     this.is任务中 = function() {
-        var o = A.DAT.get_当前执行包();        
+        var o = A.DAT.get_当前执行包();
         return o.类型 == '任务';
     };
     // 
     this.is提款中 = function() {
-        var o = A.DAT.get_当前执行包();   
+        var o = A.DAT.get_当前执行包();
         return o.类型 == '提款';
     };
     // 
@@ -106,6 +106,16 @@ const FUN = function(B) {
     // 
     // 用于列表
     this.名称_存款 = function() {
+        A.PAGE.set('UID', this.UID());
+        var z = A.DAT.get_当前执行包();
+        if (A.SYS.isObject(z)) {
+            if (z.类型 == '任务') {
+                return this.列表名称() //
+                    + ' [ 任务中... ]';
+            }
+            return this.列表名称() //
+                + ' [ 提款中... ]';
+        }
         if (this.is管理员()) {
             return this.列表名称() //
                 + ' [ 管理员 ]';

@@ -227,8 +227,8 @@ const ELEMENT = {
         }
     },
     //
-    取消漏播声音: function(执行包) {
-        var e = ELEMENT.当前元素_数据(执行包);
+    取消漏播声音: function(元素数据) {
+        var e = 元素数据;
         var s = e.时长 - e.剩下时间 - 5; // 提前 5 秒
         var arr = e.时间轴;
         // 
@@ -272,6 +272,7 @@ const ELEMENT = {
     设定显示: function(obj) {
         obj.开始时刻 = new Date().getTime();
         obj.原剩下时间 = obj.剩下时间;
+        obj.View = 'view2';
     },
     //
     计算显示: function(obj) {
@@ -283,6 +284,7 @@ const ELEMENT = {
     //
     取消显示: function(obj) {
         obj.开始时刻 = null;
+        obj.View = 'view1';
     },
     // na : 元素名称
     // o : DAT ( JSON )

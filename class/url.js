@@ -1,14 +1,7 @@
 // // 
 const A = getApp();
 // 
-const path = function() {
-    // 
-    if (A.SYS.测试) {
-        return 'http://localhost/';
-    } else {
-        return 'http://localhost/';
-    }
-}
+
 // const 版本 = 'a';
 const 版本 = 'tb';
 // 
@@ -24,53 +17,45 @@ const arr = {
     修改存款: {
         url: '9_fix_money.php',
         dat: {
-            UID: ['UID', null, false],
-            m: ['money', null, false], //
+            UID: ['UID', 'ID', false],
+            m: ['money', '实数', false], //
         },
     },
     // 
     发出邀请: {
         url: '二维码B',
         dat: {
-            scene: ['JID', null, false],
+            scene: ['JID', 'ID', false],
             page: ['page接受邀请', null, false], //
-        },
-    },
-    // 
-    更新执行包: {
-        url: '9_up_exec.php',
-        dat: {
-            UID: ['UID', null, false],
-            JSON: ['m_box', null, false], // 执行包
         },
     },
     // 
     任务结束: {
         url: '9_mission_end.php',
         dat: {
-            UID: ['UID', null, false],
-            T: ['剩下时间', null, false], //
+            UID: ['UID', 'ID', false],
+            T: ['剩下时间', '整数', false], //
         },
     },
     任务取消: { // 暂时 借用<提款取消>
         url: '9_takeback_cancle.php',
         dat: {
-            UID: ['UID', null, false],
+            UID: ['UID', 'ID', false],
         },
     },
     // 
     提款结束: {
         url: '9_takeback_end.php',
         dat: {
-            UID: ['UID', null, false],
-            T: ['用掉的时间', null, false], //
+            UID: ['UID', 'ID', false],
+            T: ['用掉的时间', '正整数', false], //
         },
     },
     // 
     提款取消: {
         url: '9_takeback_cancle.php',
         dat: {
-            UID: ['UID', null, false],
+            UID: ['UID', 'ID', false],
         },
     },
     // 
@@ -81,21 +66,21 @@ const arr = {
     添加孩子: {
         url: '5_add_c.php',
         dat: {
-            h_NA: ['input_name', null, false],
+            h_NA: ['input_name', '昵称', false],
         },
     },
     添加好友: {
         url: '9_add_f.php',
         dat: {
-            id: ['好友邀请码', null, false],
+            id: ['好友邀请码', '邀请码', false],
         },
     },
     加入家庭: {
         url: '9_login_in_old.php',
         login: true,
         dat: {
-            j_NA: ['家长称为', null, false],
-            invite: ['家长邀请码', null, false],
+            j_NA: ['家长称为', '昵称', false],
+            invite: ['家长邀请码', '邀请码', false],
         },
     },
     // 
@@ -108,39 +93,31 @@ const arr = {
         url: '9_add_f_get.php',
         dat: {},
     },
-    添加家长: {
-        url: '9_add_m.php',
-        dat: {
-            // code: ['code', null, false], // 
-            JID: ['JID', null, false], // 家庭ID
-            j_na: ['input_name', null, false], // 昵称
-        },
-    },
     家长_改密码: {
         url: '5_fix_mm.php',
         dat: {
-            UID: ['UID', null, false], //
-            m: ['短密', null, false], // 昵称
+            UID: ['UID', 'ID', false], //
+            m: ['短密', '短密', false], // 昵称
         },
     },
     家长_改名: {
         url: '5_rename.php',
         dat: {
-            UID: ['UID', null, false], //
-            NA: ['家长称为', null, false], // 昵称
+            UID: ['UID', 'ID', false], //
+            NA: ['家长称为', '昵称', false], // 昵称
         },
     },
     孩子_改名: {
         url: '5_rename.php',
         dat: {
-            UID: ['UID', null, false], //
-            NA: ['孩子昵称', null, false], // 昵称
+            UID: ['UID', 'ID', false], //
+            NA: ['孩子昵称', '昵称', false], // 昵称
         },
     },
     删除孩子: {
         url: '5_del_c.php',
         dat: {
-            UID: ['UID', null, false], //
+            UID: ['UID', 'ID', false], //
         },
         backCall: function(isOk) {
             // 
@@ -156,11 +133,11 @@ const arr = {
         login: true,
         dat: {
             // 孩子名称
-            h_NA: ['h_name', null, false],
+            h_NA: ['h_name', '昵称', false],
             // 家长名称
-            j_NA: ['j_name', null, false],
-            // 年级
-            LJ: ['LJ', null, false],
+            j_NA: ['j_name', '昵称', false],
+            // 年级 // 改年龄了
+            LJ: ['LJ', '年龄', false],
         },
     },
     // 
@@ -292,8 +269,12 @@ const OBJ = {
                 // 
                 v = A.PAGE.get(vn);
                 if (v) {
-                    if (fun)
-                        if (!fun(v)) return;
+                    if (fun) {
+                        if (!A.INPUT[fun].chk(v)) {
+                            A.ST.show(vn + ' : ' + A.INPUT[fun].msg());
+                            return;
+                        }
+                    }
                     // 需要转换成JSON
                     if (toObj.indexOf(i) > -1) {
                         v = JSON.stringify(v);

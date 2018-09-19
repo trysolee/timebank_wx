@@ -22,6 +22,7 @@ A.RET = require('class/ret');
 // 
 A.BUF = require('class/buf');
 A.Url = require('class/url');
+A.INPUT = require('class/input');
 A.DAT = require('class_tb/s_dat');
 A.PAGE = require('class/page');
 A.VAL = require('class/val');
@@ -41,7 +42,7 @@ A.FIRST = require('class_tb/s_first');
 // A.CS = require('class_tb/cs');
 // A.CS.检查版本();
 // 
-const CS版本 = 12;
+const CS版本 = 14;
 const 检查版本 = function() {
     // var A = getApp();
     var s = 'CS版本';

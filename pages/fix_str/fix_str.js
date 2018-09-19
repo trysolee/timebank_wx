@@ -92,7 +92,7 @@ Page({
         input_str = e.detail.value;
         A.PAGE.set(A.PAGE.当前page().pageVN, input_str);
         // 
-        this.OK_key();
+        // this.OK_key();
     },
     // 
     BKey: function(e) {
@@ -122,7 +122,9 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
+        if (A.PAGE.isDEL(this)) return;
+        // 
         if (!back_标志) // 
-            A.PAGE.pageBack_标志(this);
+            A.PAGE.pageBack_onUnload();
     },
 })

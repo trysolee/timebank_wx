@@ -12,7 +12,9 @@
     <button class="OK_key" bindtap='mute_key' type="primary">{{mute_key_name}}</button>
   </view>
 
-  <view class="view1" wx:for="{{_List}}" wx:key='keyNa'>
+  <block wx:for="{{_List}}"  wx:key='keyNa'>
+
+  <view class="{{item.View}}">
     <view class="view_l">
       <text class="txt1">{{item.keyNa}}</text>
     </view>
@@ -20,6 +22,8 @@
       <button class="key1"  type='{{item.type}}' disabled='{{!item.isKey}}'  bindtap="key_next" id="{{index}}">{{item.time}}</button>
     </view>
   </view>
+
+  </block>
 
  <view>
     <button class="OK_key" bindtap='OK_key' type="primary">- 完成 -</button>
