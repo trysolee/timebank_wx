@@ -1,0 +1,42 @@
+
+
+
+<view class='list_view1' wx:if="{{txt1}}">
+<view class='txt_view1'>
+<view class='txt_text'><text>宝贝,吃饭要快哦!</text></view>
+<view class='txt_text'><text>20分钟吃完, 可以吗?</text></view>
+</view>
+</view>
+
+<view class='list_view2' wx:if="{{txt2}}">
+<view class='txt_view2'>
+<view class='txt_text'><text>OK! 那如果我提前呢?</text></view>
+</view>
+</view>
+
+<view class='list_view1' wx:if="{{txt3}}">
+<view class='txt_view1'>
+<view class='txt_text'><text>如果提前了,先把节约的时间存起来</text></view>
+<view class='txt_text'><text>你要看电视了再提出来用</text></view>
+</view>
+</view>
+
+<view class='list_view2' wx:if="{{txt4}}">
+<view class='txt_view2'>
+<view class='txt_text'><text>好呀! 那么把时间存在哪里?</text></view>
+</view>
+</view>
+
+<view class='list_view1' wx:if="{{txt5}}">
+<view class='txt_view1'>
+<view class='txt_text'><text>存在 [ 时间记账 ] 啊!</text></view>
+</view>
+</view>
+
+
+<view class='key_view1' wx:if="{{key1}}">
+ <button  bindtap='OK_key' type="primary">下一步</button>
+</view>
+
+
+

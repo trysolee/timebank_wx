@@ -28,7 +28,9 @@ A.PAGE = require('class/page');
 A.VAL = require('class/val');
 A.SHOW_CODE = require('class/show_code');
 // 
-A.USER = require('class/user');
+// A.USER = require('class/user');
+A.UC = require('class_tb/c_uc');
+A.UH = require('class_tb/c_uh');
 A.My = require('class/user_my');
 // 
 A.MISSION = require('class_tb/c_mission');
@@ -37,7 +39,7 @@ A.SOUND = require('class_tb/c_sound');
 A.TAKEBACK = require('class_tb/c_takeback');
 A.PLAY = require('class_tb/c_play');
 A.FUN = require('class_tb/s_fun');
-A.FIRST = require('class_tb/s_first');
+// A.FIRST = require('class_tb/s_first');
 // 
 // A.CS = require('class_tb/cs');
 // A.CS.检查版本();
@@ -45,14 +47,14 @@ A.FIRST = require('class_tb/s_first');
 const CS版本 = 14;
 const 检查版本 = function() {
     // var A = getApp();
-    var s = 'CS版本';
-    var v = A.DAT.get_SYS(s);
-    if (v == CS版本) return;
-    // 
-    // 
-    var CS = require('class_tb/cs');
-    CS.更新();
-    // 
-    A.DAT.set_SYS(s, CS版本);
+    // var s = 'CS版本';
+    // var v = A.DAT.get_SYS(s);
+    // if (v == CS版本) return;
+    // // 
+    // // 
+    // var CS = require('class_tb/cs');
+    // CS.更新();
+    // // 
+    // A.DAT.set_SYS(s, CS版本);
 };
 检查版本();

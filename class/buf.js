@@ -5,7 +5,9 @@ const A = getApp();
 const tableList = { //
     // pic : table名
     // PID : 主键名
-    user: 'UID',
+    // user: 'UID',
+    uc: 'UID',
+    uh: 'UID',
     // 
     user_my: null,
     // 
@@ -52,14 +54,14 @@ const inBUF = {
         A.My.家庭名称 = dat.NA;
         return false; // 不缓存
     },
-    user: function(dat) {
-        //
-        var u = A.USER.getByBUF(dat);
-        if (u.is别家家长()) {
-            return false // 不缓存
-        }
-        return true; // 缓存
-    },
+    // user: function(dat) {
+    //     //
+    //     var u = A.USER.getByBUF(dat);
+    //     if (u.is别家家长()) {
+    //         return false // 不缓存
+    //     }
+    //     return true; // 缓存
+    // },
 }
 // 发生变化 , 重新归纳统计
 const changeBUF = {

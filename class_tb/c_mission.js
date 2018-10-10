@@ -22,7 +22,10 @@ const init = function() {
 const FUN = function(B) {
     // 
     this.BUF = B;
-    // 
+    //  
+    this.ID = function() { 
+        return this.BUF.ID;
+    };
     this.名称 = function() { // 名称
         return this.BUF.Na;
     };
@@ -57,7 +60,7 @@ const FUN = function(B) {
         // 
         var dat = {
             类型: '任务',
-            任务: this.名称(),
+            任务: this.ID(),
             // 
             元素组: null, // 
             // 
@@ -74,7 +77,7 @@ const FUN = function(B) {
             var s = e.时长();
             // 
             d.push({
-                keyNa: na,
+                keyNa: e.名称(),
                 time: A.SYS.秒ToStr(s),
                 isKey: false,
                 type: 'default',
@@ -93,22 +96,22 @@ const FUN = function(B) {
         return dat;
     };
     this.save = function() { //
-        A.DAT.set_任务(this.名称(), this.BUF);
+        A.DAT.set_任务(this.ID(), this.BUF);
     };
 }
 // 
 const MISSION = {
     // 
-    getByNa: function(Na) {
+    getByID: function(ID) {
         // 
         return new FUN( //
-            A.DAT.get_任务(Na) //
+            A.DAT.get_任务(ID) //
         );
     },
     //
     getBy执行包: function(dat) {
         // 
-        var o = MISSION.getByNa(dat.任务);
+        var o = MISSION.getByID(dat.任务);
         return o;
     },
     // 单位 : 秒
@@ -146,7 +149,7 @@ const MISSION = {
         }
         o.DAT.时长 = i;
         // 
-        o.Na = na; // 记录 名称
+        o.ID = na; // 记录 名称
         // 
         A.DAT.set_任务(na, o);
         MISSION.保存列表1(na, o);
@@ -174,7 +177,7 @@ const MISSION = {
         var arr = A.DAT.get_SYS('任务列表');
         var ar = [];
         for (var i in arr) {
-            ar.push(MISSION.getByNa(i));
+            ar.push(MISSION.getByID(i));
         }
         return ar;
     },

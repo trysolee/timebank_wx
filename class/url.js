@@ -1,7 +1,6 @@
 // // 
 const A = getApp();
 // 
-
 // const 版本 = 'a';
 const 版本 = 'tb';
 // 
@@ -12,6 +11,9 @@ const arr = {
         dat: {
             // code: ['code', null, false],
         },
+    },
+    CS更新: {
+        url: '9_cs_dat.js',
     },
     // 
     修改存款: {
@@ -59,10 +61,6 @@ const arr = {
         },
     },
     // 
-    更新孩子数据: {
-        url: '9_update.php',
-        dat: {},
-    },
     添加孩子: {
         url: '5_add_c.php',
         dat: {
@@ -108,7 +106,7 @@ const arr = {
         },
     },
     孩子_改名: {
-        url: '5_rename.php',
+        url: '5_rename_c.php',
         dat: {
             UID: ['UID', 'ID', false], //
             NA: ['孩子昵称', '昵称', false], // 昵称
@@ -121,10 +119,42 @@ const arr = {
         },
         backCall: function(isOk) {
             // 
-            if (isOk) {
-                var uid = A.PAGE.get('UID');
-                A.BUF.delOne('user', uid);
-            }
+            //  服务器会更新数据
+            // 
+            // if (isOk) {
+            //     var uid = A.PAGE.get('UID');
+            //     A.BUF.delOne('user', uid);
+            // }
+        },
+    },
+    删除家长: {
+        url: '5_del_h.php',
+        dat: {
+            UID: ['UID', 'ID', false], //
+        },
+        backCall: function(isOk) {
+            // 
+            //  服务器会更新数据
+            // 
+            // if (isOk) {
+            //     var uid = A.PAGE.get('UID');
+            //     A.BUF.delOne('user', uid);
+            // }
+        },
+    },
+    注销自己: {
+        url: '9_login_off.php',
+        dat: {
+            UID: ['UID', 'ID', false], //
+        },
+        backCall: function(isOk) {
+            // 
+            //  服务器会更新数据
+            // 
+            // if (isOk) {
+            //     var uid = A.PAGE.get('UID');
+            //     A.BUF.delOne('user', uid);
+            // }
         },
     },
     // 
@@ -215,7 +245,7 @@ const OBJ = {
             return;
         }
         if (o.login) { // 需要 获取<微信code>
-            if (A.SYS.非正式测试) {
+            if (A.SYS.测试用户) {
                 A.PAGE.set('_CODE_', A.SYS.测试用户);
                 // 
                 this.post_(o);
@@ -312,6 +342,7 @@ const OBJ = {
                 })
             },
             method: 'POST',
+            dataType: 'json',
             header: {
                 'content-type': 'application/x-www-form-urlencoded' // 默认值
                 // 'content-type': 'application/json;charset=utf8'

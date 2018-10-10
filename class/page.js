@@ -3,81 +3,15 @@ const A = getApp();
 //
 // 
 const Page = {
-    声音测试: {
-        url: '../list_chk/list_chk',
-        返回: '首页', // 
-        datList: function() {
-            var li = [{
-                // primary
-                // default
-                // warn
-                type: 'primary',
-                na: '录音...',
-                fun: '录音',
-            }, {
-                // primary
-                // default
-                // warn
-                type: 'warn',
-                na: '结束',
-                fun: '结束',
-            }, {
-                // primary
-                // default
-                // warn
-                type: 'primary',
-                na: '回播',
-                fun: '回播',
-            }, {
-                // primary
-                // default
-                // warn
-                type: 'default',
-                na: '播放web',
-                fun: '播放',
-            }, {
-                // primary
-                // default
-                // warn
-                type: 'default',
-                na: '播放1',
-                fun: '播放1',
-            }, {
-                // primary
-                // default
-                // warn
-                type: 'default',
-                na: 'stop',
-                fun: 'stop',
-            }];
-            // TODO 
-            // 只设置了<更多>键 , 
-            // 帖子的列表还没有考虑
-            return li;
-        },
-        // dList : 全部列表Arr
-        // o : 被点击的obj
-        录音: function(dList, o) {
-            A.REC.开始();
-        },
-        结束: function(dList, o) {
-            A.REC.结束((res) => {
-                console.log('recorder stop', res)
-                PAGE.set('tempFilePath', res.tempFilePath)
-            });
-        },
-        回播: function(dList, o) {
-            A.A_PLAY.开始(PAGE.get('tempFilePath'));
-        },
-        播放: function(dList, o) {
-            A.A_PLAY.开始('https://kfqlh.com/a3.mp3');
-        },
-        播放1: function(dList, o) {
-            A.A_PLAY.开始('https://kfqlh.com/a1.m4a');
-        },
-        stop: function(dList, o) {
-            A.A_PLAY.结束();
-        },
+    操作指引1: {
+        url: '../guide1/guide',
+        标志: '首页',
+        返回: null, // 没有返回键
+    },
+    测试载入txt: {
+        url: '../get_dat/get_dat',
+        标志: '首页',
+        返回: null, // 没有返回键
     },
     首页: {
         url: '../list_chk/list_chk',
@@ -85,7 +19,7 @@ const Page = {
         返回: null, // 没有返回键
         datList: function() {
             var li = [];
-            var arr = A.USER.孩子列表();
+            var arr = A.UC.孩子列表();
             for (var i = 0; i < arr.length; i++) {
                 var x = arr[i];
                 var o = {
@@ -98,17 +32,14 @@ const Page = {
                 // 
                 li.push(o);
             }
-            if (A.My.管理员) {
-                li.push({
-                    // primary
-                    // default
-                    // warn
-                    type: 'default',
-                    na: '系统',
-                    pageJump: '进入更多_密码',
-                    // fun: '更多',
-                })
-            }
+            li.push({
+                // primary
+                // default
+                // warn
+                type: 'default',
+                na: '系统',
+                pageJump: '进入更多_密码',
+            })
             return li;
         },
         // 
@@ -156,35 +87,51 @@ const Page = {
                 // default
                 // warn
             ];
+            if (A.My.管理员()) {
+                li.push({
+                    na: '家人列表',
+                    pageJump: '人员列表',
+                    // fun: '点击',
+                });
+                li.push({
+                    na: '家长邀请码...',
+                    // _URL: '二维码B',
+                    // fun: '添加家长',
+                    _URL: '获取家长邀请码',
+                });
+                li.push({
+                    na: '添加孩子',
+                    pageJump: '添加孩子',
+                });
+            } else {
+                li.push({
+                    na: '家长邀请码...',
+                    // _URL: '二维码B',
+                    // fun: '添加家长',
+                    _URL: '获取家长邀请码',
+                });
+                li.push({
+                    na: '注销',
+                    type: 'warn',
+                    UID: A.My.UID,
+                    _page_set_: ['UID'],
+                    _URL: '注销自己',
+                });
+            }
             // 
             // li.push({
             //     na: '排行榜',
             //     pageJump: '排行榜',
             //     // fun: '点击',
             // });
-            li.push({
-                na: '家人列表',
-                pageJump: '人员列表',
-                // fun: '点击',
-            });
             // li.push({
             //     na: '好友邀请码...',
             //     _URL: '获取好友邀请码',
             // });
-            li.push({
-                na: '家长邀请码...',
-                // _URL: '二维码B',
-                // fun: '添加家长',
-                _URL: '获取家长邀请码',
-            });
             // li.push({
             //     na: '添加好友',
             //     pageJump: '添加好友',
             // });
-            li.push({
-                na: '添加孩子',
-                pageJump: '添加孩子',
-            });
             // 
             if (A.SYS.非正式测试) {
                 li.push({
@@ -234,7 +181,7 @@ const Page = {
                     + A.SYS.秒ToStr(x.时长()) // 
                     + ' ]';
                 // 
-                if (x.名称() == '临时') {
+                if (x.名称() == '临时任务') {
                     n = '临时任务 [自定义]'
                 }
                 // 
@@ -246,8 +193,8 @@ const Page = {
                     na: n,
                     // _URL: '执行任务', // TODO 
                     fun: '执行任务',
-                    任务Na: x.名称(),
-                    _page_set_: ['任务Na'],
+                    任务ID: x.ID(),
+                    _page_set_: ['任务ID'],
                 })
             }
             //
@@ -270,13 +217,13 @@ const Page = {
             return li;
         },
         执行任务: function() {
-            var na = PAGE.get('任务Na');
-            if (na == '临时') {
+            var id = PAGE.get('任务ID');
+            if (id == '临时') {
                 PAGE.open('执行临时任务');
                 return;
             }
             // 
-            var m = A.MISSION.getByNa(na);
+            var m = A.MISSION.getByID(id);
             var b = m.创建_执行包();
             // 
             PAGE.set('m_box', b);
@@ -312,7 +259,7 @@ const Page = {
             e.BUF.时长 = l * 60;
             e.save();
             // 
-            var m = A.MISSION.getByNa(PAGE.get('任务Na'));
+            var m = A.MISSION.getByID(PAGE.get('任务ID'));
             m.BUF.DAT.时长 = l * 60;
             m.save();
             // 
@@ -331,7 +278,7 @@ const Page = {
         datList: function() {
             // 用于 列表的list
             // 
-            var user = A.USER.getByID(PAGE.get('UID'));
+            var user = A.UC.getByID(PAGE.get('UID'));
             var 存款 = user.存款();
             // 
             var li = [
@@ -352,16 +299,16 @@ const Page = {
                     na: x.列表名称(),
                     // _URL: '执行任务', // TODO 
                     fun: '执行任务',
-                    任务Na: x.名称(),
-                    _page_set_: ['任务Na'],
+                    任务ID: x.ID(),
+                    _page_set_: ['任务ID'],
                 })
             }
             return li;
         },
         执行任务: function() {
             // 
-            var m = A.TAKEBACK.getByNa(PAGE.get('任务Na'));
-            var user = A.USER.getByID(PAGE.get('UID'));
+            var m = A.TAKEBACK.getByNa(PAGE.get('任务ID'));
+            var user = A.UC.getByID(PAGE.get('UID'));
             if (user.存款() < m.预留存款()) {
                 A.ST.show('存款不足 : ' + A.SYS.秒ToStr(m.预留存款()));
                 return null;
@@ -527,7 +474,7 @@ const Page = {
         url: '../list_chk/list_chk',
         返回: '上一页',
         datList: function() {
-            var arr = A.USER.家长_孩子_好友列表();
+            var arr = A.UH.家长列表();
             var li = [];
             // 
             // primary
@@ -535,28 +482,25 @@ const Page = {
             // warn
             for (var i = 0; i < arr.length; i++) {
                 var x = arr[i];
-                var t = 'default';
-                var f = null;
-                // 
-                if (x.is孩子()) {
-                    t = 'primary';
-                    f = '_孩子';
-                }
-                if (x.is好友()) {
-                    t = 'primary';
-                    f = '_好友';
-                }
-                if (x.is家长()) {
-                    t = 'default';
-                    f = '_家长';
-                }
                 li.push({
-                    type: t,
+                    type: 'default',
+                    na: x.列表名称(),
+                    user: x,
+                    UID: x.UID(),
+                    _page_set_: ['UID'],
+                    fun: '_家长',
+                })
+            }
+            arr = A.UC.孩子列表();
+            for (var i = 0; i < arr.length; i++) {
+                var x = arr[i];
+                li.push({
+                    type: 'primary',
                     na: x.名称_存款(),
                     user: x,
                     UID: x.UID(),
                     _page_set_: ['UID'],
-                    fun: f,
+                    fun: '_孩子',
                 })
             }
             return li;
@@ -616,16 +560,6 @@ const Page = {
                     // _URL: '任务取消',
                 })
             }
-            // 
-            return li;
-        },
-        // 
-        _好友: function(dList, o) {
-            // 
-            var li = [{
-                na: '删除',
-                _URL: '删除好友',
-            }];
             // 
             return li;
         },
@@ -791,26 +725,15 @@ const Page = {
             return '声音测试';
         },
         OK_fun: function(str) {
-            if (str == '重载数据') {
-                var 测试_执行包 = A.FIRST.测试1();
-                // 
-            } else if (str == 'p') {
-                A.FIRST.测试2(测试_执行包);
-                // 
-            } else if (str == 's') {
-                A.FIRST.测试3();
-                //     // 
-            } else if (str == '声音测试') { // 声音测试
+            if (str == '声音测试') { // 声音测试
                 // var p = A.PAGE.当前page();
                 this.OK_page = '声音测试';
                 // 
-            } else if (str == '网络引用') {
-                var str = JSON.stringify(A.CS);
             }
             // 
             return true;
         },
-        msg: '重载数据\n声音测试\n网络引用'
+        msg: '声音测试\n'
     },
     // 
     // TODO
@@ -991,11 +914,11 @@ const Page = {
 var backup = Page['首页'];
 // 
 const PAGE = {
-    open: function(p) {
+    open: function(p1) {
         // 
         A.ST.reSet();
         // 
-        var o = backup = Page[p];
+        var o = backup = Page[p1];
         //
         if (o.标志 == '首页') {
             var p = getCurrentPages();
@@ -1013,7 +936,8 @@ const PAGE = {
         }
     },
     // 
-    pageBack: function() {
+    pageBack: function(cp) {
+        if (PAGE.isDEL(cp)) return;
         wx.navigateBack();
     },
     // 

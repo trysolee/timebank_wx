@@ -65,7 +65,7 @@ Page({
         }
     },
     OK_end: function(OK) {
-        if (OK) A.PAGE.pageBack()
+        if (OK) A.PAGE.pageBack(this);
     },
     chk: function(r) {
         var index = r.target.id;

@@ -1,0 +1,55 @@
+/* pages/test/test.wxss */
+
+page {
+  /* background-image: url('http://localhost/pic/hzcf.png'); */
+  background: url('http://localhost/pic/hzcf.png') no-repeat fixed bottom;
+  /* background-size: 220rpx 220rpx; */
+  background-size: 100% 100%;
+}
+
+.key_view1 {
+  /* display: flex; */
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+  float: right;
+  flex-direction: row;  
+  width: 100%;
+}
+
+button {
+   width: 50%;
+}
+
+.list_view1 {
+  display: flex;
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+  float: right;
+  flex-direction: column;
+}
+
+.txt_view1 {
+  background-color: rgb(70, 185, 114);
+  padding: 0.6em;
+  width: auto;
+  text-align: right;
+}
+
+.list_view2 {
+  display: flex;
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+  float: left;
+  flex-direction: column;
+}
+
+.txt_view2 {
+  background-color: rgb(227, 237, 250);
+  padding: 0.6em;
+  width: auto;
+  text-align: left;
+}
+
+.txt_text {
+  padding: 0.3em;
+}

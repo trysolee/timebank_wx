@@ -53,11 +53,25 @@ const RET = function(d) {
                 DAT: OPT.INID,
             })
         }
+        if (OPT.CS版本) {
+            A.LOG({
+                _VAL: 'CS版本', //
+                DAT: OPT.CS版本,
+            })
+        }
+        if (OPT.CS_DAT) {
+            A.LOG({
+                _VAL: 'CS_DAT', //
+                DAT: OPT.CS_DAT,
+            })
+        }
         // 
-        A.LOG({
-            _VAL: 'BUF', // 缓存数据
-            DAT: d.DAT,
-        })
+        if (d.DAT) {
+            A.LOG({
+                _VAL: 'BUF', // 缓存数据
+                DAT: d.DAT,
+            })
+        }
         if (OPT.call) {
             A.LOG({
                 _VAL: '后续call', //

@@ -82,7 +82,7 @@ Page({
     },
     OK_end: function(OK) {
         if (OK) //
-            A.PAGE.pageBack()
+            A.PAGE.pageBack(this)
     },
     BKey: function(e) {
         if (A.SYS.非正式测试) {

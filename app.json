@@ -2,13 +2,14 @@
   "pages": [
     "pages/loading/loading",
     "pages/fix_str/fix_str",
-    "pages/run_time/run_time",
     "pages/list_exp/list_exp",
     "pages/logs/logs",
     "pages/list_chk/list_chk",
     "pages/list_sel/list_sel",
     "pages/get_time/get_time",
-    "pages/run_time1/run_time1"
+    "pages/run_time1/run_time1",
+    "pages/guide1/guide",
+    "pages/get_dat/get_dat"
   ],
   "window": {
     "backgroundTextStyle": "light",

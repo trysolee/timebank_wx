@@ -9,11 +9,14 @@ const FUN = function(B) {
     // 
     this.BUF = B;
     // 
+    this.ID = function() { 
+        return this.BUF.ID;
+    };
     this.名称 = function() { // 名称
         return this.BUF.Na;
     };
     this.列表名称 = function() { //
-        return this.BUF.name;
+        return this.名称();
     };
     // 
     this.预留存款 = function() { // 
@@ -111,7 +114,7 @@ const TAKEBACK = {
             }
             o.DAT.时长 = i;
         }
-        o.Na = na; // 记录 名称
+         o.ID = na; // 记录 名称
         // 
         A.DAT.set_提款(na, o);
         TAKEBACK.保存列表1(na, o);

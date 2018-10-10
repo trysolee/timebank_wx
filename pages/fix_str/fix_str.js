@@ -110,7 +110,7 @@ Page({
                 A.PAGE.pageBackTo(back_标志);
                 return;
             }
-            A.PAGE.pageBack()
+            A.PAGE.pageBack(this);
         } else {
             this.setData({
                 ready: false,

@@ -12,10 +12,7 @@ const VAL = {
         FUN: function(DAT) {
             // 
             if (A.SYS.页面测试) {
-                var a = A.SYS.页面测试;
-                wx.reLaunch({
-                    url: '../' + a + '/' + a,
-                })
+                this.PageJump = A.SYS.页面测试;
             } else {
                 this.url = '登录';
             }
@@ -89,9 +86,10 @@ const VAL = {
     },
     // ----------------------
     还没注册: {
-        TXT: '还没注册',
+        // TXT: '还没注册',
         // PageJump: '邀请码',
-        PageJump: '注册',
+        // PageJump: '注册',
+         PageJump: '操作指引1',
     },
     参数不全: {
         TXT: '参数不全',
@@ -111,6 +109,35 @@ const VAL = {
         // TODO
         // 跳转到相应页面
         // 
+    },
+    CS版本: {
+        TXT: 'CS版本',
+        FUN: function(DAT) {
+            // 
+            var v = A.DAT.get_SYS('CS版本');
+            if (v == DAT) return;
+            // 
+            A.LOG({
+                VAL: {
+                    url: 'CS更新',
+                }
+            })
+        },
+    },
+    CS_DAT: {
+        TXT: 'CS版本',
+        FUN: function(DAT) {
+            // 
+            A.SYS.Each(DAT.声音, A.SOUND.初始化);
+            A.SYS.Each(DAT.元素, A.ELEMENT.初始化);
+            A.SYS.Each(DAT.任务, A.MISSION.初始化);
+            A.SYS.Each(DAT.提款, A.TAKEBACK.初始化);
+            // 
+            A.MISSION.保存列表();
+            A.TAKEBACK.保存列表();
+            // 
+            A.DAT.set_SYS('CS版本', DAT.版本号);
+        },
     },
     微信登录_成功: {
         TXT: '微信登录成功',

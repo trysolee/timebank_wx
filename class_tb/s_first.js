@@ -125,7 +125,7 @@ const FIRST = {
         A.MISSION.保存列表();
         A.TAKEBACK.保存列表();
         // 
-        var w = A.MISSION.getByNa('起床');
+        // var w = A.MISSION.getByNa('起床');
         var dat = w.创建_执行包();
         // 
         return dat;

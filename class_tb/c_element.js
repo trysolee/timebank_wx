@@ -75,7 +75,10 @@ const KEY = {
 const FUN = function(B) {
     // 
     this.BUF = B;
-    // 
+    //  
+    this.ID = function() { 
+        return this.BUF.ID;
+    };
     this.名称 = function() { // 名称
         return this.BUF.Na;
     };
@@ -168,7 +171,7 @@ const FUN = function(B) {
         });
     };
     this.save = function() { //
-        A.DAT.set_元素(this.名称(), this.BUF);
+        A.DAT.set_元素(this.ID(), this.BUF);
     };
 }
 // 
@@ -300,7 +303,7 @@ const ELEMENT = {
                 最近5次完成时间: [],
             }
         }
-        o.Na = na; // 记录 名称
+        o.ID = na; // 记录 名称
         // 
         A.DAT.set_元素(na, o);
     },

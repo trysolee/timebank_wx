@@ -93,7 +93,7 @@ Page({
     // warn
     onReady: function() {
         A.PAGE.ready();
-        var u = A.USER.getByID(A.PAGE.get('UID'));
+        var u = A.UC.getByID(A.PAGE.get('UID'));
         存款 = u.存款();
         // 
         重启();
@@ -115,7 +115,7 @@ Page({
     //
     OK_end: function(OK) {
         if (OK) {
-            A.PAGE.pageBack()
+            A.PAGE.pageBack(this);
         } else {
             this.setData({
                 ready: false,

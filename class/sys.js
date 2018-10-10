@@ -1,11 +1,11 @@
 // 
-// const url1 = 'http://localhost/';
-// // const post_url = 'http://localhost/tb2_10/';
-// const post_url = 'http://localhost/tb2_11/';
+const url1 = 'http://localhost/';
+// const post_url = 'http://localhost/tb2_10/';
+const post_url = 'http://localhost/tb2_12/';
 // 
-const url1 = 'https://www.kfqlh.com/';
-// const post_url = 'https://www.kfqlh.com/tb2_10/';
-const post_url = 'https://www.kfqlh.com/tb2_11/';
+// const url1 = 'https://www.kfqlh.com/';
+// // const post_url = 'https://www.kfqlh.com/tb2_10/';
+// const post_url = 'https://www.kfqlh.com/tb2_11/';
 // 
 const post版本 = 'tb';
 const 二维码B = 'https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=12_um8DQF6a3cW1QkmEZmhzleNCvuPwaGG-OhKJwx3WNfQLr4FL6VfE49Q8jhhScYHQIsgj-PRxEC2oG4GXDS_jEZdWyXYVhbfHbnlwwccYwwjxEf_Rfb7-om6y9cnJBvzAUuTsQu2OPgLbolDwKHVbAJAOLZ';
@@ -15,7 +15,8 @@ const SYS = {
     //   
     // ===== 常量 =====
     // 
-    // 页面测试: 'run_time1', // false
+    // 页面测试: '测试载入txt', // false
+    // 页面测试: true, // 具体页面在Page里面设置
     页面测试: false,
     // 
     // 非正式测试: true, // 正式调试之前
@@ -24,10 +25,13 @@ const SYS = {
     // 测试: true,
     测试: false,
     不播放声音: false,
-    测试用户: 'admin',
+    // 
+    测试用户: 'admin', // 家长
+    // 测试用户: 'ukkc--k9921', // 管理员
+    // 测试用户: false,
+    // 
     // 测试用户: 'user2q',
     // 测试用户: 'userpptptpq', // 老虎泰格
-    // 测试用户: 'ukkc--k9921', // 小新
     //
     项目名_长度: 35,
     分组名_长度: 35,

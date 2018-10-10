@@ -22,7 +22,10 @@ const CLA = function(B) {
     this.get时刻 = function() { // 
         return this.时刻;
     };
-    //
+    // 
+    this.ID = function() { 
+        return this.BUF.ID;
+    };
     //  
     this.名称 = function() { // 声音名称
         return this.BUF.Na;
@@ -75,7 +78,7 @@ const CLA = function(B) {
         this.继续exec = false;
     };
     this.save = function() { //
-        A.DAT.set_声音(this.名称(), this.BUF);
+        A.DAT.set_声音(this.ID(), this.BUF);
     };
 }
 // 
@@ -119,7 +122,7 @@ const SOUND = {
             }
         }
         // 
-        o.Na = na; // 记录 声音的名称
+        o.ID = na; // 记录 名称
         A.DAT.set_声音(na, o);
     },
 };
